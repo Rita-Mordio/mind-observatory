@@ -1,0 +1,8 @@
+.idea
+
+####### CLIENT #######
+
+
+####### SERVER #######
+/server/.env
+/server/node_modules
