@@ -1,16 +1,58 @@
 import express from "express";
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+
 import User from "../schemas/User";
 
 const router = express.Router();
 
+dotenv.config();
+
+const main = async (data) => {
+  let transporter = nodemailer.createTransport({
+    service: "Naver",
+    host: "smtp.naver.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  await transporter.sendMail(data);
+}
+
+router.post("/authEmailSend", (request, response) => {
+  let randomNumber = Math.floor(Math.random() * 1000000) + 100000;
+  if (randomNumber > 1000000) {
+    randomNumber = randomNumber - 100000;
+  }
+
+  main({
+    from: process.env.EMAIL,
+    to: request.body.email,
+    subject: "내 마음 관측소 인증 번호",
+    html: `<p>안녕하세요! 회원님의 인증 번호는 <b>${randomNumber}</b> 입니다</p>`,
+  }).catch(console.error);
+  return response.status(200).json({
+    success: true,
+    randomNumber: randomNumber
+  });
+});
+
 router.post("/duplicateEmailCheck", (request, response) => {
   User.findOne({ email: request.body.email }, (error, result) => {
     if (error) return response.json({ success: false, error });
+
     return response.status(200).json({
       success: true,
-      isDuplicate: result ? true : false
+      isDuplicate: result ? true : false,
     });
-  })
+  });
 });
 
 router.post("/duplicateNicknameCheck", (request, response) => {
@@ -18,9 +60,9 @@ router.post("/duplicateNicknameCheck", (request, response) => {
     if (error) return response.json({ success: false, error });
     return response.status(200).json({
       success: true,
-      isDuplicate: result ? true : false
+      isDuplicate: result ? true : false,
     });
-  })
+  });
 });
 
 router.post("/register", (request, response) => {
