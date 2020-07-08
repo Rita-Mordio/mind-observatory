@@ -1,6 +1,9 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const saltRounds = 12;
 const { Schema } = mongoose;
@@ -58,9 +61,9 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre("save", function (next) {
   const user = this;
-  if (user.isModified('password')) {
+  if (user.isModified("password")) {
     bcrypt.genSalt(saltRounds, (err, salt) => {
       if (err) return next(err);
       bcrypt.hash(user.password, salt, (err, hash) => {
@@ -83,7 +86,7 @@ UserSchema.methods.comparePassword = function (plainPassword, callback) {
 
 UserSchema.methods.generateToken = function (callback) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), 'secretToken');
+  const token = jwt.sign(user._id.toHexString(), process.env.JWT_SECRET_TOKEN);
   user.token = token;
   user.save((error, user) => {
     if (error) return callback(error);
@@ -91,6 +94,6 @@ UserSchema.methods.generateToken = function (callback) {
   });
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 export default User;

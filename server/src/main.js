@@ -10,12 +10,12 @@ dotenv.config();
 connect()
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
 app.use('/user', userRouter);
 
 app.listen(process.env.PORT, () =>
-  console.log(`Example app listening at http://localhost:${process.env.PORT}`),
+  console.log(`서버 가동중 http://localhost:${process.env.PORT}`),
 );
