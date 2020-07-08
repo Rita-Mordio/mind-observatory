@@ -26,11 +26,18 @@ const main = async (data) => {
   await transporter.sendMail(data);
 }
 
-router.post("/authEmailSend", (request, response) => {
-  let randomNumber = Math.floor(Math.random() * 1000000) + 100000;
-  if (randomNumber > 1000000) {
-    randomNumber = randomNumber - 100000;
+const randomNumberGenerator = () => {
+  let number = Math.floor(Math.random() * 100000000) + 10000000;
+  if (number > 100000000) {
+    number = number - 10000000;
   }
+
+  return number
+}
+
+router.post("/authEmailSend", (request, response) => {
+
+  const randomNumber = randomNumberGenerator()
 
   main({
     from: process.env.EMAIL,
@@ -38,6 +45,7 @@ router.post("/authEmailSend", (request, response) => {
     subject: "내 마음 관측소 인증 번호",
     html: `<p>안녕하세요! 회원님의 인증 번호는 <b>${randomNumber}</b> 입니다</p>`,
   }).catch(console.error);
+
   return response.status(200).json({
     success: true,
     randomNumber: randomNumber
@@ -61,6 +69,30 @@ router.post("/duplicateNicknameCheck", (request, response) => {
     return response.status(200).json({
       success: true,
       isDuplicate: result ? true : false,
+    });
+  });
+});
+
+router.post("/changeRandomPassword", (request, response) => {
+  User.findOne({ email: request.body.email }, (error, result) => {
+    if (error) return response.json({ success: false, error });
+
+    const randomNumber = randomNumberGenerator()
+
+    main({
+      from: process.env.EMAIL,
+      to: request.body.email,
+      subject: "내 마음 관측소 임시 비밀번호",
+      html: `<p>안녕하세요! 회원님의 임시 비밀번호는 <b>${randomNumber}</b> 입니다</p>`,
+    }).catch(console.error);
+
+    result.password = randomNumber
+
+    result.save((error, result) => {
+      if (error) return response.json({ success: false, error });
+      return response.status(200).json({
+        success: true
+      });
     });
   });
 });
