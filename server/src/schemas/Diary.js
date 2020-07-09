@@ -3,14 +3,16 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const DiarySchema = new Schema({
-  //제작자 Id
-  userId: {
-    type: String,
+  //작성자 Id
+  userFrom: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
 
   //제목
   title: {
     type: String,
+    required: true,
   },
 
   //감정 날씨
