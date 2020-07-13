@@ -28,13 +28,39 @@ router.post("/editDiary", (request, response) => {
     });
 });
 
-router.post("/getMyDiaries", (request, response) => {
+router.post("/getDetailMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
       // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
-        Diary.find({ userFrom: user._id })
+      Diary.find({ userFrom: user._id })
         .then((diaries) => {
           response.status(200).json({ success: true, diaries });
+        })
+        .catch((error) => {
+          response.status(400).json({ success: false, error });
+        });
+    })
+    .catch((error) => {
+      response.status(400).json({ success: false, error });
+    });
+});
+
+router.post("/getDiary", (request, response) => {
+  Diary.findOne({ _id: request.body.id })
+    .then((result) => {
+      response.status(200).json({ success: true, result });
+    })
+    .catch((error) => {
+      response.status(400).json({ success: false, error });
+    });
+});
+
+router.post("/searchMyDiariesByTitle", (request, response) => {
+  User.findOne({ token: request.body.token })
+    .then((user) => {
+      Diary.find({ userFrom: user._id, title: {'$regex': request.body.title}})
+        .then((result) => {
+          response.status(200).json({ success: true, result });
         })
         .catch((error) => {
           response.status(400).json({ success: false, error });
