@@ -37,6 +37,12 @@ const UserSchema = new Schema({
     type: String,
   },
 
+  //구독 중인 사용자 ID
+  subscribeUserIds: {
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
+  },
+
   //사용자 권한
   role: {
     type: Number,
