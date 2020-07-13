@@ -28,6 +28,7 @@ router.post("/editDiary", (request, response) => {
     });
 });
 
+//내가 작성한 일기List 가져오기
 router.post("/getDetailMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
@@ -45,6 +46,8 @@ router.post("/getDetailMyDiaries", (request, response) => {
     });
 });
 
+//단일 일기 객체 가져오기
+//일기 ID로 검색
 router.post("/getDiary", (request, response) => {
   Diary.findOne({ _id: request.body.id })
     .then((result) => {
@@ -55,6 +58,8 @@ router.post("/getDiary", (request, response) => {
     });
 });
 
+
+//제목으로 내가 작성한 일기 검색
 router.post("/searchMyDiariesByTitle", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
