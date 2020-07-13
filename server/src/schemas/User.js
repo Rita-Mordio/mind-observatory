@@ -35,12 +35,14 @@ const UserSchema = new Schema({
   //프로필 이미지 URL
   profileImage: {
     type: String,
+    default: ""
   },
 
   //구독 중인 사용자 ID
   subscribeUserIds: {
     type: [Schema.Types.ObjectId],
-    ref: 'User'
+    ref: 'User',
+    default: []
   },
 
   //사용자 권한
