@@ -1,6 +1,7 @@
 import express from "express";
 
 import Diary from "../schemas/Diary";
+import User from "../schemas/User";
 
 const router = express.Router();
 
@@ -21,6 +22,23 @@ router.post("/editDiary", (request, response) => {
   Diary.update({ _id: request.body.diaryId }, { $set: request.body })
     .then((result) => {
       response.status(200).json({ success: true, result });
+    })
+    .catch((error) => {
+      response.status(400).json({ success: false, error });
+    });
+});
+
+router.post("/getMyDiaries", (request, response) => {
+  User.findOne({ token: request.body.token })
+    .then((user) => {
+      // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
+        Diary.find({ userFrom: user._id })
+        .then((diaries) => {
+          response.status(200).json({ success: true, diaries });
+        })
+        .catch((error) => {
+          response.status(400).json({ success: false, error });
+        });
     })
     .catch((error) => {
       response.status(400).json({ success: false, error });
