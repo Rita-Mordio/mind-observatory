@@ -1,8 +1,82 @@
+
 .idea
 
+######################
+######################
 ####### CLIENT #######
+######################
+######################
+/client/node_modules
+
+# OSX
+#
+/client/.DS_Store
+
+# Xcode
+#
+/client/build/
+/client/*.pbxuser
+/client/!default.pbxuser
+/client/*.mode1v3
+/client/!default.mode1v3
+/client/*.mode2v3
+/client/!default.mode2v3
+/client/*.perspectivev3
+/client/!default.perspectivev3
+/client/xcuserdata
+/client/*.xccheckout
+/client/*.moved-aside
+/client/DerivedData
+/client/*.hmap
+/client/*.ipa
+/client/*.xcuserstate
+
+# Android/IntelliJ
+#
+/client/build/
+/client/.idea
+/client/.gradle
+/client/local.properties
+/client/*.iml
+
+# node.js
+#
+/client/node_modules/
+/client/npm-debug.log
+/client/yarn-error.log
+
+# BUCK
+/client/buck-out/
+/client/\.buckd/
+/client/*.keystore
+/client/!debug.keystore
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+/client/*/fastlane/report.xml
+/client/*/fastlane/Preview.html
+/client/*/fastlane/screenshots
+
+# Bundle artifact
+/client/*.jsbundle
+
+# CocoaPods
+/client/ios/Pods/
 
 
+
+
+
+
+######################
+######################
 ####### SERVER #######
+######################
+######################
 /server/.env
 /server/node_modules
