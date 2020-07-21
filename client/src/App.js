@@ -1,48 +1,27 @@
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-import SplashScreen from 'react-native-splash-screen'
+import React, {useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import SplashScreen from 'react-native-splash-screen';
 
-import HomeStackScreen from "./Navigation/HomeStackScreen";
-import ObservatoryStackScreen from "./Navigation/ObservatoryStackScreen";
+import RootStackScreen from "./Navigation/RootStackScreen";
+import MainTabScreen from './Navigation/MainTabScreen';
+import DrawerContentScreen from "./Navigation/DrawerContentScreen";
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeStackScreen} />
-        <Drawer.Screen name="Observatory" component={ObservatoryStackScreen} />
-      </Drawer.Navigator>
+      {/*<Drawer.Navigator drawerContent={(props) => <DrawerContentScreen {...props} />}>*/}
+      {/*  <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />*/}
+      {/*</Drawer.Navigator>*/}
+      <RootStackScreen />
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: "center"
-  },
-  text: {
-    fontFamily: 'Nanum Pen'
-  },
-  text2: {
-    fontFamily: 'NotoSerifKR-Regular'
-  }
-});
 
 export default App;
