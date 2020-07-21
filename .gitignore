@@ -33,9 +33,9 @@
 
 # Android/IntelliJ
 #
-/client/build/
+/client/android/app/build/
 /client/.idea
-/client/.gradle
+/client/android/.gradle
 /client/local.properties
 /client/*.iml
 
