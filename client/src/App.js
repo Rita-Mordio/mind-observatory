@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,6 +10,11 @@ import {
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 
+import HomeStackScreen from "./Navigation/HomeStackScreen";
+import ObservatoryStackScreen from "./Navigation/ObservatoryStackScreen";
+
+const Drawer = createDrawerNavigator();
+
 const App = () => {
 
   useEffect(() => {
@@ -17,13 +23,10 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.view}>
-        <View>
-          <Text style={styles.text}>안녕하세요!</Text>
-          <Text style={styles.text2}>안녕하세요!</Text>
-        </View>
-      </SafeAreaView>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeStackScreen} />
+        <Drawer.Screen name="Observatory" component={ObservatoryStackScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };
