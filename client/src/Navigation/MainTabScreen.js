@@ -6,8 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeStackScreen from "./HomeStackScreen";
 import ObservatoryStackScreen from "./ObservatoryStackScreen";
 
-Icon.loadFont();
-
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => {
