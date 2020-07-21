@@ -33,7 +33,7 @@
 
 # Android/IntelliJ
 #
-/client/build/
+/client//build/
 /client/.idea
 /client/.gradle
 /client/local.properties
