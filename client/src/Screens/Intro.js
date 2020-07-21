@@ -51,7 +51,7 @@ const Intro = ({navigation}) => {
         <BottomTitle>당신의 마음을 관측합니다.</BottomTitle>
         <BottomContent>내 마음 관측소에 어서오세요.</BottomContent>
         <BottomContent>하루 하루 당신의 마음 속 날씨</BottomContent>
-        <BottomContent>소중하게 간직 할께요</BottomContent>
+        <BottomContent>소중하게 간직 할께요.</BottomContent>
         <ButtonWrap>
           <Button
             containerStyle={styles.buttonContainerStyle}
@@ -59,6 +59,7 @@ const Intro = ({navigation}) => {
             title="시작하기"
             raised={true}
             iconRight={true}
+            onPress={() => {navigation.navigate('SignIn')}}
           />
         </ButtonWrap>
       </Animatable.View>
