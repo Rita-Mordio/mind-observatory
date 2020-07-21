@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   textSign: {
     fontSize: 18,
-    fontFamily: 'NotoSerifKR-Medium',
+    fontFamily: 'NotoSerifKR-Regular',
   },
   textPrivate: {
     flexDirection: 'row',

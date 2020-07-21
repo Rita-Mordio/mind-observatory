@@ -22,16 +22,20 @@ const BottomTitle = styled.Text`
   margin-bottom: 15px;
 `;
 
-const BottomContent = styled.Text`
-    color: #9e9e9e;
-    font-family: NotoSerifKR-Regular;
-    line-height: 35px;
-`
+const BottomContentWrap = styled.View`
+  flex: 1;
+`;
 
-const ButtonWrap = styled.View`
-  align-items: flex-end;
-  margin-top: 10px;
-`
+const BottomContent = styled.Text`
+  color: #9e9e9e;
+  font-family: NotoSerifKR-Regular;
+  line-height: 35px;
+`;
+
+const BottomButtonWrap = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
 
 const Intro = ({navigation}) => {
   return (
@@ -40,7 +44,7 @@ const Intro = ({navigation}) => {
         <Animatable.Image
           animation="bounce"
           duration={2500}
-          iterationDelay={1500}
+          iterationDelay={650}
           source={require('../../assets/images/logo.png')}
           style={styles.logo}
           resizeMode="stretch"
@@ -48,20 +52,23 @@ const Intro = ({navigation}) => {
         />
       </TopView>
       <Animatable.View style={styles.bottom} animation="fadeInUpBig">
-        <BottomTitle>당신의 마음을 관측합니다.</BottomTitle>
-        <BottomContent>내 마음 관측소에 어서오세요.</BottomContent>
-        <BottomContent>하루 하루 당신의 마음 속 날씨</BottomContent>
-        <BottomContent>소중하게 간직 할께요.</BottomContent>
-        <ButtonWrap>
+        <BottomContentWrap>
+          <BottomTitle>당신의 마음을 관측합니다.</BottomTitle>
+          <BottomContent>내 마음 관측소에 어서오세요.</BottomContent>
+          <BottomContent>하루 하루 당신의 마음 속 날씨</BottomContent>
+          <BottomContent>소중하게 간직 할께요.</BottomContent>
+        </BottomContentWrap>
+        <BottomButtonWrap>
           <Button
-            containerStyle={styles.buttonContainerStyle}
             buttonStyle={styles.buttonStyle}
             title="시작하기"
             raised={true}
             iconRight={true}
-            onPress={() => {navigation.navigate('SignIn')}}
+            onPress={() => {
+              navigation.navigate('SignIn');
+            }}
           />
-        </ButtonWrap>
+        </BottomButtonWrap>
       </Animatable.View>
     </Container>
   );
@@ -85,10 +92,7 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     paddingHorizontal: 30,
   },
-  buttonContainerStyle: {
-    width: '60%'
-  },
   buttonStyle: {
-    backgroundColor: '#efc4cd'
-  }
+    backgroundColor: '#efc4cd',
+  },
 });

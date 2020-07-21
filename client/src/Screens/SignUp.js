@@ -1,9 +1,8 @@
 import {
-  TouchableOpacity,
   Keyboard,
-  TextInput,
   StyleSheet,
   Platform,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
@@ -12,11 +11,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-
-// const Container = styled.View`
-//   flex: 1;
-//   background-color: #efc4cd;
-// `;
 
 const Container = styled.View`
   flex: 1;
@@ -45,9 +39,24 @@ const BottomTitle = styled.Text`
 const InputWrap = styled.View`
   flex-direction: row;
   margin-top: 10px;
+  margin-bottom: ${() => {
+    if (Platform.OS === 'ios') return `20px`;
+    else return `0px`;
+  }};
   padding-bottom: 5px;
   border-bottom-width: 1px;
   border-color: #f2f2f2;
+`;
+
+const Input = styled.TextInput`
+  flex: 1;
+  margin-top: ${() => {
+    if (Platform.OS === 'ios') return `0`;
+    else `-12px`;
+  }};
+
+  padding-left: 10px;
+  color: #2b2b2b;
 `;
 
 const ButtonWrap = styled.View`
@@ -118,7 +127,7 @@ const SignUp = ({navigation}) => {
           <BottomTitle>이메일</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
-            <TextInput
+            <Input
               placeholder="당신의 소중한 이메일"
               style={styles.textInput}
               autoCapitalize="none"
@@ -133,7 +142,7 @@ const SignUp = ({navigation}) => {
           <BottomTitle>비밀번호</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="lock" color="#05375a" size={20} />
-            <TextInput
+            <Input
               placeholder="당신의 비밀스런 비밀번호"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
@@ -152,7 +161,7 @@ const SignUp = ({navigation}) => {
           <BottomTitle>비밀번호 확인</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="lock" color="#05375a" size={20} />
-            <TextInput
+            <Input
               placeholder="중요한 건 한번 더 체크"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
@@ -191,12 +200,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingVertical: 10,
-  },
-  textInput: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
-    paddingLeft: 10,
-    color: '#2b2b2b',
   },
   buttonStyle: {
     backgroundColor: '#efc4cd',
