@@ -4,6 +4,7 @@ import {
   Platform,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView
 } from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
@@ -119,6 +120,7 @@ const SignUp = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{flex: 1}}>
       <Container>
         <TopView>
           <TopTitle>회원가입</TopTitle>
@@ -186,6 +188,7 @@ const SignUp = ({navigation}) => {
           </ButtonWrap>
         </Animatable.View>
       </Container>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
