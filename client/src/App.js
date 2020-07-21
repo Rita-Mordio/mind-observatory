@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,7 +16,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.view}>
         <View>
@@ -23,7 +24,7 @@ const App = () => {
           <Text style={styles.text2}>안녕하세요!</Text>
         </View>
       </SafeAreaView>
-    </>
+    </NavigationContainer>
   );
 };
 
