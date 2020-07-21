@@ -1,19 +1,42 @@
-import {
-  Text,
-  View,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import LinearGradient from 'react-native-linear-gradient';
+import styled from 'styled-components/native';
+import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 
-const Intro = ({ navigation }) => {
+const Container = styled.View`
+  flex: 1;
+  background-color: #efc4cd;
+`;
+
+const TopView = styled.View`
+  flex: 1.25;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BottomTitle = styled.Text`
+  color: #2b2b2b;
+  font-size: 38px;
+  font-family: Nanum Pen;
+  margin-bottom: 15px;
+`;
+
+const BottomContent = styled.Text`
+    color: #9e9e9e;
+    font-family: NotoSerifKR-Regular;
+    line-height: 35px;
+`
+
+const ButtonWrap = styled.View`
+  align-items: flex-end;
+  margin-top: 10px;
+`
+
+const Intro = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <Container>
+      <TopView>
         <Animatable.Image
           animation="bounce"
           duration={2500}
@@ -23,78 +46,48 @@ const Intro = ({ navigation }) => {
           resizeMode="stretch"
           iterationCount="infinite"
         />
-      </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.title}>당신의 마음을 남겨봐요</Text>
-        <Text style={styles.text}>감성일기에 어서오세요</Text>
-        <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('SignIn');
-            }}
-          >
-            <LinearGradient colors={['#9dc8c8', '#58c9b9']} style={styles.signIn}>
-              <Text style={styles.textSign}>시작하기</Text>
-              <Icon name="navigate-next" color="#2b2b2b" size={20} />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+      </TopView>
+      <Animatable.View style={styles.bottom} animation="fadeInUpBig">
+        <BottomTitle>당신의 마음을 관측합니다.</BottomTitle>
+        <BottomContent>내 마음 관측소에 어서오세요.</BottomContent>
+        <BottomContent>하루 하루 당신의 마음 속 날씨</BottomContent>
+        <BottomContent>소중하게 간직 할께요</BottomContent>
+        <ButtonWrap>
+          <Button
+            containerStyle={styles.buttonContainerStyle}
+            buttonStyle={styles.buttonStyle}
+            title="시작하기"
+            raised={true}
+            iconRight={true}
+          />
+        </ButtonWrap>
       </Animatable.View>
-    </View>
+    </Container>
   );
 };
 
 export default Intro;
 
-const { height } = Dimensions.get('screen');
+const {height} = Dimensions.get('screen');
 const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#efc4cd',
+  logo: {
+    width: height_logo,
+    height: height_logo,
   },
-  header: {
-    flex: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  footer: {
+  bottom: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
     paddingHorizontal: 30,
   },
-  logo: {
-    width: height_logo,
-    height: height_logo,
+  buttonContainerStyle: {
+    width: '60%'
   },
-  title: {
-    color: '#2b2b2b',
-    fontSize: 45,
-    fontFamily: 'Nanum Pen',
-  },
-  text: {
-    color: '#9e9e9e',
-    fontFamily: 'NotoSerifKR-Regular',
-    marginTop: 5,
-  },
-  button: {
-    alignItems: 'flex-end',
-    marginTop: 30,
-  },
-  signIn: {
-    width: 150,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-    flexDirection: 'row',
-  },
-  textSign: {
-    color: '#2b2b2b',
-    fontFamily: 'NotoSerifKR-Bold',
-  },
+  buttonStyle: {
+    backgroundColor: '#efc4cd'
+  }
 });
