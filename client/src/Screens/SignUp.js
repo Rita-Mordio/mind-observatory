@@ -11,6 +11,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import Axios from "axios";
 
 const Container = styled.View`
   flex: 1;
@@ -63,57 +64,37 @@ const ButtonWrap = styled.View`
 
 const SignUp = ({navigation}) => {
   const [data, setData] = React.useState({
-    id: '',
+    email: '',
     password: '',
-    confirm_password: '',
-    check_textInputChange: false,
+    confirmPassword: '',
+    checkDuplicateEmail: false,
     secureTextEntry: true,
-    confirm_secureTextEntry: true,
+    confirmSecureTextEntry: true,
   });
 
-  const handleIdChange = (val) => {
-    if (val.length !== 0) {
-      setData({
-        ...data,
-        id: val,
-        check_textInputChange: true,
-      });
-    } else {
-      setData({
-        ...data,
-        id: val,
-        check_textInputChange: false,
-      });
-    }
-  };
-
-  const handlePasswordChange = (val) => {
+  const handleInputChange = (value, inputName) => {
     setData({
       ...data,
-      password: val,
+      [inputName]: value,
     });
   };
 
-  const handleConfirmPasswordChange = (val) => {
+  const handleSecureTextEntryChange = (entryName) => {
     setData({
       ...data,
-      confirm_password: val,
+      [entryName]: !data[entryName],
     });
   };
 
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
-
-  const updateConfirmSecureTextEntry = () => {
-    setData({
-      ...data,
-      confirm_secureTextEntry: !data.confirm_secureTextEntry,
-    });
-  };
+  const checkDuplicateEmail = () => {
+    Axios.post('http://127.0.0.1:4000/api/user/checkDuplicateEmail', {
+      email: data.email
+    }).then((result) => {
+      alert(result.isDuplicate)
+    }).catch((error) => {
+      alert(error)
+    })
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -128,14 +109,16 @@ const SignUp = ({navigation}) => {
             <Input
               placeholder="당신의 소중한 이메일"
               autoCapitalize="none"
-              onChangeText={(val) => handleIdChange(val)}
+              onChangeText={(value) => handleInputChange(value, 'email')}
+              onBlur={checkDuplicateEmail}
             />
-            {data.check_textInputChange ? (
+            {data.checkDuplicateEmail ? (
               <Animatable.View animation="bounceIn">
                 <FeatherIcon name="check-circle" color="green" size={20} />
               </Animatable.View>
             ) : null}
           </InputWrap>
+
           <BottomTitle>비밀번호</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="lock" color="#05375a" size={20} />
@@ -143,9 +126,12 @@ const SignUp = ({navigation}) => {
               placeholder="당신의 비밀스런 비밀번호"
               secureTextEntry={data.secureTextEntry ? true : false}
               autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
+              onChangeText={(value) => handleInputChange(value, 'password')}
             />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
+            <TouchableOpacity
+              onPress={() => {
+                handleSecureTextEntryChange('secureTextEntry');
+              }}>
               {data.secureTextEntry ? (
                 <FeatherIcon name="eye-off" color="gray" size={20} />
               ) : (
@@ -159,12 +145,17 @@ const SignUp = ({navigation}) => {
             <FontAwesomeIcon name="lock" color="#05375a" size={20} />
             <Input
               placeholder="중요한 건 한번 더 체크"
-              secureTextEntry={data.confirm_secureTextEntry ? true : false}
+              secureTextEntry={data.confirmSecureTextEntry ? true : false}
               autoCapitalize="none"
-              onChangeText={(val) => handleConfirmPasswordChange(val)}
+              onChangeText={(value) =>
+                handleInputChange(value, 'confirmPassword')
+              }
             />
-            <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
-              {data.confirm_secureTextEntry ? (
+            <TouchableOpacity
+              onPress={() => {
+                handleSecureTextEntryChange('confirmSecureTextEntry');
+              }}>
+              {data.confirmSecureTextEntry ? (
                 <FeatherIcon name="eye-off" color="gray" size={20} />
               ) : (
                 <FeatherIcon name="eye" color="gray" size={20} />
@@ -186,7 +177,9 @@ const SignUp = ({navigation}) => {
               type="outline"
               title="로그인"
               raised={true}
-              onPress={() => {navigation.navigate('SignIn')}}
+              onPress={() => {
+                navigation.navigate('SignIn');
+              }}
             />
           </ButtonWrap>
         </Animatable.View>

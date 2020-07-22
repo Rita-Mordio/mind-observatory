@@ -59,7 +59,7 @@ router.post("/authEmailSend", (request, response) => {
 
 //이메일 중복 체크
 //회원 가입시 사용중인 이메일이 존재하나 체크
-router.post("/duplicateEmailCheck", (request, response) => {
+router.post("/checkDuplicateEmail", (request, response) => {
   User.findOne({ email: request.body.email })
     .then((result) => {
       return response.status(200).json({
