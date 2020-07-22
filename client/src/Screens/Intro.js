@@ -10,7 +10,7 @@ const Container = styled.View`
 `;
 
 const TopView = styled.View`
-  flex: 1.25;
+  flex: 1.2;
   align-items: center;
   justify-content: center;
 `;
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingTop: 50,
     paddingHorizontal: 30,
   },
   buttonStyle: {
