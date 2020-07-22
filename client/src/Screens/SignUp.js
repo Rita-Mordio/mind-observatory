@@ -53,7 +53,6 @@ const Input = styled.TextInput`
     if (Platform.OS === 'ios') return `0`;
     else return `-12px`;
   }};
-
   padding-left: 10px;
   color: #2b2b2b;
 `;
@@ -128,7 +127,6 @@ const SignUp = ({navigation}) => {
             <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
             <Input
               placeholder="당신의 소중한 이메일"
-              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handleIdChange(val)}
             />
@@ -144,7 +142,6 @@ const SignUp = ({navigation}) => {
             <Input
               placeholder="당신의 비밀스런 비밀번호"
               secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handlePasswordChange(val)}
             />
@@ -163,7 +160,6 @@ const SignUp = ({navigation}) => {
             <Input
               placeholder="중요한 건 한번 더 체크"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
-              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handleConfirmPasswordChange(val)}
             />
