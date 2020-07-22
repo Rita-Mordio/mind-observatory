@@ -190,6 +190,7 @@ const SignUp = ({navigation}) => {
               type="outline"
               title="로그인"
               raised={true}
+              onPress={() => {navigation.navigate('SignIn')}}
             />
           </ButtonWrap>
         </Animatable.View>
