@@ -1,6 +1,5 @@
 import {
   Keyboard,
-  StyleSheet,
   Platform,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -28,6 +27,17 @@ const TopTitle = styled.Text`
   color: #2b2b2b;
   font-family: Nanum Pen;
   font-size: 50px;
+`;
+
+const BottomView = styled.View`
+  flex: ${() => {
+    if (Platform.OS === 'ios') return 3;
+    else return 5;
+  }};
+  background-color: #ffffff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 20px;
 `;
 
 const BottomTitle = styled.Text`
@@ -117,7 +127,7 @@ const SignUp = ({navigation}) => {
         <TopView>
           <TopTitle>회원가입</TopTitle>
         </TopView>
-        <Animatable.View style={styles.bottom} animation="fadeInUpBig">
+        <BottomView as={Animatable.View} animation="fadeInUpBig">
           <BottomTitle>이메일</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
@@ -198,21 +208,10 @@ const SignUp = ({navigation}) => {
               }}
             />
           </ButtonWrap>
-        </Animatable.View>
+        </BottomView>
       </Container>
     </TouchableWithoutFeedback>
   );
 };
 
 export default SignUp;
-
-const styles = StyleSheet.create({
-  bottom: {
-    flex: Platform.OS === 'ios' ? 3 : 5,
-    backgroundColor: '#ffffff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-});
