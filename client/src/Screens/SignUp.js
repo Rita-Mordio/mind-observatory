@@ -67,7 +67,7 @@ const SignUp = ({navigation}) => {
     email: '',
     password: '',
     confirmPassword: '',
-    checkDuplicateEmail: false,
+    isAvailableEmail: false,
     secureTextEntry: true,
     confirmSecureTextEntry: true,
   });
@@ -86,13 +86,28 @@ const SignUp = ({navigation}) => {
     });
   };
 
-  const checkDuplicateEmail = () => {
-    Axios.post('http://127.0.0.1:4000/api/user/checkDuplicateEmail', {
+  const availableEmailCheck = () => {
+    Axios.post('http://10.0.2.2:4000/api/user/availableEmail', {
       email: data.email
     }).then((result) => {
-      alert(result.isDuplicate)
+
+      const isAvailable = result.data.isAvailable;
+
+      if(isAvailable){
+        setData({
+          ...data,
+          isAvailableEmail: true
+        })
+      } else {
+        setData({
+          ...data,
+          isAvailableEmail: false
+        })
+        alert("이미 사용중인 이메일 입니다.")
+      }
+      
     }).catch((error) => {
-      alert(error)
+      alert("에러가 발생했습니다. 관리자에게 문의해주세요.")
     })
   }
 
@@ -110,9 +125,9 @@ const SignUp = ({navigation}) => {
               placeholder="당신의 소중한 이메일"
               autoCapitalize="none"
               onChangeText={(value) => handleInputChange(value, 'email')}
-              onBlur={checkDuplicateEmail}
+              onBlur={availableEmailCheck}
             />
-            {data.checkDuplicateEmail ? (
+            {data.isAvailableEmail ? (
               <Animatable.View animation="bounceIn">
                 <FeatherIcon name="check-circle" color="green" size={20} />
               </Animatable.View>

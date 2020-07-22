@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import cors from 'cors'
 
 import connect from './schemas'
 import userRouter from './routes/user';
@@ -12,6 +13,8 @@ connect()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
