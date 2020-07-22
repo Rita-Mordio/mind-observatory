@@ -11,7 +11,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-import Axios from "axios";
+import COMMON from '../common';
 
 const Container = styled.View`
   flex: 1;
@@ -86,30 +86,37 @@ const SignUp = ({navigation}) => {
     });
   };
 
+  const validEmailCheck = () => {
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (data.email.match(regExp) != null) availableEmailCheck();
+    else alert('올바른 이메일 형식이 아닙니다.');
+  };
+
   const availableEmailCheck = () => {
-    Axios.post('http://10.0.2.2:4000/api/user/availableEmail', {
-      email: data.email
-    }).then((result) => {
+    COMMON.axiosCall(
+      'user/availableEmail',
+      {
+        email: data.email,
+      },
+      (object) => {
+        const isAvailable = object.data.isAvailable;
 
-      const isAvailable = result.data.isAvailable;
-
-      if(isAvailable){
-        setData({
-          ...data,
-          isAvailableEmail: true
-        })
-      } else {
-        setData({
-          ...data,
-          isAvailableEmail: false
-        })
-        alert("이미 사용중인 이메일 입니다.")
-      }
-      
-    }).catch((error) => {
-      alert("에러가 발생했습니다. 관리자에게 문의해주세요.")
-    })
-  }
+        if (isAvailable) {
+          setData({
+            ...data,
+            isAvailableEmail: true,
+          });
+        } else {
+          setData({
+            ...data,
+            isAvailableEmail: false,
+          });
+          alert('이미 사용중인 이메일 입니다.');
+        }
+      },
+    );
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -124,8 +131,9 @@ const SignUp = ({navigation}) => {
             <Input
               placeholder="당신의 소중한 이메일"
               autoCapitalize="none"
+              keyboardType="email-address"
               onChangeText={(value) => handleInputChange(value, 'email')}
-              onBlur={availableEmailCheck}
+              onBlur={validEmailCheck}
             />
             {data.isAvailableEmail ? (
               <Animatable.View animation="bounceIn">
