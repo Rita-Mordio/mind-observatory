@@ -37,7 +37,7 @@ const BottomTitle = styled.Text`
 
 const InputWrap = styled.View`
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-bottom: ${() => {
     if (Platform.OS === 'ios') return `20px`;
     else return `0px`;
@@ -58,7 +58,7 @@ const Input = styled.TextInput`
 `;
 
 const ButtonWrap = styled.View`
-  margin-top: 20px;
+  margin-top: 30px;
 `;
 
 const SignUp = ({navigation}) => {
