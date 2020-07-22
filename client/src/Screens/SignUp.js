@@ -87,6 +87,9 @@ const SignUp = ({navigation}) => {
   };
 
   const validEmailCheck = () => {
+    setData({...data, isAvailableEmail: false});
+    if (COMMON.isEmptyValue(data.email)) return false;
+
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
     if (data.email.match(regExp) != null) availableEmailCheck();
@@ -102,18 +105,8 @@ const SignUp = ({navigation}) => {
       (object) => {
         const isAvailable = object.data.isAvailable;
 
-        if (isAvailable) {
-          setData({
-            ...data,
-            isAvailableEmail: true,
-          });
-        } else {
-          setData({
-            ...data,
-            isAvailableEmail: false,
-          });
-          alert('이미 사용중인 이메일 입니다.');
-        }
+        if (isAvailable) setData({...data, isAvailableEmail: true});
+        else alert('이미 사용중인 이메일 입니다.');
       },
     );
   };
