@@ -178,8 +178,17 @@ const SignUp = ({navigation}) => {
 
           <ButtonWrap>
             <Button
-              buttonStyle={styles.buttonStyle}
+              buttonStyle={{backgroundColor: '#efc4cd'}}
               title="회원가입"
+              raised={true}
+            />
+          </ButtonWrap>
+          <ButtonWrap>
+            <Button
+              buttonStyle={{borderColor: '#efc4cd'}}
+              titleStyle={{color: '#efc4cd'}}
+              type="outline"
+              title="로그인"
               raised={true}
             />
           </ButtonWrap>
@@ -199,8 +208,5 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingVertical: 20,
-  },
-  buttonStyle: {
-    backgroundColor: '#efc4cd',
   },
 });
