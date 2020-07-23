@@ -114,15 +114,15 @@ const SignIn = ({navigation}) => {
 
   const storeData = async (value) => {
     try {
-      await AsyncStorage.setItem('@userToken', value)
+      await AsyncStorage.setItem('@userToken', value);
     } catch (e) {
       setAlertData({
         ...alertData,
         show: true,
-        message: '로그인 토큰 저장중 에러가 발생했습니다.'
-      })
+        message: '로그인 토큰 저장중 에러가 발생했습니다.',
+      });
     }
-  }
+  };
 
   const login = () => {
     if (COMMON.isEmptyValue(data.email) || COMMON.isEmptyValue(data.password)) {
@@ -141,8 +141,8 @@ const SignIn = ({navigation}) => {
         password: data.password,
       },
       (object) => {
-        if(COMMON.checkSuccess(object, alertData, setAlertData)){
-          storeData(object.data.token)
+        if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+          storeData(object.data.token);
         }
       },
     );
