@@ -8,6 +8,7 @@ import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
 
 import InputSecureIcon from '../Components/InputSecureIcon';
+import Alert from '../Components/Alert';
 
 const Container = styled.View`
   flex: 1;
@@ -79,6 +80,12 @@ const SignUp = ({navigation}) => {
     confirmSecureTextEntry: true,
   });
 
+  const [alert, setAlert] = React.useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
+
   const handleInputChange = (value, inputName) => {
     setData({
       ...data,
@@ -100,7 +107,12 @@ const SignUp = ({navigation}) => {
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
     if (data.email.match(regExp) != null) availableEmailCheck();
-    else alert('올바른 이메일 형식이 아닙니다.');
+    else
+      setAlert({
+        ...alert,
+        show: true,
+        message: '올바른 이메일 형식이 아닙니다.',
+      });
   };
 
   const availableEmailCheck = () => {
@@ -113,24 +125,37 @@ const SignUp = ({navigation}) => {
         const isAvailable = object.data.isAvailable;
 
         if (isAvailable) setData({...data, isAvailableEmail: true});
-        else alert('이미 사용중인 이메일 입니다.');
+        else
+          setAlert({
+            ...alert,
+            show: true,
+            message: '이미 사용중인 이메일 입니다.',
+          });
       },
     );
   };
 
   const signUp = () => {
     if (!data.isAvailableEmail) {
-      alert('이메일을 확인해 주세요.');
+      setAlert({...alert, show: true, message: '이메일을 확인해 주세요.'});
       return false;
     }
 
     if (data.password.length < 8) {
-      alert('비밀번호는 8자리 이상으로 해주세요');
+      setAlert({
+        ...alert,
+        show: true,
+        message: '비밀번호는 8자리 이상으로 해주세요.',
+      });
       return false;
     }
 
     if (data.password !== data.confirmPassword) {
-      alert('비밀번호가 동일하지 않습니다');
+      setAlert({
+        ...alert,
+        show: true,
+        message: '비밀번호는 8자리 이상으로 해주세요.',
+      });
       return false;
     }
 
@@ -142,10 +167,19 @@ const SignUp = ({navigation}) => {
       },
       (object) => {
         if (object.data.success) {
-          alert('회원가입을 축하드립니다!')
-          navigation.navigate('SignIn');
-        }
-        else alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
+          setAlert({
+            show: true,
+            message: '회원가입을 축하드립니다!',
+            onConfirmPressed: () => {
+              navigation.navigate('SignIn');
+            },
+          });
+        } else
+          setAlert({
+            ...alert,
+            show: true,
+            message: '회원가입에 실패하였습니다. 관리자에게 문의해주세요.',
+          });
       },
     );
   };
@@ -231,6 +265,8 @@ const SignUp = ({navigation}) => {
             />
           </ButtonWrap>
         </BottomView>
+
+        <Alert alert={alert} setAlert={setAlert} />
       </Container>
     </TouchableWithoutFeedback>
   );
