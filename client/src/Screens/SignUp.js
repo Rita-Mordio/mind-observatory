@@ -1,7 +1,6 @@
 import {
   Keyboard,
   Platform,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
