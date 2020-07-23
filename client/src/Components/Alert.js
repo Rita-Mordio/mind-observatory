@@ -13,6 +13,10 @@ import COMMON from '../common';
 const Alert = ({alertData, setAlertData}) => {
   return (
     <AwesomeAlert
+      contentContainerStyle={{width: 300}}
+      messageStyle={{fontSize: 16}}
+      confirmButtonStyle={{width: 70}}
+      confirmButtonTextStyle={{fontSize: 16, textAlign: 'center'}}
       show={alertData.show}
       showProgress={false}
       title={COMMON.isEmptyValue(alertData.title) ? '' : alertData.title}
@@ -22,10 +26,14 @@ const Alert = ({alertData, setAlertData}) => {
       showCancelButton={!COMMON.isEmptyValue(alertData.showCancelButton)}
       showConfirmButton={true}
       cancelText={
-        COMMON.isEmptyValue(alertData.cancelText) ? '취소' : alertData.cancelText
+        COMMON.isEmptyValue(alertData.cancelText)
+          ? '취소'
+          : alertData.cancelText
       }
       confirmText={
-        COMMON.isEmptyValue(alertData.confirmText) ? '확인' : alertData.confirmText
+        COMMON.isEmptyValue(alertData.confirmText)
+          ? '확인'
+          : alertData.confirmText
       }
       confirmButtonColor={
         COMMON.isEmptyValue(alertData.confirmButtonColor)
