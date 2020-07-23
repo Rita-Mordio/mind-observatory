@@ -1,8 +1,4 @@
-import {
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -122,6 +118,32 @@ const SignUp = ({navigation}) => {
     );
   };
 
+  const signUp = () => {
+    if (!data.isAvailableEmail) {
+      alert('이메일을 확인해 주세요.');
+      return false;
+    }
+
+    if (data.password.length < 8) {
+      alert('비밀번호는 8자리 이상으로 해주세요');
+      return false;
+    }
+
+    if (data.password !== data.confirmPassword) {
+      alert('비밀번호가 동일하지 않습니다');
+      return false;
+    }
+
+    COMMON.axiosCall(
+      'user/register',
+      {
+        email: data.email,
+        password: data.password,
+      },
+      (object) => {},
+    );
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -150,7 +172,7 @@ const SignUp = ({navigation}) => {
           <InputWrap>
             <FontAwesomeIcon name="lock" color="#05375a" size={20} />
             <Input
-              placeholder="당신의 비밀스런 비밀번호"
+              placeholder="비밀번호는 8자 이상으로"
               secureTextEntry={data.secureTextEntry ? true : false}
               autoCapitalize="none"
               onChangeText={(value) => handleInputChange(value, 'password')}
@@ -187,6 +209,7 @@ const SignUp = ({navigation}) => {
               buttonStyle={{backgroundColor: '#efc4cd'}}
               title="회원가입"
               raised={true}
+              onPress={signUp}
             />
           </ButtonWrap>
           <ButtonWrap>
