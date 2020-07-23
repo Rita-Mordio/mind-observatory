@@ -26,9 +26,11 @@ const COMMON = {
         show: true,
         message: object.data.message,
       });
+
+      return false
     }
 
-    return false
+    return true
   },
 };
 

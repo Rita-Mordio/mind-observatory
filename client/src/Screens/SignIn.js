@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import AsyncStorage from '@react-native-community/async-storage';
 import COMMON from '../common';
 
 import InputSecureIcon from '../Components/InputSecureIcon';
@@ -111,6 +112,18 @@ const SignIn = ({navigation}) => {
     });
   };
 
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('@userToken', value)
+    } catch (e) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '로그인 토큰 저장중 에러가 발생했습니다.'
+      })
+    }
+  }
+
   const login = () => {
     if (COMMON.isEmptyValue(data.email) || COMMON.isEmptyValue(data.password)) {
       setAlertData({
@@ -129,7 +142,7 @@ const SignIn = ({navigation}) => {
       },
       (object) => {
         if(COMMON.checkSuccess(object, alertData, setAlertData)){
-         console.log("TEST")
+          storeData(object.data.token)
         }
       },
     );
