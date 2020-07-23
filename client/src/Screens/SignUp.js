@@ -12,6 +12,8 @@ import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
 
+import InputSecureIcon from '../Components/InputSecureIcon';
+
 const Container = styled.View`
   flex: 1;
   background-color: #efc4cd;
@@ -154,16 +156,12 @@ const SignUp = ({navigation}) => {
               autoCapitalize="none"
               onChangeText={(value) => handleInputChange(value, 'password')}
             />
-            <TouchableOpacity
-              onPress={() => {
-                handleSecureTextEntryChange('secureTextEntry');
-              }}>
-              {data.secureTextEntry ? (
-                <FeatherIcon name="eye-off" color="gray" size={20} />
-              ) : (
-                <FeatherIcon name="eye" color="gray" size={20} />
-              )}
-            </TouchableOpacity>
+            <InputSecureIcon
+              handleSecureTextEntryChange={() =>
+                handleSecureTextEntryChange('secureTextEntry')
+              }
+              isSecureTextEntry={data.secureTextEntry}
+            />
           </InputWrap>
 
           <BottomTitle>비밀번호 확인</BottomTitle>
@@ -177,16 +175,12 @@ const SignUp = ({navigation}) => {
                 handleInputChange(value, 'confirmPassword')
               }
             />
-            <TouchableOpacity
-              onPress={() => {
-                handleSecureTextEntryChange('confirmSecureTextEntry');
-              }}>
-              {data.confirmSecureTextEntry ? (
-                <FeatherIcon name="eye-off" color="gray" size={20} />
-              ) : (
-                <FeatherIcon name="eye" color="gray" size={20} />
-              )}
-            </TouchableOpacity>
+            <InputSecureIcon
+              handleSecureTextEntryChange={() =>
+                handleSecureTextEntryChange('confirmSecureTextEntry')
+              }
+              isSecureTextEntry={data.confirmSecureTextEntry}
+            />
           </InputWrap>
 
           <ButtonWrap>
