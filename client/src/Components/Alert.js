@@ -3,6 +3,13 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import COMMON from '../common';
 
+//필수로 넣어야 될 항목
+// const [alert, setAlert] = React.useState({
+//     show: false,
+//     message: '',
+//     onConfirmPressed: null,
+// });
+
 const Alert = ({alert, setAlert}) => {
   return (
     <AwesomeAlert
