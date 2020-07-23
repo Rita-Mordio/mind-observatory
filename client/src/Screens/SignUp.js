@@ -140,7 +140,13 @@ const SignUp = ({navigation}) => {
         email: data.email,
         password: data.password,
       },
-      (object) => {},
+      (object) => {
+        if (object.data.success) {
+          alert('회원가입을 축하드립니다!')
+          navigation.navigate('SignIn');
+        }
+        else alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
+      },
     );
   };
 

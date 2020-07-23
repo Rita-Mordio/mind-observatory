@@ -29,7 +29,7 @@ const sendEmail = async (data) => {
 };
 
 //8자리 난수를 발생
-//회원가입시 이메일을 인증하거나, 임시 비밀번호를 생성할 때 사용
+//이메일을 인증하거나, 임시 비밀번호를 생성할 때 사용
 const randomNumberGenerator = () => {
   let number = Math.floor(Math.random() * 100000000) + 10000000;
   if (number > 100000000) {
@@ -40,7 +40,7 @@ const randomNumberGenerator = () => {
 };
 
 //이메일 인증 라우터
-//회원 가입시 이메일로 랜덤한 8자리 난수를 보내 주는 라우터
+//이메일로 랜덤한 8자리 난수를 보내 주는 라우터
 router.post("/authEmailSend", (request, response) => {
   const randomNumber = randomNumberGenerator();
 
@@ -77,7 +77,7 @@ router.post("/availableEmail", (request, response) => {
 });
 
 //닉네임 중복 체크
-//회원가입 또는 내 정보 수정시 사용중인 닉네임이 존재하나 쳌크
+//내 정보 수정시 사용중인 닉네임이 존재하나 체크
 router.post("/duplicateNicknameCheck", (request, response) => {
   User.findOne({ nickname: request.body.nickname })
     .then((result) => {

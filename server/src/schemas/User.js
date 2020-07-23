@@ -55,6 +55,11 @@ const UserSchema = new Schema({
     type: String,
   },
 
+  promotion: {
+    type: Boolean,
+    default: true,
+  },
+
   //가입 일자
   registerDate: {
     type: Date,
