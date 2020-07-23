@@ -4,62 +4,62 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import COMMON from '../common';
 
 //필수로 넣어야 될 항목
-// const [alert, setAlert] = React.useState({
+// const [alertData, setAlertData] = React.useState({
 //     show: false,
 //     message: '',
 //     onConfirmPressed: null,
 // });
 
-const Alert = ({alert, setAlert}) => {
+const Alert = ({alertData, setAlertData}) => {
   return (
     <AwesomeAlert
-      show={alert.show}
+      show={alertData.show}
       showProgress={false}
-      title={COMMON.isEmptyValue(alert.title) ? '' : alert.title}
-      message={alert.message}
+      title={COMMON.isEmptyValue(alertData.title) ? '' : alertData.title}
+      message={alertData.message}
       closeOnTouchOutside={true}
       closeOnHardwareBackPress={false}
-      showCancelButton={!COMMON.isEmptyValue(alert.showCancelButton)}
+      showCancelButton={!COMMON.isEmptyValue(alertData.showCancelButton)}
       showConfirmButton={true}
       cancelText={
-        COMMON.isEmptyValue(alert.cancelText) ? '취소' : alert.cancelText
+        COMMON.isEmptyValue(alertData.cancelText) ? '취소' : alertData.cancelText
       }
       confirmText={
-        COMMON.isEmptyValue(alert.confirmText) ? '확인' : alert.confirmText
+        COMMON.isEmptyValue(alertData.confirmText) ? '확인' : alertData.confirmText
       }
       confirmButtonColor={
-        COMMON.isEmptyValue(alert.confirmButtonColor)
+        COMMON.isEmptyValue(alertData.confirmButtonColor)
           ? '#efc4cd'
-          : alert.confirmButtonColor
+          : alertData.confirmButtonColor
       }
       onCancelPressed={
-        COMMON.isEmptyValue(alert.onConfirmPressed)
+        COMMON.isEmptyValue(alertData.onConfirmPressed)
           ? () => {
-              setAlert({
-                ...alert,
+              setAlertData({
+                ...alertData,
                 show: false,
               });
             }
           : () => {
-              alert.onConfirmPressed();
-              setAlert({
-                ...alert,
+              alertData.onConfirmPressed();
+              setAlertData({
+                ...alertData,
                 onConfirmPressed: null,
               });
             }
       }
       onConfirmPressed={
-        COMMON.isEmptyValue(alert.onConfirmPressed)
+        COMMON.isEmptyValue(alertData.onConfirmPressed)
           ? () => {
-              setAlert({
-                ...alert,
+              setAlertData({
+                ...alertData,
                 show: false,
               });
             }
           : () => {
-              alert.onConfirmPressed();
-              setAlert({
-                ...alert,
+              alertData.onConfirmPressed();
+              setAlertData({
+                ...alertData,
                 onConfirmPressed: null,
               });
             }

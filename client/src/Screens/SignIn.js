@@ -1,16 +1,19 @@
-import {
-  Keyboard,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import FeatherIcon from 'react-native-vector-icons/Feather';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import COMMON from '../common';
+
+import InputSecureIcon from '../Components/InputSecureIcon';
+import Alert from '../Components/Alert';
+
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
 
 const Container = styled.View`
   flex: 1;
@@ -27,6 +30,17 @@ const TopTitle = styled.Text`
   color: #2b2b2b;
   font-family: Nanum Pen;
   font-size: 50px;
+`;
+
+const BottomView = styled.View`
+  flex: ${() => {
+    if (Platform.OS === 'ios') return 3;
+    else return 5;
+  }};
+  background-color: #ffffff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 20px;
 `;
 
 const BottomTitle = styled.Text`
@@ -61,6 +75,12 @@ const ButtonWrap = styled.View`
   margin-top: 30px;
 `;
 
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
+
 const SignIn = ({navigation}) => {
   const [data, setData] = React.useState({
     email: '',
@@ -71,34 +91,48 @@ const SignIn = ({navigation}) => {
     isValidPassword: true,
   });
 
-  const textInputChange = (val) => {
-    if (val.length !== 0) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
+  const [alertData, setAlertData] = React.useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
+
+  const handleInputChange = (value, inputName) => {
+    setData({
+      ...data,
+      [inputName]: value,
+    });
+  };
+
+  const handleSecureTextEntryChange = (entryName) => {
+    setData({
+      ...data,
+      [entryName]: !data[entryName],
+    });
+  };
+
+  const login = () => {
+    if (COMMON.isEmptyValue(data.email) || COMMON.isEmptyValue(data.password)) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '이메일 또는 비밀번호를 입력해주세요.',
       });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-      });
+      return false;
     }
-  };
 
-  const handlePasswordChange = (val) => {
-    setData({
-      ...data,
-      password: val,
-    });
-  };
-
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
+    COMMON.axiosCall(
+      'user/signIn',
+      {
+        email: data.email,
+        password: data.password,
+      },
+      (object) => {
+        if(COMMON.checkSuccess(object, alertData, setAlertData)){
+         console.log("TEST")
+        }
+      },
+    );
   };
 
   return (
@@ -107,20 +141,16 @@ const SignIn = ({navigation}) => {
         <TopView>
           <TopTitle>로그인</TopTitle>
         </TopView>
-        <Animatable.View style={styles.bottom} animation="fadeInUpBig">
+        <BottomView as={Animatable.View} animation="fadeInUpBig">
           <BottomTitle>이메일</BottomTitle>
           <InputWrap>
             <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
             <Input
               placeholder="당신의 소중한 이메일"
               autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
+              keyboardType="email-address"
+              onChangeText={(value) => handleInputChange(value, 'email')}
             />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <FeatherIcon name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
           </InputWrap>
 
           <BottomTitle>비밀번호</BottomTitle>
@@ -130,50 +160,42 @@ const SignIn = ({navigation}) => {
               placeholder="당신의 비밀스런 비밀번호"
               secureTextEntry={data.secureTextEntry ? true : false}
               autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
+              onChangeText={(value) => handleInputChange(value, 'password')}
             />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <FeatherIcon name="eye-off" color="gray" size={20} />
-              ) : (
-                <FeatherIcon name="eye" color="gray" size={20} />
-              )}
-            </TouchableOpacity>
+            <InputSecureIcon
+              handleSecureTextEntryChange={() =>
+                handleSecureTextEntryChange('secureTextEntry')
+              }
+              isSecureTextEntry={data.secureTextEntry}
+            />
           </InputWrap>
 
           <ButtonWrap>
             <Button
-                buttonStyle={{backgroundColor: '#efc4cd'}}
-                title="로그인"
-                raised={true}
+              buttonStyle={{backgroundColor: '#efc4cd'}}
+              title="로그인"
+              raised={true}
+              onPress={login}
             />
           </ButtonWrap>
           <ButtonWrap>
             <Button
-                buttonStyle={{borderColor: '#efc4cd'}}
-                titleStyle={{color: '#efc4cd'}}
-                type="outline"
-                title="회원가입"
-                raised={true}
-                onPress={() => {navigation.navigate('SignUp')}}
+              buttonStyle={{borderColor: '#efc4cd'}}
+              titleStyle={{color: '#efc4cd'}}
+              type="outline"
+              title="회원가입"
+              raised={true}
+              onPress={() => {
+                navigation.navigate('SignUp');
+              }}
             />
           </ButtonWrap>
+        </BottomView>
 
-        </Animatable.View>
+        <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>
     </TouchableWithoutFeedback>
   );
 };
 
 export default SignIn;
-
-const styles = StyleSheet.create({
-  bottom: {
-    flex: Platform.OS === 'ios' ? 3 : 5,
-    backgroundColor: '#ffffff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-});

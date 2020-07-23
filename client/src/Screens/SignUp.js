@@ -10,6 +10,12 @@ import COMMON from '../common';
 import InputSecureIcon from '../Components/InputSecureIcon';
 import Alert from '../Components/Alert';
 
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
 const Container = styled.View`
   flex: 1;
   background-color: #efc4cd;
@@ -70,6 +76,12 @@ const ButtonWrap = styled.View`
   margin-top: 30px;
 `;
 
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
+
 const SignUp = ({navigation}) => {
   const [data, setData] = React.useState({
     email: '',
@@ -80,7 +92,7 @@ const SignUp = ({navigation}) => {
     confirmSecureTextEntry: true,
   });
 
-  const [alert, setAlert] = React.useState({
+  const [alertData, setAlertData] = React.useState({
     show: false,
     message: '',
     onConfirmPressed: null,
@@ -108,8 +120,8 @@ const SignUp = ({navigation}) => {
 
     if (data.email.match(regExp) != null) availableEmailCheck();
     else
-      setAlert({
-        ...alert,
+      setAlertData({
+        ...alertData,
         show: true,
         message: '올바른 이메일 형식이 아닙니다.',
       });
@@ -126,8 +138,8 @@ const SignUp = ({navigation}) => {
 
         if (isAvailable) setData({...data, isAvailableEmail: true});
         else
-          setAlert({
-            ...alert,
+          setAlertData({
+            ...alertData,
             show: true,
             message: '이미 사용중인 이메일 입니다.',
           });
@@ -137,13 +149,13 @@ const SignUp = ({navigation}) => {
 
   const signUp = () => {
     if (!data.isAvailableEmail) {
-      setAlert({...alert, show: true, message: '이메일을 확인해 주세요.'});
+      setAlertData({...alertData, show: true, message: '이메일을 확인해 주세요.'});
       return false;
     }
 
     if (data.password.length < 8) {
-      setAlert({
-        ...alert,
+      setAlertData({
+        ...alertData,
         show: true,
         message: '비밀번호는 8자리 이상으로 해주세요.',
       });
@@ -151,8 +163,8 @@ const SignUp = ({navigation}) => {
     }
 
     if (data.password !== data.confirmPassword) {
-      setAlert({
-        ...alert,
+      setAlertData({
+        ...alertData,
         show: true,
         message: '비밀번호는 8자리 이상으로 해주세요.',
       });
@@ -167,7 +179,7 @@ const SignUp = ({navigation}) => {
       },
       (object) => {
         if (object.data.success) {
-          setAlert({
+          setAlertData({
             show: true,
             message: '회원가입을 축하드립니다!',
             onConfirmPressed: () => {
@@ -175,8 +187,8 @@ const SignUp = ({navigation}) => {
             },
           });
         } else
-          setAlert({
-            ...alert,
+          setAlertData({
+            ...alertData,
             show: true,
             message: '회원가입에 실패하였습니다. 관리자에게 문의해주세요.',
           });
@@ -257,7 +269,7 @@ const SignUp = ({navigation}) => {
               buttonStyle={{borderColor: '#efc4cd'}}
               titleStyle={{color: '#efc4cd'}}
               type="outline"
-              title="로그인"
+              title="로그인 화면으로"
               raised={true}
               onPress={() => {
                 navigation.navigate('SignIn');
@@ -266,7 +278,7 @@ const SignUp = ({navigation}) => {
           </ButtonWrap>
         </BottomView>
 
-        <Alert alert={alert} setAlert={setAlert} />
+        <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>
     </TouchableWithoutFeedback>
   );

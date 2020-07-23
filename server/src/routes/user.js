@@ -148,7 +148,7 @@ router.post("/register", (request, response) => {
 });
 
 //로그인
-router.post("/login", (request, response) => {
+router.post("/signIn", (request, response) => {
   User.findOne({ email: request.body.email })
     .then((result) => {
       if (!result) {

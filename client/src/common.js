@@ -18,6 +18,18 @@ const COMMON = {
     else if (value === '') return true;
     else return false;
   },
+
+  checkSuccess: (object, alert, setAlert) => {
+    if (!object.data.success) {
+      setAlert({
+        ...alert,
+        show: true,
+        message: object.data.message,
+      });
+    }
+
+    return false
+  },
 };
 
 export default COMMON;
