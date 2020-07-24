@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Button, CheckBox} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-import AsyncStorage from '@react-native-community/async-storage';
 import COMMON from '../common';
 
 import InputSecureIcon from '../Components/InputSecureIcon';
@@ -112,7 +111,25 @@ const SignIn = ({navigation}) => {
   });
 
   useEffect(() => {
-    getData();
+    COMMON.getStoreData(
+        '@isAutoSignUp',
+        (value) => {
+          if (value !== null) {
+            if (value === 'true')
+              setData({
+                ...data,
+                isAutoSignIn: true,
+              });
+          }
+        },
+        () => {
+          setAlertData({
+            ...alertData,
+            show: true,
+            message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
+          });
+        },
+    );
   }, []);
 
   const handleInputChange = (value, inputName) => {
@@ -129,35 +146,14 @@ const SignIn = ({navigation}) => {
     });
   };
 
-  const storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, value.toString());
-    } catch (e) {
+  const storeData = (key, value) => {
+    COMMON.setStoreData(key, value, () => {
       setAlertData({
         ...alertData,
         show: true,
         message: '데이터 저장중 에러가 발생했습니다.',
       });
-    }
-  };
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@isAutoSignUp');
-      if (value !== null) {
-        if (value === 'true')
-          setData({
-            ...data,
-            isAutoSignIn: true,
-          });
-      }
-    } catch (e) {
-      setAlertData({
-        ...alertData,
-        show: true,
-        message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
-      });
-    }
+    });
   };
 
   const setAutoSignUp = () => {
@@ -242,7 +238,12 @@ const SignIn = ({navigation}) => {
               textStyle={{fontSize: 14}}
               onPress={setAutoSignUp}
             />
-            <FindPassword>비밀번호 찾기</FindPassword>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('FindPassword');
+              }}>
+              <FindPassword>비밀번호 찾기</FindPassword>
+            </TouchableWithoutFeedback>
           </CheckBoxWrap>
 
           <ButtonWrap>

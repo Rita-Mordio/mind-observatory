@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const COMMON = {
   axiosCall: (url, data, callBack) => {
@@ -32,6 +33,31 @@ const COMMON = {
 
     return true
   },
+
+  setStoreData: async (key, value, errorCallback) => {
+    try {
+      await AsyncStorage.setItem(key, value.toString());
+    } catch (e) {
+      errorCallback()
+    }
+  },
+
+  getStoreData: async (key, successCallback, errorCallback) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      successCallback(value)
+    } catch(e) {
+      errorCallback()
+    }
+  },
+
+  removeStoreData: async (key, errorCallback) => {
+    try {
+      await AsyncStorage.removeItem(key)
+    } catch(e) {
+      errorCallback()
+    }
+  }
 };
 
 export default COMMON;
