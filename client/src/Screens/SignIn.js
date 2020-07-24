@@ -1,5 +1,5 @@
 import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Button, CheckBox} from 'react-native-elements';
@@ -111,6 +111,10 @@ const SignIn = ({navigation}) => {
     onConfirmPressed: null,
   });
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   const handleInputChange = (value, inputName) => {
     setData({
       ...data,
@@ -133,6 +137,25 @@ const SignIn = ({navigation}) => {
         ...alertData,
         show: true,
         message: '데이터 저장중 에러가 발생했습니다.',
+      });
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@isAutoSignUp');
+      if (value !== null) {
+        if (value === 'true')
+          setData({
+            ...data,
+            isAutoSignIn: true,
+          });
+      }
+    } catch (e) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
       });
     }
   };
