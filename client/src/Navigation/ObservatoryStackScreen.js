@@ -1,11 +1,11 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Observatory from '../Screens/Observatory';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const ObservatoryStack = createStackNavigator();
 
-const ObservatoryStackScreen = ({navigation}) => {
+const ObservatoryStackScreen = ({ navigation }) => {
   return (
     <ObservatoryStack.Navigator
       screenOptions={{
@@ -16,7 +16,8 @@ const ObservatoryStackScreen = ({navigation}) => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      }}>
+      }}
+    >
       <ObservatoryStack.Screen
         name="Observatory"
         component={Observatory}

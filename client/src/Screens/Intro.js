@@ -1,7 +1,7 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 
 import COMMON from '../common';
@@ -39,7 +39,7 @@ const BottomButtonWrap = styled.View`
   justify-content: center;
 `;
 
-const Intro = ({navigation}) => {
+const Intro = ({ navigation }) => {
   useEffect(() => {
     COMMON.getStoreData(
       '@isAutoSignUp',
@@ -102,7 +102,7 @@ const Intro = ({navigation}) => {
 
 export default Intro;
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({

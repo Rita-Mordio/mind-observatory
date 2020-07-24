@@ -3,8 +3,8 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import HomeStackScreen from "./HomeStackScreen";
-import ObservatoryStackScreen from "./ObservatoryStackScreen";
+import HomeStackScreen from './HomeStackScreen';
+import ObservatoryStackScreen from './ObservatoryStackScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -17,7 +17,9 @@ const MainTabScreen = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarColor: '#EEB3A3',
-          tabBarIcon: ({ color }) => <Icon name="ios-home" color={color} size={26} />,
+          tabBarIcon: ({ color }) => (
+            <Icon name="ios-home" color={color} size={26} />
+          ),
         }}
       />
       <Tab.Screen
@@ -26,7 +28,9 @@ const MainTabScreen = () => {
         options={{
           tabBarLabel: 'Observatory',
           tabBarColor: '#AAD4EC',
-          tabBarIcon: ({ color }) => <Icon name="ios-happy" color={color} size={26} />,
+          tabBarIcon: ({ color }) => (
+            <Icon name="ios-happy" color={color} size={26} />
+          ),
         }}
       />
     </Tab.Navigator>

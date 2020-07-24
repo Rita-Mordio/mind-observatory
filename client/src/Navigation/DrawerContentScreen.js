@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import { View, StyleSheet } from 'react-native';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   Avatar,
@@ -21,11 +21,11 @@ const DrawerContentScreen = (props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-            <View style={{flexDirection: 'row', marginTop: 15}}>
+            <View style={{ flexDirection: 'row', marginTop: 15 }}>
               <Avatar.Image
                 source={{
                   uri:
@@ -33,7 +33,7 @@ const DrawerContentScreen = (props) => {
                 }}
                 size={50}
               />
-              <View style={{marginLeft: 15, flexDirection: 'column'}}>
+              <View style={{ marginLeft: 15, flexDirection: 'column' }}>
                 <Title style={styles.title}>김신예</Title>
                 <Caption style={styles.caption}>
                   오늘은 어떤 일이 기다릴까요?
@@ -52,7 +52,7 @@ const DrawerContentScreen = (props) => {
 
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
-              icon={({color, size}) => (
+              icon={({ color, size }) => (
                 <Icon name="ios-home" color={color} size={size} />
               )}
               label="홈"
@@ -79,7 +79,8 @@ const DrawerContentScreen = (props) => {
             <TouchableRipple
               onPress={() => {
                 toggleTheme();
-              }}>
+              }}
+            >
               <View style={styles.preference}>
                 <Text>Dark Theme</Text>
                 <View pointerEvents="none">
@@ -92,7 +93,7 @@ const DrawerContentScreen = (props) => {
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
-          icon={({color, size}) => (
+          icon={({ color, size }) => (
             <Icon name="md-exit" color={color} size={size} />
           )}
           label="Sign Out"

@@ -1,9 +1,9 @@
-import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
+import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
 
@@ -82,7 +82,7 @@ const ButtonWrap = styled.View`
 //###################################
 //###################################
 
-const SignUp = ({navigation}) => {
+const SignUp = ({ navigation }) => {
   const [data, setData] = React.useState({
     email: '',
     password: '',
@@ -113,7 +113,7 @@ const SignUp = ({navigation}) => {
   };
 
   const validEmailCheck = () => {
-    setData({...data, isAvailableEmail: false});
+    setData({ ...data, isAvailableEmail: false });
     if (COMMON.isEmptyValue(data.email)) return false;
 
     const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -136,7 +136,7 @@ const SignUp = ({navigation}) => {
       (object) => {
         const isAvailable = object.data.isAvailable;
 
-        if (isAvailable) setData({...data, isAvailableEmail: true});
+        if (isAvailable) setData({ ...data, isAvailableEmail: true });
         else
           setAlertData({
             ...alertData,
@@ -149,7 +149,11 @@ const SignUp = ({navigation}) => {
 
   const signUp = () => {
     if (!data.isAvailableEmail) {
-      setAlertData({...alertData, show: true, message: '이메일을 확인해 주세요.'});
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '이메일을 확인해 주세요.',
+      });
       return false;
     }
 
@@ -258,7 +262,7 @@ const SignUp = ({navigation}) => {
 
           <ButtonWrap>
             <Button
-              buttonStyle={{backgroundColor: '#efc4cd'}}
+              buttonStyle={{ backgroundColor: '#efc4cd' }}
               title="회원가입"
               raised={true}
               onPress={signUp}
@@ -266,8 +270,8 @@ const SignUp = ({navigation}) => {
           </ButtonWrap>
           <ButtonWrap>
             <Button
-              buttonStyle={{borderColor: '#efc4cd'}}
-              titleStyle={{color: '#efc4cd'}}
+              buttonStyle={{ borderColor: '#efc4cd' }}
+              titleStyle={{ color: '#efc4cd' }}
               type="outline"
               title="로그인 화면으로"
               raised={true}

@@ -1,8 +1,8 @@
-import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
-import React, {useState} from 'react';
+import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
 
@@ -80,7 +80,7 @@ const ButtonWrap = styled.View`
 //###################################
 //###################################
 
-const FindPassword = ({navigation}) => {
+const FindPassword = ({ navigation }) => {
   const [data, setData] = useState({
     email: '',
   });
@@ -128,7 +128,7 @@ const FindPassword = ({navigation}) => {
               show: true,
               message: '토큰 삭제중 에러가 발생했습니다.',
             });
-          })
+          });
         }
       },
     );
@@ -154,7 +154,7 @@ const FindPassword = ({navigation}) => {
 
           <ButtonWrap>
             <Button
-              buttonStyle={{backgroundColor: '#efc4cd'}}
+              buttonStyle={{ backgroundColor: '#efc4cd' }}
               title="비밀번호 찾기"
               raised={true}
               onPress={findPassword}
@@ -162,8 +162,8 @@ const FindPassword = ({navigation}) => {
           </ButtonWrap>
           <ButtonWrap>
             <Button
-              buttonStyle={{borderColor: '#efc4cd'}}
-              titleStyle={{color: '#efc4cd'}}
+              buttonStyle={{ borderColor: '#efc4cd' }}
+              titleStyle={{ color: '#efc4cd' }}
               type="outline"
               title="로그인 화면으로"
               raised={true}

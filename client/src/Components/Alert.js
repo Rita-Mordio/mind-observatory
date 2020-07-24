@@ -10,13 +10,13 @@ import COMMON from '../common';
 //     onConfirmPressed: null,
 // });
 
-const Alert = ({alertData, setAlertData}) => {
+const Alert = ({ alertData, setAlertData }) => {
   return (
     <AwesomeAlert
-      contentContainerStyle={{width: 300}}
-      messageStyle={{fontSize: 16}}
-      confirmButtonStyle={{width: 70}}
-      confirmButtonTextStyle={{fontSize: 16, textAlign: 'center'}}
+      contentContainerStyle={{ width: 300 }}
+      messageStyle={{ fontSize: 16 }}
+      confirmButtonStyle={{ width: 70 }}
+      confirmButtonTextStyle={{ fontSize: 16, textAlign: 'center' }}
       show={alertData.show}
       showProgress={false}
       title={COMMON.isEmptyValue(alertData.title) ? '' : alertData.title}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from "../Screens/Home";
+import Home from '../Screens/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const HomeStack = createStackNavigator();
@@ -10,7 +10,7 @@ const HomeStackScreen = ({ navigation }) => {
     <HomeStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#EEB3A3'
+          backgroundColor: '#EEB3A3',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
