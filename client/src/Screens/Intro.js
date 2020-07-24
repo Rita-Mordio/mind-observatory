@@ -1,8 +1,10 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 import {Button} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+
+import COMMON from '../common';
 
 const Container = styled.View`
   flex: 1;
@@ -38,6 +40,30 @@ const BottomButtonWrap = styled.View`
 `;
 
 const Intro = ({navigation}) => {
+  useEffect(() => {
+    COMMON.getStoreData(
+      '@isAutoSignUp',
+      (value) => {
+        if (value === 'true') {
+          COMMON.getStoreData(
+            '@userToken',
+            (value) => {
+              if (value !== null) {
+                // alert('자동 로그인 성공');
+              }
+            },
+            () => {
+              alert('사용자 토큰 가져오기 실패');
+            },
+          );
+        }
+      },
+      () => {
+        alert('자동 로그인 정보 가져오기 실패');
+      },
+    );
+  }, []);
+
   return (
     <Container>
       <TopView>
