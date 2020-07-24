@@ -1,8 +1,8 @@
 import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'react-native-elements';
+import {Button, CheckBox} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import AsyncStorage from '@react-native-community/async-storage';
 import COMMON from '../common';
@@ -50,6 +50,18 @@ const BottomTitle = styled.Text`
   margin-top: 20px;
 `;
 
+const CheckBoxWrap = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 20px;
+`;
+
+const FindPassword = styled.Text`
+  font-size: 14.7px;
+  margin-top: 2px;
+`;
+
 const InputWrap = styled.View`
   flex-direction: row;
   margin-top: 15px;
@@ -83,16 +95,17 @@ const ButtonWrap = styled.View`
 //###################################
 
 const SignIn = ({navigation}) => {
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     email: '',
     password: '',
     check_textInputChange: false,
     secureTextEntry: true,
+    isAutoSignIn: false,
     isValidUser: true,
     isValidPassword: true,
   });
 
-  const [alertData, setAlertData] = React.useState({
+  const [alertData, setAlertData] = useState({
     show: false,
     message: '',
     onConfirmPressed: null,
@@ -112,16 +125,24 @@ const SignIn = ({navigation}) => {
     });
   };
 
-  const storeData = async (value) => {
+  const storeData = async (key, value) => {
     try {
-      await AsyncStorage.setItem('@userToken', value);
+      await AsyncStorage.setItem(key, value.toString());
     } catch (e) {
       setAlertData({
         ...alertData,
         show: true,
-        message: '로그인 토큰 저장중 에러가 발생했습니다.',
+        message: '데이터 저장중 에러가 발생했습니다.',
       });
     }
+  };
+
+  const setAutoSignUp = () => {
+    storeData('@isAutoSignUp', !data.isAutoSignIn);
+    setData({
+      ...data,
+      isAutoSignIn: !data.isAutoSignIn,
+    });
   };
 
   const login = () => {
@@ -142,7 +163,7 @@ const SignIn = ({navigation}) => {
       },
       (object) => {
         if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-          storeData(object.data.token);
+          storeData('@userToken', object.data.token);
         }
       },
     );
@@ -182,6 +203,24 @@ const SignIn = ({navigation}) => {
               isSecureTextEntry={data.secureTextEntry}
             />
           </InputWrap>
+
+          <CheckBoxWrap>
+            <CheckBox
+              title="자동으로 로그인"
+              checked={data.isAutoSignIn}
+              checkedColor="#f5889f"
+              containerStyle={{
+                backgroundColor: '#ffffff',
+                borderWidth: 0,
+                padding: 0,
+                margin: 0,
+                marginLeft: 0,
+              }}
+              textStyle={{fontSize: 14}}
+              onPress={setAutoSignUp}
+            />
+            <FindPassword>비밀번호 찾기</FindPassword>
+          </CheckBoxWrap>
 
           <ButtonWrap>
             <Button
