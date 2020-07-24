@@ -229,7 +229,7 @@ const SignIn = ({navigation}) => {
 
           <CheckBoxWrap>
             <CheckBox
-              title="자동으로 로그인"
+              title="자동 로그인"
               checked={data.isAutoSignIn}
               checkedColor="#f5889f"
               containerStyle={{
