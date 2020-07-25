@@ -1,10 +1,11 @@
 import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
+import { AuthContext } from "../context";
 
 import InputSecureIcon from '../Components/InputSecureIcon';
 import Alert from '../Components/Alert';
@@ -110,6 +111,8 @@ const SignIn = ({ navigation }) => {
     onConfirmPressed: null,
   });
 
+  const { signIn } = useContext(AuthContext)
+
   useEffect(() => {
     COMMON.getStoreData(
       '@isAutoSignUp',
@@ -183,6 +186,7 @@ const SignIn = ({ navigation }) => {
       (object) => {
         if (COMMON.checkSuccess(object, alertData, setAlertData)) {
           storeData('@userToken', object.data.token);
+          signIn(object.data.token)
         }
       },
     );
