@@ -13,7 +13,7 @@ import {
   Switch,
 } from 'react-native-paper';
 
-import { AuthContext } from '../context';
+import AuthContext from '../Redux/contexts/authContext';
 
 const DrawerContentScreen = (props) => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);

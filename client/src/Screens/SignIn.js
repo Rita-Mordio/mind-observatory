@@ -5,7 +5,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
-import { AuthContext } from "../context";
+import AuthContext from "../Redux/contexts/authContext";
 
 import InputSecureIcon from '../Components/InputSecureIcon';
 import Alert from '../Components/Alert';
@@ -115,7 +115,7 @@ const SignIn = ({ navigation }) => {
 
   useEffect(() => {
     COMMON.getStoreData(
-      '@isAutoSignUp',
+      '@isAutoSignIn',
       (value) => {
         if (value !== null) {
           if (value === 'true')
@@ -159,8 +159,8 @@ const SignIn = ({ navigation }) => {
     });
   };
 
-  const setAutoSignUp = () => {
-    storeData('@isAutoSignUp', !data.isAutoSignIn);
+  const setAutoSignIn = () => {
+    storeData('@isAutoSignIn', !data.isAutoSignIn);
     setData({
       ...data,
       isAutoSignIn: !data.isAutoSignIn,
@@ -185,8 +185,8 @@ const SignIn = ({ navigation }) => {
       },
       (object) => {
         if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-          storeData('@userToken', object.data.token);
           signIn(object.data.token)
+          storeData('@userToken', object.data.token);
         }
       },
     );
@@ -240,7 +240,7 @@ const SignIn = ({ navigation }) => {
                 marginLeft: 0,
               }}
               textStyle={{ fontSize: 14 }}
-              onPress={setAutoSignUp}
+              onPress={setAutoSignIn}
             />
             <TouchableWithoutFeedback
               onPress={() => {
