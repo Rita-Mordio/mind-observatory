@@ -1,11 +1,11 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 
-import COMMON from "../common";
-import AuthContext from "../Redux/contexts/authContext";
+import COMMON from '../common';
+import AuthContext from '../Redux/contexts/authContext';
 
 const Container = styled.View`
   flex: 1;
@@ -41,8 +41,9 @@ const BottomButtonWrap = styled.View`
 `;
 
 const Intro = ({ navigation }) => {
+  const { signIn } = useContext(AuthContext);
 
-  const { signIn } = useContext(AuthContext)
+  const [userToken, setUserToken] = useState(null);
 
   useEffect(() => {
     COMMON.getStoreData(
@@ -53,7 +54,7 @@ const Intro = ({ navigation }) => {
             '@userToken',
             (value) => {
               if (value !== null) {
-                signIn(value)
+                setUserToken(value);
               }
             },
             () => {
@@ -66,7 +67,7 @@ const Intro = ({ navigation }) => {
         alert('자동 로그인 정보 가져오기 실패');
       },
     );
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -95,7 +96,9 @@ const Intro = ({ navigation }) => {
             raised={true}
             iconRight={true}
             onPress={() => {
-              navigation.navigate('SignIn');
+              userToken === null
+                ? navigation.navigate('SignIn')
+                : signIn(userToken);
             }}
           />
         </BottomButtonWrap>
