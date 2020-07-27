@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 
@@ -18,15 +18,22 @@ const GrayBackground = styled.View`
   width: 100%;
   height: 250px;
   position: absolute;
-`
+`;
 
 const WindowImage = styled.Image`
-  width: ${width * 0.6};
-  height: ${width * 0.732};
+  width: ${Math.round(width * 0.6)}px;
+  height: ${Math.round(width * 0.732)}px;
 `;
 
 const TodayText = styled.Text`
-  margin-top: 15px;
+  margin-top: ${() => {
+    if (Platform.OS === 'ios') return '35px';
+    else return '15px';
+  }};
+  margin-bottom: ${() => {
+    if (Platform.OS === 'ios') return '25px';
+    else return '5px';
+  }};
   font-family: NotoSerifKR-Regular;
   font-size: 24px;
 `;
@@ -34,7 +41,7 @@ const TodayText = styled.Text`
 const TodayStatus = () => {
   return (
     <Container>
-        <GrayBackground />
+      <GrayBackground />
       <WindowImage source={require('../../assets/images/window.png')} />
       <TodayText>오늘은, 어떤 날이었나요?</TodayText>
       <Button
@@ -54,7 +61,6 @@ export default TodayStatus;
 const styles = StyleSheet.create({
   containerStyle: {
     width: 150,
-    marginTop: 5,
   },
 
   buttonStyle: {
@@ -63,8 +69,7 @@ const styles = StyleSheet.create({
 
   titleStyle: {
     color: '#2b2b2b',
-    fontFamily: 'NotoSerifKR-Bold',
     lineHeight: 24,
-    paddingTop: 7,
+    paddingTop: Platform.OS === 'ios' ? 5 : 7,
   },
 });

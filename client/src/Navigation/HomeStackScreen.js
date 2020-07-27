@@ -10,7 +10,7 @@ const HomeStackScreen = ({ navigation }) => {
     <HomeStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#EEB3A3',
+          backgroundColor: '#efc4cd',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -27,7 +27,7 @@ const HomeStackScreen = ({ navigation }) => {
             <Icon.Button
               name="ios-menu"
               size={25}
-              backgroundColor="#EEB3A3"
+              backgroundColor="#efc4cd"
               onPress={() => {navigation.openDrawer()}}
             />
           ),
