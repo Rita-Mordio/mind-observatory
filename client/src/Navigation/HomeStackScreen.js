@@ -28,9 +28,7 @@ const HomeStackScreen = ({ navigation }) => {
               name="ios-menu"
               size={25}
               backgroundColor="#EEB3A3"
-              onPress={() => {
-                navigation.openDrawer();
-              }}
+              onPressOut={() => navigation.openDrawer()}
             />
           ),
         }}
