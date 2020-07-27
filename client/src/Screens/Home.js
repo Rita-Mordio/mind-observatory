@@ -1,13 +1,47 @@
-import { Text, View, Dimensions } from 'react-native';
 import React from 'react';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import styled from 'styled-components/native';
+
+import TodayStatus from "../Components/TodayStatus";
+
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
+const Container = styled.ScrollView`
+  flex: 1;
+`;
+
+const ViewType = styled.View`
+  height: 50px;
+  background-color: cadetblue;
+`;
+
+const DiaryScroll = styled.View`
+  flex: 1;
+  background-color: coral;
+`
+
+const Diary = styled.View`
+  width: 300px;
+  height: 300px;
+  background-color: yellowgreen;
+  border: 2px solid #000000;
+`
+
 
 const Home = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>여기는 홈~</Text>
-      {/*<Icon name="heart" size={30} color="#900" />*/}
-    </View>
+    <Container>
+        <TodayStatus />
+        <ViewType></ViewType>
+        <DiaryScroll>
+            <Diary />
+            <Diary />
+            <Diary />
+        </DiaryScroll>
+    </Container>
   );
 };
 

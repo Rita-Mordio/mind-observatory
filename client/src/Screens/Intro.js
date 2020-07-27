@@ -76,7 +76,7 @@ const Intro = ({ navigation }) => {
           animation="bounce"
           duration={2500}
           iterationDelay={650}
-          source={require('../../assets/images/logo.png')}
+          source={require('../../assets/images/logo-background-void.png')}
           style={styles.logo}
           resizeMode="stretch"
           iterationCount="infinite"
