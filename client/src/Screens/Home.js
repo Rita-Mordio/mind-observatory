@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TodayStatus from '../Components/TodayStatus';
+import ViewType from "../Components/ViewType";
 
 //##################################
 //##################################
@@ -11,11 +13,6 @@ import TodayStatus from '../Components/TodayStatus';
 
 const Container = styled.ScrollView`
   flex: 1;
-`;
-
-const ViewType = styled.View`
-  height: 50px;
-  background-color: white;
 `;
 
 const DiaryScroll = styled.View`
@@ -40,7 +37,7 @@ const Home = () => {
   return (
     <Container>
       <TodayStatus />
-      <ViewType></ViewType>
+      <ViewType />
       <DiaryScroll>
           <Diary />
           <Diary />
