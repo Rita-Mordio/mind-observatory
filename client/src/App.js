@@ -8,6 +8,7 @@ import { SIGN_IN, SIGN_OUT } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import RootStackScreen from './Navigation/RootStackScreen';
 import MainTabScreen from './Navigation/MainTabScreen';
+import EditDiaryStackScreen from './Navigation/EditDiaryStackScreen';
 import DrawerContentScreen from './Navigation/DrawerContentScreen';
 
 const Drawer = createDrawerNavigator();
@@ -39,6 +40,7 @@ const App = () => {
             drawerContent={(props) => <DrawerContentScreen {...props} />}
           >
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+            <Drawer.Screen name="EditDiary" component={EditDiaryStackScreen} />
           </Drawer.Navigator>
         ) : (
           <RootStackScreen />

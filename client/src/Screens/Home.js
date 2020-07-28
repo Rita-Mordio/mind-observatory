@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 
 import TodayStatus from '../Components/TodayStatus';
 import ViewType from '../Components/ViewType';
-import DiaryImage from '../Components/DiaryImage';
-import DiaryText from '../Components/DiaryText';
+import ImageTypeDiary from '../Components/ImageTypeDiary';
+import TextTypeDiary from '../Components/TextTypeDiary';
 
 //##################################
 //##################################
@@ -29,7 +29,7 @@ const DiaryScroll = styled.View`
 //###################################
 //###################################
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [viewType, setViewType] = useState('image');
 
   const handleVieTypeToggle = (nextType) => {
@@ -43,15 +43,15 @@ const Home = () => {
 
   return (
     <Container>
-      <TodayStatus />
+      <TodayStatus navigation={navigation} />
       <ViewType viewType={viewType} handleVieTypeToggle={handleVieTypeToggle} />
       <DiaryScroll>
-        {/*<DiaryText />*/}
-        {/*<DiaryText />*/}
-        {/*<DiaryText />*/}
-        <DiaryImage />
-        <DiaryImage />
-        <DiaryImage />
+        {/*<TextTypeDiary />*/}
+        {/*<TextTypeDiary />*/}
+        {/*<TextTypeDiary />*/}
+        <ImageTypeDiary />
+        <ImageTypeDiary />
+        <ImageTypeDiary />
       </DiaryScroll>
     </Container>
   );

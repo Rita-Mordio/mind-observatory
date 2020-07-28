@@ -60,7 +60,7 @@ const Contents = styled.Text`
 //###################################
 //###################################
 
-const DiaryImage = () => {
+const ImageTypeDiary = () => {
   return (
     <Container>
       <Image
@@ -90,4 +90,4 @@ const DiaryImage = () => {
   );
 };
 
-export default DiaryImage;
+export default ImageTypeDiary;

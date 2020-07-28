@@ -43,7 +43,7 @@ const Title = styled.Text`
 //###################################
 //###################################
 
-const DiaryText = () => {
+const TextTypeDiary = () => {
   return (
     <Container>
       <ViewWrapper>
@@ -60,4 +60,4 @@ const DiaryText = () => {
   );
 };
 
-export default DiaryText;
+export default TextTypeDiary;

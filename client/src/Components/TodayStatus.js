@@ -38,7 +38,7 @@ const TodayText = styled.Text`
   font-size: 24px;
 `;
 
-const TodayStatus = () => {
+const TodayStatus = ({ navigation }) => {
   return (
     <Container>
       <GrayBackground />
@@ -51,6 +51,9 @@ const TodayStatus = () => {
         buttonStyle={styles.buttonStyle}
         containerStyle={styles.containerStyle}
         titleStyle={styles.titleStyle}
+        onPress={() => {
+          navigation.navigate('EditDiary');
+        }}
       />
     </Container>
   );
