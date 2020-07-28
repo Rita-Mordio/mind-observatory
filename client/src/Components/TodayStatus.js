@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: '#2b2b2b',
     lineHeight: 24,
-    paddingTop: Platform.OS === 'ios' ? 2 : 7,
+    paddingTop: 2,
   },
 });

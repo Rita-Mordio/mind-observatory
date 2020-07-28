@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -23,20 +24,42 @@ const ButtonWrap = styled.View`
 `;
 
 const ViewType = () => {
+  const [viewType, setViewType] = useState('image');
+
+  const handleVieTypeToggle = (nextType) => {
+    if (nextType !== viewType)
+      setViewType(viewType === 'image' ? 'text' : 'image');
+  };
+
   return (
     <Container>
       <Text>나의 기록</Text>
       <ButtonWrap>
-        <Icon
-          name="newspaper-variant-outline"
-          size={30}
-          style={{ marginRight: 15, color: '#2b2b2b' }}
-        ></Icon>
-        <Icon
-          name="text-box-outline"
-          size={30}
-          style={{ color: '#d9d9d9' }}
-        ></Icon>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            handleVieTypeToggle('image');
+          }}
+        >
+          <Icon
+            name="newspaper-variant-outline"
+            size={30}
+            style={{
+              marginRight: 15,
+              color: viewType === 'image' ? '#2b2b2b' : '#d9d9d9',
+            }}
+          />
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            handleVieTypeToggle('text');
+          }}
+        >
+          <Icon
+            name="text-box-outline"
+            size={30}
+            style={{ color: viewType === 'text' ? '#2b2b2b' : '#d9d9d9' }}
+          />
+        </TouchableWithoutFeedback>
       </ButtonWrap>
     </Container>
   );
