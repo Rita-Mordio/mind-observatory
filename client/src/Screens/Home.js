@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TodayStatus from '../Components/TodayStatus';
 import ViewType from '../Components/ViewType';
+import DiaryImage from '../Components/DiaryImage';
 
 //##################################
 //##################################
@@ -17,14 +17,9 @@ const Container = styled.ScrollView`
 
 const DiaryScroll = styled.View`
   flex: 1;
+  padding: 30px 20px;
   background-color: white;
-`;
-
-const Diary = styled.View`
-  width: 300px;
-  height: 300px;
-  background-color: white;
-  border: 0px solid #000000;
+  align-items: center;
 `;
 
 //###################################
@@ -46,9 +41,9 @@ const Home = () => {
       <TodayStatus />
       <ViewType viewType={viewType} handleVieTypeToggle={handleVieTypeToggle} />
       <DiaryScroll>
-        <Diary />
-        <Diary />
-        <Diary />
+        <DiaryImage />
+        <DiaryImage />
+        <DiaryImage />
       </DiaryScroll>
     </Container>
   );

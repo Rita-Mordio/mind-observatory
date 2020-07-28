@@ -3,6 +3,12 @@ import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
 const Container = styled.View`
   height: 70px;
   background-color: #ffffff;
@@ -10,18 +16,24 @@ const Container = styled.View`
   border-bottom-width: 1px;
   border-color: #d9d9d9;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding: 0px 20px;
 `;
 
 const Text = styled.Text`
-  font-family: NotoSerifKR-Regular;
   font-size: 24px;
 `;
 
 const ButtonWrap = styled.View`
   flex-direction: row;
 `;
+
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
 
 const ViewType = ({ viewType, handleVieTypeToggle }) => {
   return (
