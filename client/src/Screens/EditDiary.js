@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 //##################################
 //##################################
@@ -7,14 +9,18 @@ import styled from 'styled-components/native';
 //##################################
 //##################################
 
-const Container = styled.ScrollView`
+const Container = styled.View`
   flex: 1;
 `;
 
-const TestView = styled.View`
-  width: 100px;
-  height: 10px;
+const Image = styled.Image`
+  flex: 2;
   background-color: darkred;
+`;
+
+const TextWrap = styled.View`
+  flex: 1;
+  background-color: yellowgreen;
 `;
 
 //###################################
@@ -24,9 +30,31 @@ const TestView = styled.View`
 //###################################
 
 const EditDiary = () => {
+  const [imageUrl, setImageUrl] = useState(
+    'https://blog.jinbo.net/attach/615/200937431.jpg',
+  );
+
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then((image) => {
+      console.log(image);
+      setImageUrl(image.path)
+    });
+  };
+
   return (
     <Container>
-      <TestView />
+      <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
+        <Image
+          source={{
+            uri: imageUrl,
+          }}
+        />
+      </TouchableWithoutFeedback>
+      <TextWrap></TextWrap>
     </Container>
   );
 };

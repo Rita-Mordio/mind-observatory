@@ -28,12 +28,9 @@ const EditDiaryStackScreen = ({ navigation }) => {
                 name="arrow-back-outline"
                 size={30}
                 backgroundColor="#efc4cd"
-                onPressOut={() => {
-                    navigation.goBack();
+                onPress={() => {
+                  navigation.goBack();
                 }}
-                // onPress={() => {
-                //   navigation.goBack();
-                // }}
               />
             ),
           }}
