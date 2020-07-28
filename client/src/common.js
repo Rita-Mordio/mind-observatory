@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const COMMON = {
   axiosCall: (url, data, callBack) => {
-    // Axios.post(`http://127.0.0.1:4000/api/${url}`, data)
-    Axios.post(`http://10.0.2.2:4000/api/${url}`, data)
+    Axios.post(`http://127.0.0.1:4000/api/${url}`, data)
+    // Axios.post(`http://10.0.2.2:4000/api/${url}`, data)
       .then((result) => {
         callBack(result);
       })

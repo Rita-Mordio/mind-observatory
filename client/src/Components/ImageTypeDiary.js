@@ -66,7 +66,7 @@ const ImageTypeDiary = () => {
       <Image
         source={{
           uri:
-            'https://lh3.googleusercontent.com/proxy/mOXA5mmFqtk3uHHBQZFBFqugfCWkoeVbsYW1oYTxXNF2IPUPEFRTakCrE5aYz4CfGQJjfxaOqzIkawhK5QbpAcAekC3ylVnK5BFe1b3OyDEn9dUrzByPBPIzhBfiNtupoP6i',
+            'https://lh3.googleusercontent.com/proxy/K97X0dgTBmtg6ahchEkhX-JlLEYT7vqP0QfQT92I3liS9A2M8dufJoBSBC6_GC-0V8IXIW_egDjmA5Jx0MCQ1cJlYpEZoe-jRlCKoA0b8tNIP2FhjBTgH-XCOSl8rBspvnG4',
         }}
       />
       <BottomView>
