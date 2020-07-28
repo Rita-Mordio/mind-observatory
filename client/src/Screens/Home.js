@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TodayStatus from '../Components/TodayStatus';
-import ViewType from "../Components/ViewType";
+import ViewType from '../Components/ViewType';
 
 //##################################
 //##################################
@@ -34,14 +34,21 @@ const Diary = styled.View`
 //###################################
 
 const Home = () => {
+  const [viewType, setViewType] = useState('image');
+
+  const handleVieTypeToggle = (nextType) => {
+    if (nextType !== viewType)
+      setViewType(viewType === 'image' ? 'text' : 'image');
+  };
+
   return (
     <Container>
       <TodayStatus />
-      <ViewType />
+      <ViewType viewType={viewType} handleVieTypeToggle={handleVieTypeToggle} />
       <DiaryScroll>
-          <Diary />
-          <Diary />
-          <Diary />
+        <Diary />
+        <Diary />
+        <Diary />
       </DiaryScroll>
     </Container>
   );

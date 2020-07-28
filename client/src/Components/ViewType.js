@@ -23,14 +23,7 @@ const ButtonWrap = styled.View`
   flex-direction: row;
 `;
 
-const ViewType = () => {
-  const [viewType, setViewType] = useState('image');
-
-  const handleVieTypeToggle = (nextType) => {
-    if (nextType !== viewType)
-      setViewType(viewType === 'image' ? 'text' : 'image');
-  };
-
+const ViewType = ({ viewType, handleVieTypeToggle }) => {
   return (
     <Container>
       <Text>나의 기록</Text>
