@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import TodayStatus from '../Components/TodayStatus';
 import ViewType from '../Components/ViewType';
 import DiaryImage from '../Components/DiaryImage';
+import DiaryText from '../Components/DiaryText';
 
 //##################################
 //##################################
@@ -36,11 +37,18 @@ const Home = () => {
       setViewType(viewType === 'image' ? 'text' : 'image');
   };
 
+  const renderDiaries = () => {
+
+  }
+
   return (
     <Container>
       <TodayStatus />
       <ViewType viewType={viewType} handleVieTypeToggle={handleVieTypeToggle} />
       <DiaryScroll>
+        {/*<DiaryText />*/}
+        {/*<DiaryText />*/}
+        {/*<DiaryText />*/}
         <DiaryImage />
         <DiaryImage />
         <DiaryImage />

@@ -32,6 +32,18 @@ const DiarySchema = new Schema({
     type: [String],
   },
 
+  //공유 여부
+  isShare: {
+    type: Boolean,
+    default: false,
+  },
+
+  //삭제 여부
+  isVisible: {
+    type: Boolean,
+    default: true,
+  },
+
   //작성 일자
   registerDate: {
     type: Date,
@@ -42,11 +54,6 @@ const DiarySchema = new Schema({
   updateDate: {
     type: Date,
     default: Date.now,
-  },
-
-  isVisible: {
-    type: Boolean,
-    default: true,
   },
 });
 

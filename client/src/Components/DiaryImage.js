@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 const { width } = Dimensions.get('screen');
@@ -11,7 +11,7 @@ const { width } = Dimensions.get('screen');
 //##################################
 
 const Container = styled.View`
-  width: ${Math.round(width * 0.9)}px;
+  width: 100%;
   margin-bottom: 30px;
   border-width: 1px;
   border-color: #d9d9d9;
@@ -22,7 +22,6 @@ const Image = styled.Image`
   height: ${Math.round(width * 0.3)}px;
 `;
 
-// height: ${Math.round(width * 0.4)}px;
 const BottomView = styled.View`
   width: 100%;
   padding: 25px 15px;
@@ -72,10 +71,7 @@ const DiaryImage = () => {
       />
       <BottomView>
         <ViewWrapper>
-          <View>
-            <CreatedTime>2020년 06월 21일</CreatedTime>
-            <Title>햇빛이 쨍쨍</Title>
-          </View>
+          <CreatedTime>2020년 06월 21일</CreatedTime>
           <Weather
             source={{
               uri:
@@ -83,7 +79,8 @@ const DiaryImage = () => {
             }}
           />
         </ViewWrapper>
-        <Contents>
+        <Title>햇빛이 햇빛이 햇빛</Title>
+        <Contents ellipsizeMode='tail' numberOfLines={3}>
           오랜만의 공원. 날이 더 더워지기 전에 가길 잘한 것 같다. 언제 이렇게
           더워졌는지 신기할 따름이다. 돌아오는 길에 아이스크림 하나를 샀다. 내가
           제일...
