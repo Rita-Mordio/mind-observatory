@@ -59,9 +59,13 @@ const EditDiary = () => {
         successActionStatus: 201,
       };
 
-      RNS3.put(file, config).then((result) => {
-        console.log(result);
-      });
+      RNS3.put(file, config)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error)
+        });
 
       setImageUrl(image.path);
     });
