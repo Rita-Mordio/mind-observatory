@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import { RNS3 } from 'react-native-aws3';
+import AWS_KEY from '../AWS_Key';
 
 //##################################
 //##################################
@@ -40,8 +42,28 @@ const EditDiary = () => {
       height: 400,
       cropping: true,
     }).then((image) => {
-      console.log(image);
-      setImageUrl(image.path)
+      const file = {
+        uri: `file://${image.path}`,
+        name: image.filename,
+        type: image.mime,
+      };
+
+      console.log(file);
+
+      const config = {
+        keyPrefix: 'images/',
+        bucket: 'mind-observatory',
+        region: 'ap-northeast-2',
+        accessKey: AWS_KEY.accessKey,
+        secretKey: AWS_KEY.secretKey,
+        successActionStatus: 201,
+      };
+
+      RNS3.put(file, config).then((result) => {
+        console.log(result);
+      });
+
+      setImageUrl(image.path);
     });
   };
 
