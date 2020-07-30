@@ -12,7 +12,7 @@ const MainTabScreen = () => {
   return (
     <Tab.Navigator initialRouteName="Home" activeColor="#fff" shifting={true}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
@@ -23,7 +23,7 @@ const MainTabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="Observatory"
+        name="ObservatoryTab"
         component={ObservatoryStackScreen}
         options={{
           tabBarLabel: 'Observatory',

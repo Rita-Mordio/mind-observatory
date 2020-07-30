@@ -57,10 +57,10 @@ const App = () => {
               drawerContent={(props) => <DrawerContentScreen {...props} />}
             >
               <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-              <Drawer.Screen
-                name="EditDiary"
-                component={EditDiaryStackScreen}
-              />
+              {/*<Drawer.Screen*/}
+              {/*  name="EditDiary"*/}
+              {/*  component={EditDiaryStackScreen}*/}
+              {/*/>*/}
             </Drawer.Navigator>
           </FileContext.Provider>
         ) : (

@@ -3,7 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { RNS3 } from 'react-native-aws3';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+
 import EditDiary from '../Screens/EditDiary';
+
 import FileContext from '../Redux/contexts/fileContext';
 import AWS_KEY from '../AWS_Key';
 
