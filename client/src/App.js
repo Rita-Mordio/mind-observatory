@@ -8,6 +8,7 @@ import FileContext from './Redux/contexts/fileContext';
 import {SIGN_IN, SIGN_OUT, SET_FILE} from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { fileReducer, initialFileState } from './Redux/reducers/fileReducer';
+
 import RootStackScreen from './Navigation/RootStackScreen';
 import MainTabScreen from './Navigation/MainTabScreen';
 import EditDiaryStackScreen from './Navigation/EditDiaryStackScreen';
