@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { RNS3 } from 'react-native-aws3';
+import moment from 'moment';
 import AWS_KEY from '../AWS_Key';
 
 //##################################
@@ -36,21 +37,30 @@ const EditDiary = () => {
     'https://blog.jinbo.net/attach/615/200937431.jpg',
   );
 
+  const [imageFile, setImageFile] = useState({
+    uri: '',
+    name: '',
+    type: ''
+  })
+
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
     }).then((image) => {
-      const file = {
+
+      setImageUrl(image.path);
+
+      const currentDate = moment().format('YYYY-MM-DD-hh-mm-ss');
+
+      setImageFile({
         uri: `file://${image.path}`,
-        name: image.filename,
+        name: `${currentDate}${image.filename}`,
         type: image.mime,
-      };
+      })
 
-      console.log(file);
-
-      const config = {
+      const awsConfig = {
         keyPrefix: 'images/',
         bucket: 'mind-observatory',
         region: 'ap-northeast-2',
@@ -59,15 +69,13 @@ const EditDiary = () => {
         successActionStatus: 201,
       };
 
-      RNS3.put(file, config)
+      RNS3.put(imageFile, awsConfig)
         .then((result) => {
           console.log(result);
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
         });
-
-      setImageUrl(image.path);
     });
   };
 
