@@ -5,7 +5,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
-import AuthContext from "../Redux/contexts/authContext";
+import Context from "../Redux/contexts/context";
 
 import InputSecureIcon from '../Components/InputSecureIcon';
 import Alert from '../Components/Alert';
@@ -111,7 +111,7 @@ const SignIn = ({ navigation }) => {
     onConfirmPressed: null,
   });
 
-  const { signIn } = useContext(AuthContext)
+  const { signIn } = useContext(Context)
 
   useEffect(() => {
     COMMON.getStoreData(

@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 
 import COMMON from '../common';
-import AuthContext from '../Redux/contexts/authContext';
+import Context from '../Redux/contexts/context';
 
 const Container = styled.View`
   flex: 1;
@@ -41,7 +41,7 @@ const BottomButtonWrap = styled.View`
 `;
 
 const Intro = ({ navigation }) => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useContext(Context);
 
   const [userToken, setUserToken] = useState(null);
 

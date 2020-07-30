@@ -6,13 +6,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 import EditDiary from '../Screens/EditDiary';
 
-import FileContext from '../Redux/contexts/fileContext';
+import Context from "../Redux/contexts/context";
 import AWS_KEY from '../AWS_Key';
 
 const EditDiaryStack = createStackNavigator();
 
 const EditDiaryStackScreen = ({ navigation }) => {
-  const { getFile } = useContext(FileContext);
+  const { getFile } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',

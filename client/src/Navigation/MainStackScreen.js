@@ -5,13 +5,13 @@ import EditDiary from '../Screens/EditDiary';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { RNS3 } from 'react-native-aws3';
-import FileContext from '../Redux/contexts/fileContext';
+import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ navigation }) => {
-  const { getFile } = useContext(FileContext);
+  const { getFile } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -23,17 +23,7 @@ const MainStackScreen = ({ navigation }) => {
   };
 
   return (
-    <MainStack.Navigator
-    // screenOptions={{
-    //   headerStyle: {
-    //     backgroundColor: '#efc4cd',
-    //   },
-    //   headerTintColor: '#fff',
-    //   headerTitleStyle: {
-    //     fontWeight: 'bold',
-    //   },
-    // }}
-    >
+    <MainStack.Navigator>
       <MainStack.Screen
         name="Main"
         component={MainTabScreen}

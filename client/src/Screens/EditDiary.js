@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import moment from 'moment';
-import FileContext from '../Redux/contexts/fileContext';
+import Context from "../Redux/contexts/context";
 
 //##################################
 //##################################
@@ -36,7 +36,7 @@ const EditDiary = () => {
     'https://blog.jinbo.net/attach/615/200937431.jpg',
   );
 
-  const { setFile } = useContext(FileContext);
+  const { setFile } = useContext(Context);
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({

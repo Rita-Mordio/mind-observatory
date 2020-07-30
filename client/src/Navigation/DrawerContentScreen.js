@@ -13,12 +13,12 @@ import {
   Switch,
 } from 'react-native-paper';
 
-import AuthContext from '../Redux/contexts/authContext';
+import Context from '../Redux/contexts/context';
 
 const DrawerContentScreen = (props) => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
-  const { signOut } = useContext(AuthContext);
+  const { signOut } = useContext(Context);
 
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
