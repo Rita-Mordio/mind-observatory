@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import moment from 'moment';
 import Context from "../Redux/contexts/context";
+import Alert from "../Components/Alert";
 
 //##################################
 //##################################
@@ -36,6 +37,12 @@ const EditDiary = () => {
     'https://blog.jinbo.net/attach/615/200937431.jpg',
   );
 
+  const [alertData, setAlertData] = useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
+
   const { setFile } = useContext(Context);
 
   const choosePhotoFromLibrary = () => {
@@ -54,7 +61,11 @@ const EditDiary = () => {
         type: image.mime,
       });
     }).catch((error) => {
-      console.log(error)
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '사용 불가능한 이미지 입니다. 다른 이미지를 선택해 주세요.',
+      });
     });
   };
 
@@ -68,6 +79,8 @@ const EditDiary = () => {
         />
       </TouchableWithoutFeedback>
       <TextWrap></TextWrap>
+
+      <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );
 };
