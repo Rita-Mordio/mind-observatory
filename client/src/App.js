@@ -5,7 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import AuthContext from './Redux/contexts/authContext';
 import FileContext from './Redux/contexts/fileContext';
-import {SIGN_IN, SIGN_OUT, SET_FILE} from './Redux/constants/actionTypes';
+import { SIGN_IN, SIGN_OUT, SET_FILE } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { fileReducer, initialFileState } from './Redux/reducers/fileReducer';
 
@@ -42,7 +42,7 @@ const App = () => {
         fileDispatch({ type: SET_FILE, file: file });
       },
       getFile: () => {
-        return fileState
+        return fileState;
       },
     }),
     [fileState],
