@@ -53,6 +53,8 @@ const EditDiary = () => {
         name: `${currentDate}${image.filename}`,
         type: image.mime,
       });
+    }).catch((error) => {
+      console.log(error)
     });
   };
 
