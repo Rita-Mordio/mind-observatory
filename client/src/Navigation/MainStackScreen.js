@@ -38,7 +38,7 @@ const MainStackScreen = ({ navigation }) => {
             <Ionicons.Button
               name="ios-menu"
               size={25}
-              backgroundColor={{ backgroundColor: getTheme().headerColor }}
+              backgroundColor={getTheme().headerColor}
               onPress={() => {
                 navigation.openDrawer();
               }}
