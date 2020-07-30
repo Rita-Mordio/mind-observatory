@@ -6,10 +6,6 @@ import Context from '../Redux/contexts/context';
 const Observatory = ({ navigation }) => {
   const { setHeader } = useContext(Context);
 
-  // useEffect(() => {
-  //     setHeader({ headerTitle: '#AAD4EC' });
-  // }, [])
-
   useEffect(() => {
     setHeader({ headerColor: '#AAD4EC', headerTitle: '내 마음 관측소' });
 

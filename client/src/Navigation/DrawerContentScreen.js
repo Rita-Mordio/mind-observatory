@@ -18,7 +18,7 @@ import Context from '../Redux/contexts/context';
 const DrawerContentScreen = (props) => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
-  const { signOut } = useContext(Context);
+  const { signOut, setHeader } = useContext(Context);
 
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
@@ -61,6 +61,7 @@ const DrawerContentScreen = (props) => {
               )}
               label="홈"
               onPress={() => {
+                setHeader({ headerColor: '#efc4cd', headerTitle: '홈' });
                 props.navigation.navigate('HomeTab');
               }}
             />
