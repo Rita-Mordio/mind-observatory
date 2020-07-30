@@ -2,17 +2,21 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import HomeStackScreen from './HomeStackScreen';
-import ObservatoryStackScreen from './ObservatoryStackScreen';
+import Home from '../Screens/Home';
+import Observatory from '../Screens/Observatory';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" activeColor="#fff" shifting={true}>
+    <Tab.Navigator
+      initialRouteName="HomeTab"
+      activeColor="#fff"
+      shifting={true}
+    >
       <Tab.Screen
         name="HomeTab"
-        component={HomeStackScreen}
+        component={Home}
         options={{
           tabBarLabel: 'Home',
           tabBarColor: '#efc4cd',
@@ -23,7 +27,7 @@ const MainTabScreen = () => {
       />
       <Tab.Screen
         name="ObservatoryTab"
-        component={ObservatoryStackScreen}
+        component={Observatory}
         options={{
           tabBarLabel: 'Observatory',
           tabBarColor: '#AAD4EC',

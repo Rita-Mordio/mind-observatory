@@ -1,7 +1,25 @@
 import { Text, View, Image } from 'react-native';
 import * as React from 'react';
+import { useContext, useEffect } from 'react';
+import Context from '../Redux/contexts/context';
 
-const Observatory = () => {
+const Observatory = ({ navigation }) => {
+  const { setHeader } = useContext(Context);
+
+  // useEffect(() => {
+  //     setHeader({ headerTitle: '#AAD4EC' });
+  // }, [])
+
+  useEffect(() => {
+    setHeader({ headerColor: '#AAD4EC', headerTitle: '내 마음 관측소' });
+
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      setHeader({ headerColor: '#AAD4EC', headerTitle: '내 마음 관측소' });
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>

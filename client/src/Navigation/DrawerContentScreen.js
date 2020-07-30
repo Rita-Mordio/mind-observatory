@@ -61,7 +61,7 @@ const DrawerContentScreen = (props) => {
               )}
               label="홈"
               onPress={() => {
-                props.navigation.navigate('Home');
+                props.navigation.navigate('HomeTab');
               }}
             />
             {/* <DrawerItem*/}

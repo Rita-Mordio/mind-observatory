@@ -1,17 +1,18 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import MainTabScreen from './MainTabScreen';
-import EditDiary from '../Screens/EditDiary';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { RNS3 } from 'react-native-aws3';
+
+import MainTabScreen from './MainTabScreen';
+import EditDiary from '../Screens/EditDiary';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ navigation }) => {
-  const { getFile } = useContext(Context);
+  const { getFile, getTheme } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -28,8 +29,8 @@ const MainStackScreen = ({ navigation }) => {
         name="Main"
         component={MainTabScreen}
         options={{
-          title: '홈',
-          headerStyle: { backgroundColor: '#efc4cd' },
+          title: getTheme().headerTitle,
+          headerStyle: { backgroundColor: getTheme().headerColor },
           headerTitleStyle: {
             color: '#ffffff',
           },
@@ -37,7 +38,7 @@ const MainStackScreen = ({ navigation }) => {
             <Ionicons.Button
               name="ios-menu"
               size={25}
-              backgroundColor="#efc4cd"
+              backgroundColor={{ backgroundColor: getTheme().headerColor }}
               onPress={() => {
                 navigation.openDrawer();
               }}
@@ -60,7 +61,7 @@ const MainStackScreen = ({ navigation }) => {
               size={30}
               backgroundColor="#efc4cd"
               onPress={() => {
-                navigation.navigate('Home');
+                navigation.goBack();
               }}
             />
           ),
