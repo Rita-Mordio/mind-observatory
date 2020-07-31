@@ -8,6 +8,7 @@ import MainTabScreen from './MainTabScreen';
 import EditDiary from '../Screens/EditDiary';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
+import Template from '../Screens/Template';
 
 const MainStack = createStackNavigator();
 
@@ -41,6 +42,27 @@ const MainStackScreen = ({ navigation }) => {
               backgroundColor={getTheme().headerColor}
               onPress={() => {
                 navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+      <MainStack.Screen
+        name="Template"
+        component={Template}
+        options={{
+          title: '템플릿 선택',
+          headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleStyle: {
+            color: '#ffffff',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                navigation.goBack();
               }}
             />
           ),

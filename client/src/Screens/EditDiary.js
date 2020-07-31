@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import { Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
+
+const { width } = Dimensions.get('screen');
 
 //##################################
 //##################################
@@ -12,9 +14,13 @@ import Alert from '../Components/Alert';
 //##################################
 //##################################
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex: 1;
   padding: 20px;
+`;
+
+const ScrollView = styled.ScrollView`
+  flex: 1;
 `;
 
 const Date = styled.Text`
@@ -25,19 +31,28 @@ const Date = styled.Text`
 `;
 
 const Image = styled.Image`
-  flex: 1;
-  background-color: darkred;
+  width: 100%;
+  height: ${Math.round(width * 1.1)}px;
+  background-color: coral;
   border-radius: 20px;
+`;
+
+const BottomWrap = styled.View`
+  flex: 1;
 `;
 
 const Title = styled.TextInput`
   border-bottom-color: #a9a9a9;
   border-bottom-width: 1px;
-`
+  color: #3f3e3c;
+  margin-top: 20px;
+`;
 
-const TextWrap = styled.View`
-  flex: 1;
-  background-color: yellowgreen;
+const Contents = styled.TextInput`
+  border-color: #a9a9a9;
+  border-width: 1px;
+  color: #3f3e3c;
+  margin-top: 20px;
 `;
 
 //###################################
@@ -85,20 +100,29 @@ const EditDiary = () => {
   };
 
   return (
-    <Container>
-      <Date>2020년 07월 31일</Date>
-      <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
-        <Image
-          source={{
-            uri: imageUrl,
-          }}
-        />
-      </TouchableWithoutFeedback>
-      <Title placeholder="제목"></Title>
-      {/*<TextWrap></TextWrap>*/}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <ScrollView>
+          <Date>2020년 07월 31일</Date>
+          <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
+            <Image
+              source={{
+                uri: imageUrl,
+              }}
+            />
+          </TouchableWithoutFeedback>
 
-      <Alert alertData={alertData} setAlertData={setAlertData} />
-    </Container>
+          <BottomWrap>
+            <Title placeholder="제목"></Title>
+            <Contents multiline numberOfLines={5} placeholder="내용"></Contents>
+          </BottomWrap>
+
+          <Title placeholder="제목"></Title>
+
+          <Alert alertData={alertData} setAlertData={setAlertData} />
+        </ScrollView>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 

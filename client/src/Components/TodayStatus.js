@@ -53,7 +53,7 @@ const TodayStatus = ({ navigation }) => {
         containerStyle={styles.containerStyle}
         titleStyle={styles.titleStyle}
         onPress={() => {
-          navigation.navigate('EditDiary');
+          navigation.navigate('Template');
         }}
       />
     </Container>

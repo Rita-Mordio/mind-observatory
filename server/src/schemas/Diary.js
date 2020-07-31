@@ -9,6 +9,12 @@ const DiarySchema = new Schema({
     ref: 'User'
   },
 
+  //템플릿 넘버
+  template: {
+    type: Number,
+    required: true,
+  },
+
   //제목
   title: {
     type: String,
