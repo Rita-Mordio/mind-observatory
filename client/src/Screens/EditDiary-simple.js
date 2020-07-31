@@ -9,10 +9,12 @@ import {
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Textarea from 'react-native-textarea';
-import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
+import { Overlay } from 'react-native-elements';
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
 import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
+import WeatherChoiceModal from '../Components/WeatherChoiceModal';
 
 const { width } = Dimensions.get('screen');
 
@@ -77,9 +79,17 @@ const Title = styled.TextInput`
 //###################################
 
 const EditDiarySimple = () => {
+  const { setFile } = useContext(Context);
+
   const [imageUrl, setImageUrl] = useState(
     'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
   );
+
+  const [weather, setWeather] = useState(
+    require(`../../assets/images/weather-sun.png`),
+  );
+
+  const [visible, setVisible] = useState(false);
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -87,7 +97,9 @@ const EditDiarySimple = () => {
     onConfirmPressed: null,
   });
 
-  const { setFile } = useContext(Context);
+  const toggleModal = () => {
+    setVisible(!visible);
+  };
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -124,9 +136,9 @@ const EditDiarySimple = () => {
             <TopWrap>
               <View />
               <Date>2020년 07월 31일</Date>
-              <Weather
-                source={require('../../assets/images/weather-sun.png')}
-              ></Weather>
+              <TouchableWithoutFeedback onPress={toggleModal}>
+                <Weather source={weather}></Weather>
+              </TouchableWithoutFeedback>
             </TopWrap>
             <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
               <Image source={{ uri: imageUrl }} resizeMode="cover" />
@@ -144,6 +156,11 @@ const EditDiarySimple = () => {
               />
             </BottomWrap>
 
+            <WeatherChoiceModal
+              visible={visible}
+              toggleModal={toggleModal}
+              setWeather={setWeather}
+            />
             <Alert alertData={alertData} setAlertData={setAlertData} />
           </Container>
         </KeyboardAwareScrollView>
