@@ -31,7 +31,7 @@ const Weather = styled.Image`
 `;
 
 const Title = styled.Text`
-  color: #2b2b2b;
+  color: #3f3e3c;
   font-size: 18px;
   font-weight: bold;
   margin-top: 7px;

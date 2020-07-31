@@ -36,6 +36,7 @@ const TodayText = styled.Text`
   }};
   font-family: NotoSerifKR-Regular;
   font-size: 24px;
+  color: #3f3e3c;
 `;
 
 const TodayStatus = ({ navigation }) => {
@@ -67,11 +68,11 @@ const styles = StyleSheet.create({
   },
 
   buttonStyle: {
-    borderColor: '#2b2b2b',
+    borderColor: '#3f3e3c',
   },
 
   titleStyle: {
-    color: '#2b2b2b',
+    color: '#3f3e3c',
     lineHeight: 24,
     paddingTop: 2,
   },

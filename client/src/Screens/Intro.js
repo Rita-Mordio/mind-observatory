@@ -19,7 +19,7 @@ const TopView = styled.View`
 `;
 
 const BottomTitle = styled.Text`
-  color: #2b2b2b;
+  color: #3f3e3c;
   font-size: 38px;
   font-family: Nanum Pen;
   margin-bottom: 15px;

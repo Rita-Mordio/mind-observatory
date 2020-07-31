@@ -23,6 +23,7 @@ const Container = styled.View`
 
 const Text = styled.Text`
   font-size: 24px;
+  color: #3f3e3c;
 `;
 
 const ButtonWrap = styled.View`
@@ -50,7 +51,7 @@ const ViewType = ({ viewType, handleVieTypeToggle }) => {
             size={30}
             style={{
               marginRight: 15,
-              color: viewType === 'image' ? '#2b2b2b' : '#d9d9d9',
+              color: viewType === 'image' ? '#3f3e3c' : '#d9d9d9',
             }}
           />
         </TouchableWithoutFeedback>
@@ -62,7 +63,7 @@ const ViewType = ({ viewType, handleVieTypeToggle }) => {
           <Icon
             name="text-box-outline"
             size={30}
-            style={{ color: viewType === 'text' ? '#2b2b2b' : '#d9d9d9' }}
+            style={{ color: viewType === 'text' ? '#3f3e3c' : '#d9d9d9' }}
           />
         </TouchableWithoutFeedback>
       </ButtonWrap>

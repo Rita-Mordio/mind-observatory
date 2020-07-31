@@ -28,7 +28,7 @@ const TopView = styled.View`
 `;
 
 const TopTitle = styled.Text`
-  color: #2b2b2b;
+  color: #3f3e3c;
   font-family: Nanum Pen;
   font-size: 50px;
 `;
@@ -45,7 +45,7 @@ const BottomView = styled.View`
 `;
 
 const BottomTitle = styled.Text`
-  color: #2b2b2b;
+  color: #3f3e3c;
   font-size: 18px;
   margin-top: 20px;
 `;
@@ -81,7 +81,7 @@ const Input = styled.TextInput`
     else return `-12px`;
   }};
   padding-left: 10px;
-  color: #2b2b2b;
+  color: #3f3e3c;
 `;
 
 const ButtonWrap = styled.View`

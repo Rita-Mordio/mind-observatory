@@ -3,8 +3,8 @@ import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import moment from 'moment';
-import Context from "../Redux/contexts/context";
-import Alert from "../Components/Alert";
+import Context from '../Redux/contexts/context';
+import Alert from '../Components/Alert';
 
 //##################################
 //##################################
@@ -14,12 +14,26 @@ import Alert from "../Components/Alert";
 
 const Container = styled.View`
   flex: 1;
+  padding: 20px;
+`;
+
+const Date = styled.Text`
+  color: #3f3e3c;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
 `;
 
 const Image = styled.Image`
-  flex: 2;
+  flex: 1;
   background-color: darkred;
+  border-radius: 20px;
 `;
+
+const Title = styled.TextInput`
+  border-bottom-color: #a9a9a9;
+  border-bottom-width: 1px;
+`
 
 const TextWrap = styled.View`
   flex: 1;
@@ -33,9 +47,7 @@ const TextWrap = styled.View`
 //###################################
 
 const EditDiary = () => {
-  const [imageUrl, setImageUrl] = useState(
-    'https://blog.jinbo.net/attach/615/200937431.jpg',
-  );
+  const [imageUrl, setImageUrl] = useState('');
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -50,27 +62,31 @@ const EditDiary = () => {
       width: 300,
       height: 400,
       cropping: true,
-    }).then((image) => {
-      setImageUrl(image.path);
+    })
+      .then((image) => {
+        setImageUrl(image.path);
 
-      const currentDate = moment().format('YYYY-MM-DD-hh-mm-ss');
+        const currentDate = moment().format('YYYY-MM-DD-hh-mm-ss');
 
-      setFile({
-        uri: `file://${image.path}`,
-        name: `${currentDate}${image.filename}`,
-        type: image.mime,
+        setFile({
+          uri: `file://${image.path}`,
+          name: `${currentDate}${image.filename}`,
+          type: image.mime,
+        });
+      })
+      .catch((error) => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message:
+            '이미지를 선택하지 않았거나, 사용 불가능한 이미지 입니다. 다른 이미지를 선택해 주세요.',
+        });
       });
-    }).catch((error) => {
-      setAlertData({
-        ...alertData,
-        show: true,
-        message: '사용 불가능한 이미지 입니다. 다른 이미지를 선택해 주세요.',
-      });
-    });
   };
 
   return (
     <Container>
+      <Date>2020년 07월 31일</Date>
       <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
         <Image
           source={{
@@ -78,7 +94,8 @@ const EditDiary = () => {
           }}
         />
       </TouchableWithoutFeedback>
-      <TextWrap></TextWrap>
+      <Title placeholder="제목"></Title>
+      {/*<TextWrap></TextWrap>*/}
 
       <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
