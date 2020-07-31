@@ -50,12 +50,18 @@ const Weather = styled.Image`
   height: 32px;
 `;
 
-const Image = styled.Image`
+const ImageWrap = styled.View`
   width: 100%;
   height: ${width}px;
   border-style: dashed;
   border-width: 1px;
   border-color: #a9a9a9;
+  border-radius: 20px;
+`;
+
+const Image = styled.Image`
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
 `;
 
@@ -70,6 +76,7 @@ const Title = styled.TextInput`
   color: #3f3e3c;
   margin-top: 20px;
   height: 40px;
+  font-size: 16px;
 `;
 
 //###################################
@@ -141,7 +148,9 @@ const EditDiarySimple = () => {
               </TouchableWithoutFeedback>
             </TopWrap>
             <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
-              <Image source={{ uri: imageUrl }} resizeMode="cover" />
+              <ImageWrap>
+                <Image source={{ uri: imageUrl }} resizeMode="cover" />
+              </ImageWrap>
             </TouchableWithoutFeedback>
 
             <BottomWrap>
@@ -173,7 +182,7 @@ export default EditDiarySimple;
 
 const styles = StyleSheet.create({
   textareaContainer: {
-    height: 80,
+    height: 100,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 10,
@@ -186,7 +195,7 @@ const styles = StyleSheet.create({
   textarea: {
     textAlignVertical: 'top', // hack android
     height: 170,
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
   },
 });
