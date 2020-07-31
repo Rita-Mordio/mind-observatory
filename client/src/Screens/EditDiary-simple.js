@@ -1,7 +1,14 @@
 import React, { useContext, useState } from 'react';
-import { Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import {
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  View,
+} from 'react-native';
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import Textarea from 'react-native-textarea';
 import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
@@ -27,16 +34,27 @@ const ScrollView = styled.ScrollView`
   flex: 1;
 `;
 
+const TopWrap = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+`;
+
 const Date = styled.Text`
   color: #3f3e3c;
   font-size: 18px;
-  text-align: center;
-  margin-bottom: 15px;
+  align-self: center;
+`;
+
+const Weather = styled.Image`
+  width: 32px;
+  height: 32px;
 `;
 
 const Image = styled.Image`
   width: 100%;
-  height: ${Math.round(width * 1.1)}px;
+  height: ${width}px;
   border-style: dashed;
   border-width: 1px;
   border-color: #a9a9a9;
@@ -50,16 +68,10 @@ const BottomWrap = styled.View`
 const Title = styled.TextInput`
   border-bottom-color: #a9a9a9;
   border-bottom-width: 1px;
+  border-style: solid;
   color: #3f3e3c;
   margin-top: 20px;
   height: 40px;
-`;
-
-const Contents = styled.TextInput`
-  border-color: #a9a9a9;
-  border-width: 1px;
-  color: #3f3e3c;
-  margin-top: 20px;
 `;
 
 //###################################
@@ -113,18 +125,27 @@ const EditDiarySimple = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <ScrollView>
-            <Date>2020년 07월 31일</Date>
+            <TopWrap>
+              <View />
+              <Date>2020년 07월 31일</Date>
+              <Weather
+                source={require('../../assets/images/weather-sun.png')}
+              ></Weather>
+            </TopWrap>
             <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
               <Image source={{ uri: imageUrl }} resizeMode="cover" />
             </TouchableWithoutFeedback>
 
             <BottomWrap>
-              <Title placeholder="제목"></Title>
-              <Contents
-                multiline
-                numberOfLines={5}
-                placeholder="내용"
-              ></Contents>
+              <Title placeholder="제목" placeholderTextColor="#3f3e3c"></Title>
+              <Textarea
+                containerStyle={styles.textareaContainer}
+                style={styles.textarea}
+                maxLength={100}
+                placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
+                placeholderTextColor={'#3f3e3c'}
+                // underlineColorAndroid={'transparent'}
+              />
             </BottomWrap>
 
             <Alert alertData={alertData} setAlertData={setAlertData} />
@@ -136,3 +157,23 @@ const EditDiarySimple = () => {
 };
 
 export default EditDiarySimple;
+
+const styles = StyleSheet.create({
+  textareaContainer: {
+    height: 80,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: '#a9a9a9',
+    marginTop: 20,
+  },
+
+  textarea: {
+    textAlignVertical: 'top', // hack android
+    height: 170,
+    fontSize: 14,
+    color: '#333',
+  },
+});
