@@ -9,6 +9,7 @@ import {
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Textarea from 'react-native-textarea';
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view'
 import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
@@ -30,12 +31,7 @@ const Container = styled.View`
   padding: 20px;
 `;
 
-const ScrollView = styled.ScrollView`
-  flex: 1;
-`;
-
 const TopWrap = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 15px;
@@ -123,8 +119,8 @@ const EditDiarySimple = () => {
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <ScrollView>
+        <KeyboardAwareScrollView>
+          <Container>
             <TopWrap>
               <View />
               <Date>2020년 07월 31일</Date>
@@ -144,13 +140,13 @@ const EditDiarySimple = () => {
                 maxLength={100}
                 placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
                 placeholderTextColor={'#3f3e3c'}
-                // underlineColorAndroid={'transparent'}
+                underlineColorAndroid={'transparent'}
               />
             </BottomWrap>
 
             <Alert alertData={alertData} setAlertData={setAlertData} />
-          </ScrollView>
-        </Container>
+          </Container>
+        </KeyboardAwareScrollView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
