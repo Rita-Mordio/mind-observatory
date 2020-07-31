@@ -13,15 +13,19 @@ const { width } = Dimensions.get('screen');
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
-  padding-top: 30px;
-  padding-bottom: 30px;
   background-color: #ffffff;
 `;
 
-const TitleText = styled.Text`
+const Container = styled.View`
+  flex: 1;
+  padding: 30px 0px;
+  background-color: #ffffff;
+`;
+
+const PageTitle = styled.Text`
   color: #3f3e3c;
   text-align: center;
-  font-size: 17px;
+  font-size: 18px;
   margin-bottom: 30px;
 `;
 
@@ -38,29 +42,32 @@ const CarouselWrap = styled.View`
 //###################################
 
 class Template extends Component {
-  state = {
-    activeIndex: 0,
-    carouselItems: [
-      {
-        title: 'Item 1',
-        text:
-          '여기는 홈 화면으로 지금까지 작성했던 일기가 나오면 좋을꺼 같아요, 한번에 10개씩 보여주고 사용자가 9번째까지 화면을 넘기면 그때 서버에서 데이터를 추가적으로 \n' +
-          '받아와서 더 보여 주는 방식이 좋을꺼 같아요, 그리고 해당 사용자가 일기를 터치하면 상세 화면으로 넘어가면 될꺼 같아요',
-      },
-      {
-        title: 'Item 2',
-        text: 'Text 2',
-      },
-    ],
-  };
+  constructor(props) {
+    super(props);
 
-  _onPressCarousel = () => {
-    alert('일기를 터치했어요~');
+    this.state = {
+      carouselItems: [
+        {
+          navigationName: 'EditDiarySimple',
+        },
+        {
+          navigationName: 'EditDiarySimple',
+        },
+      ],
+    };
+  }
+
+  onPressCarousel = (item) => {
+    this.props.navigation.navigate(item.navigationName);
   };
 
   renderTemplate = ({ item, index }) => {
     return (
-      <TouchableWithoutFeedback onPress={this._onPressCarousel}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          this.onPressCarousel(item);
+        }}
+      >
         <View
           style={{
             flex: 1,
@@ -70,7 +77,7 @@ class Template extends Component {
             marginRight: 0,
             marginBottom: 30,
             padding: 20,
-            shadowColor: '#000',
+            shadowColor: '#000000',
             shadowOpacity: 0.34,
             shadowRadius: 6.27,
             shadowOffset: {
@@ -80,7 +87,7 @@ class Template extends Component {
             elevation: 9,
           }}
         >
-          <Text style={{ fontSize: 30 }}>{item.title}</Text>
+          <Text style={{ fontSize: 30 }}>{item.navigationName}</Text>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -89,17 +96,19 @@ class Template extends Component {
   render() {
     return (
       <SafeAreaView>
-        <TitleText>원하시는 일기 형태를 선택해주세요.</TitleText>
-        <CarouselWrap>
-          <Carousel
-            ref={(ref) => (this.carousel = ref)}
-            data={this.state.carouselItems}
-            sliderWidth={width}
-            itemWidth={Math.round(width * 0.7)}
-            renderItem={this.renderTemplate}
-            onSnapToItem={(index) => this.setState({ activeIndex: index })}
-          />
-        </CarouselWrap>
+        <Container>
+          <PageTitle>원하시는 일기 형태를 선택해주세요.</PageTitle>
+          <CarouselWrap>
+            <Carousel
+              ref={(ref) => (this.carousel = ref)}
+              data={this.state.carouselItems}
+              sliderWidth={width}
+              itemWidth={Math.round(width * 0.7)}
+              renderItem={this.renderTemplate}
+              onSnapToItem={(index) => this.setState({ activeIndex: index })}
+            />
+          </CarouselWrap>
+        </Container>
       </SafeAreaView>
     );
   }

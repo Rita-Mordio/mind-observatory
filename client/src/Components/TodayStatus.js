@@ -19,13 +19,6 @@ const Container = styled.View`
   position: relative;
 `;
 
-const GrayBackground = styled.View`
-  background-color: #f5f5f5;
-  width: 100%;
-  height: 250px;
-  position: absolute;
-`;
-
 const WindowImage = styled.Image`
   width: ${Math.round(width * 0.6)}px;
   height: ${Math.round(width * 0.732)}px;
@@ -54,8 +47,7 @@ const TodayText = styled.Text`
 const TodayStatus = ({ navigation }) => {
   return (
     <Container>
-      <GrayBackground />
-      <WindowImage source={require('../../assets/images/window.png')} />
+      <WindowImage source={require('../../assets/images/window-blind.png')} />
       <TodayText>오늘은, 어떤 날이었나요?</TodayText>
       <Button
         title="일기 쓰기"

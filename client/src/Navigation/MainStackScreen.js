@@ -5,7 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
-import EditDiary from '../Screens/EditDiary';
+import EditDiarySimple from '../Screens/EditDiary-simple';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
@@ -69,8 +69,8 @@ const MainStackScreen = ({ navigation }) => {
         }}
       />
       <MainStack.Screen
-        name="EditDiary"
-        component={EditDiary}
+        name="EditDiarySimple"
+        component={EditDiarySimple}
         options={{
           title: '일기 쓰기',
           headerStyle: { backgroundColor: '#efc4cd' },
