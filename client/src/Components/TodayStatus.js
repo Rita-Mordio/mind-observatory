@@ -5,6 +5,12 @@ import { Button } from 'react-native-elements';
 
 const { width } = Dimensions.get('screen');
 
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
 const Container = styled.View`
   align-items: center;
   background-color: #ffffff;
@@ -38,6 +44,12 @@ const TodayText = styled.Text`
   font-size: 24px;
   color: #3f3e3c;
 `;
+
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
 
 const TodayStatus = ({ navigation }) => {
   return (
