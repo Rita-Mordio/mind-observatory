@@ -28,6 +28,17 @@ const MainStackScreen = ({ navigation }) => {
   const saveDairy = () => {
     const diaryData = getDiary();
 
+    if(COMMON.isEmptyValue(diaryData.title)){
+        alert('제목을 입력해 주세요.')
+        return false
+    } else if(COMMON.isEmptyValue(diaryData.contents[0])){
+        alert('내용을 입력해 주세요.')
+        return false
+    } else if(COMMON.isEmptyValue(diaryData.images[0].uri)){
+        alert('이미지를 선택해 주세요.')
+        return false
+    }
+
     RNS3.put(diaryData.images[0], awsConfig)
       .then((result) => {
         diaryData.images[0] = result.body.postResponse.location;
