@@ -2,7 +2,7 @@ import { SET_DIARY } from '../constants/actionTypes';
 
 export const initialDiaryState = {
   title: '',
-  weather: '',
+  weather: 'sun',
   contents: [''],
   images: [
     {

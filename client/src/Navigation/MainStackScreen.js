@@ -9,7 +9,7 @@ import EditDiarySimple from '../Screens/EditDiary-simple';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
-import COMMON from "../common";
+import COMMON from '../common';
 
 const MainStack = createStackNavigator();
 
@@ -31,11 +31,18 @@ const MainStackScreen = ({ navigation }) => {
     RNS3.put(diaryData.images[0], awsConfig)
       .then((result) => {
         diaryData.images[0] = result.body.postResponse.location;
-        COMMON.axiosCall('diary/addDiary', diaryData, (result) => {
-            navigation.navigate('Main')
-        }, (error) => {
-            console.log(error)
-        })
+        COMMON.axiosCall(
+          'diary/addDiary',
+          diaryData,
+          (result) => {
+            if (!result.data.success)
+              alert('서버 문제로 저장에 실패하였습니다.');
+            navigation.navigate('Main');
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
       })
       .catch((error) => {
         console.log(error);
