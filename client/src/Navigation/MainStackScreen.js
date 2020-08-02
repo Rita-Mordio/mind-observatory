@@ -51,7 +51,7 @@ const MainStackScreen = ({ navigation }) => {
         name="Template"
         component={Template}
         options={{
-          title: '템플릿 선택',
+          title: '일기 쓰기',
           headerStyle: { backgroundColor: '#efc4cd' },
           headerTitleStyle: {
             color: '#ffffff',

@@ -9,7 +9,6 @@ import {
 import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Textarea from 'react-native-textarea';
-import { Overlay } from 'react-native-elements';
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
 import moment from 'moment';
 import Context from '../Redux/contexts/context';

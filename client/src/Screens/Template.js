@@ -1,7 +1,9 @@
-import { Text, View, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import Carousel from 'react-native-snap-carousel';
+import TemplateViewData from '../TemplateViewData';
+import TemplateView from '../Components/TemplateView';
 
 const { width } = Dimensions.get('screen');
 
@@ -44,52 +46,18 @@ const CarouselWrap = styled.View`
 class Template extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      carouselItems: [
-        {
-          navigationName: 'EditDiarySimple',
-        },
-        {
-          navigationName: 'EditDiarySimple',
-        },
-      ],
-    };
   }
 
-  onPressCarousel = (item) => {
-    this.props.navigation.navigate(item.navigationName);
-  };
-
-  renderTemplate = ({ item, index }) => {
+  renderTemplate = ({ item }) => {
     return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          this.onPressCarousel(item);
+      <TemplateView
+        title={item.title}
+        description={item.description}
+        viewData={item.viewData}
+        navigation={() => {
+          this.props.navigation.navigate(item.navigationName);
         }}
-      >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'floralwhite',
-            borderRadius: 10,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 30,
-            padding: 20,
-            shadowColor: '#000000',
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            elevation: 9,
-          }}
-        >
-          <Text style={{ fontSize: 30 }}>{item.navigationName}</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      />
     );
   };
 
@@ -101,11 +69,10 @@ class Template extends Component {
           <CarouselWrap>
             <Carousel
               ref={(ref) => (this.carousel = ref)}
-              data={this.state.carouselItems}
+              data={TemplateViewData}
               sliderWidth={width}
-              itemWidth={Math.round(width * 0.7)}
+              itemWidth={Math.round(width * 0.77)}
               renderItem={this.renderTemplate}
-              onSnapToItem={(index) => this.setState({ activeIndex: index })}
             />
           </CarouselWrap>
         </Container>

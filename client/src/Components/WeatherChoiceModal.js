@@ -43,7 +43,7 @@ const WeatherChoiceModal = ({ visible, toggleModal, setWeather }) => {
       onBackdropPress={toggleModal}
       overlayStyle={styles.overlayStyle}
     >
-      <WeatherModalTitle>감정 날씨를 선택해 주세요.</WeatherModalTitle>
+      <WeatherModalTitle>마음 속 날씨를 선택해 주세요.</WeatherModalTitle>
       <WeatherWrap>
         <TouchableWithoutFeedback
           onPress={() => {
