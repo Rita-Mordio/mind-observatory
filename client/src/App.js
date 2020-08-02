@@ -7,11 +7,11 @@ import Context from './Redux/contexts/context';
 import {
   SIGN_IN,
   SIGN_OUT,
-  SET_FILE,
+  SET_DIARY,
   SET_HEADER,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
-import { fileReducer, initialFileState } from './Redux/reducers/fileReducer';
+import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
 
 import RootStackScreen from './Navigation/RootStackScreen';
 import DrawerContentScreen from './Navigation/DrawerContentScreen';
@@ -26,7 +26,10 @@ const App = () => {
   }, []);
 
   const [authState, authDispatch] = useReducer(authReducer, initialAuthState);
-  const [fileState, fileDispatch] = useReducer(fileReducer, initialFileState);
+  const [diaryState, diaryDispatch] = useReducer(
+    diaryReducer,
+    initialDiaryState,
+  );
   const [themeState, themeDispatch] = useReducer(
     themeReducer,
     initialThemeState,
@@ -40,11 +43,11 @@ const App = () => {
       signOut: () => {
         authDispatch({ type: SIGN_OUT });
       },
-      setFile: (file) => {
-        fileDispatch({ type: SET_FILE, file: file });
+      setDiary: (diary) => {
+        diaryDispatch({ type: SET_DIARY, diary: diary });
       },
-      getFile: () => {
-        return fileState;
+      getDiary: () => {
+        return diaryState;
       },
       setHeader: (theme) => {
         themeDispatch({ type: SET_HEADER, theme: theme });
@@ -53,7 +56,7 @@ const App = () => {
         return themeState;
       },
     }),
-    [fileState, themeState],
+    [diaryState, themeState],
   );
 
   return (

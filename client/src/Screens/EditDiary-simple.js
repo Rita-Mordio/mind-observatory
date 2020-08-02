@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 import {
   Dimensions,
   Keyboard,
-  TouchableWithoutFeedback,
   StyleSheet,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import styled from 'styled-components/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Textarea from 'react-native-textarea';
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
+import styled from 'styled-components/native';
 import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
@@ -85,7 +85,7 @@ const Title = styled.TextInput`
 //###################################
 
 const EditDiarySimple = () => {
-  const { setFile } = useContext(Context);
+  const { setDiary, getDiary } = useContext(Context);
 
   const [imageUrl, setImageUrl] = useState(
     'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
@@ -95,7 +95,7 @@ const EditDiarySimple = () => {
     require(`../../assets/images/weather-sun.png`),
   );
 
-  const [visible, setVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -104,7 +104,7 @@ const EditDiarySimple = () => {
   });
 
   const toggleModal = () => {
-    setVisible(!visible);
+    setModalVisible(!modalVisible);
   };
 
   const choosePhotoFromLibrary = () => {
@@ -118,10 +118,15 @@ const EditDiarySimple = () => {
 
         const currentDate = moment().format('YYYY-MM-DD-hh-mm-ss');
 
-        setFile({
-          uri: `file://${image.path}`,
-          name: `${currentDate}${image.filename}`,
-          type: image.mime,
+        setDiary({
+          ...getDiary(),
+          images: [
+            {
+              uri: `file://${image.path}`,
+              name: `${currentDate}${image.filename}`,
+              type: image.mime,
+            },
+          ],
         });
       })
       .catch((error) => {
@@ -132,6 +137,13 @@ const EditDiarySimple = () => {
             '이미지를 선택하지 않았거나, 사용 불가능한 이미지 입니다. 다른 이미지를 선택해 주세요.',
         });
       });
+  };
+
+  const handleTextChange = (key, value) => {
+    setDiary({
+      ...getDiary(),
+      [key]: value,
+    });
   };
 
   return (
@@ -153,7 +165,13 @@ const EditDiarySimple = () => {
             </TouchableWithoutFeedback>
 
             <BottomWrap>
-              <Title placeholder="제목" placeholderTextColor="#3f3e3c"></Title>
+              <Title
+                placeholder="제목"
+                placeholderTextColor="#3f3e3c"
+                onChangeText={(value) => {
+                  handleTextChange('title', value);
+                }}
+              />
               <Textarea
                 containerStyle={styles.textareaContainer}
                 style={styles.textarea}
@@ -161,11 +179,14 @@ const EditDiarySimple = () => {
                 placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
                 placeholderTextColor={'#3f3e3c'}
                 underlineColorAndroid={'transparent'}
+                onChangeText={(value) => {
+                  handleTextChange('contents', [value]);
+                }}
               />
             </BottomWrap>
 
             <WeatherChoiceModal
-              visible={visible}
+              visible={modalVisible}
               toggleModal={toggleModal}
               setWeather={setWeather}
             />

@@ -9,11 +9,12 @@ import EditDiarySimple from '../Screens/EditDiary-simple';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
+import COMMON from "../common";
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ navigation }) => {
-  const { getFile, getTheme } = useContext(Context);
+  const { getTheme, getDiary } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -22,6 +23,23 @@ const MainStackScreen = ({ navigation }) => {
     accessKey: AWS_KEY.accessKey,
     secretKey: AWS_KEY.secretKey,
     successActionStatus: 201,
+  };
+
+  const saveDairy = () => {
+    const diaryData = getDiary();
+
+    RNS3.put(diaryData.images[0], awsConfig)
+      .then((result) => {
+        diaryData.images[0] = result.body.postResponse.location;
+        COMMON.axiosCall('diary/addDiary', diaryData, (result) => {
+            navigation.navigate('Main')
+        }, (error) => {
+            console.log(error)
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -92,15 +110,7 @@ const MainStackScreen = ({ navigation }) => {
               name="edit"
               size={24}
               backgroundColor="#efc4cd"
-              onPress={() => {
-                RNS3.put(getFile(), awsConfig)
-                  .then((result) => {
-                    console.log(result);
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }}
+              onPress={saveDairy}
             />
           ),
         }}

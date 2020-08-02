@@ -10,7 +10,10 @@ router.post("/addDiary", (request, response) => {
   const diary = new Diary(request.body);
 
   diary.save((error, result) => {
-    if (error) return response.status(400).json({ success: false, error });
+    if (error)
+      return response
+        .status(400)
+        .json({ success: false, message: "서버문제로 일기 저장에 실패하였습니다.", error });
     return response.status(200).json({ success: true, result });
   });
 });
@@ -58,12 +61,11 @@ router.post("/getDiary", (request, response) => {
     });
 });
 
-
 //제목으로 내가 작성한 일기 검색
 router.post("/searchMyDiariesByTitle", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
-      Diary.find({ userFrom: user._id, title: {'$regex': request.body.title}})
+      Diary.find({ userFrom: user._id, title: { $regex: request.body.title } })
         .then((result) => {
           response.status(200).json({ success: true, result });
         })
