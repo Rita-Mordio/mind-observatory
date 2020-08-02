@@ -1,11 +1,11 @@
 import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
-import Context from "../Redux/contexts/context";
+import Context from '../Redux/contexts/context';
 
 import InputSecureIcon from '../Components/InputSecureIcon';
 import Alert from '../Components/Alert';
@@ -103,6 +103,7 @@ const SignIn = ({ navigation }) => {
     isAutoSignIn: false,
     isValidUser: true,
     isValidPassword: true,
+    isLoading: false,
   });
 
   const [alertData, setAlertData] = useState({
@@ -111,7 +112,7 @@ const SignIn = ({ navigation }) => {
     onConfirmPressed: null,
   });
 
-  const { signIn } = useContext(Context)
+  const { signIn } = useContext(Context);
 
   useEffect(() => {
     COMMON.getStoreData(
@@ -167,6 +168,13 @@ const SignIn = ({ navigation }) => {
     });
   };
 
+  const setLoadingButton = (value) => {
+    setData({
+      ...data,
+      isLoading: value,
+    });
+  };
+
   const login = () => {
     if (COMMON.isEmptyValue(data.email) || COMMON.isEmptyValue(data.password)) {
       setAlertData({
@@ -177,6 +185,8 @@ const SignIn = ({ navigation }) => {
       return false;
     }
 
+    setLoadingButton(true);
+
     COMMON.axiosCall(
       'user/signIn',
       {
@@ -184,10 +194,14 @@ const SignIn = ({ navigation }) => {
         password: data.password,
       },
       (object) => {
+        setLoadingButton(false);
         if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-          signIn(object.data.token)
+          signIn(object.data.token);
           storeData('@userToken', object.data.token);
         }
+      },
+      (error) => {
+        setLoadingButton(false);
       },
     );
   };
@@ -257,6 +271,7 @@ const SignIn = ({ navigation }) => {
               title="로그인"
               raised={true}
               onPress={login}
+              loading={data.isLoading}
             />
           </ButtonWrap>
           <ButtonWrap>

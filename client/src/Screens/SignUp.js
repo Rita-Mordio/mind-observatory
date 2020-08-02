@@ -90,6 +90,7 @@ const SignUp = ({ navigation }) => {
     isAvailableEmail: false,
     secureTextEntry: true,
     confirmSecureTextEntry: true,
+    isLoading: false,
   });
 
   const [alertData, setAlertData] = React.useState({
@@ -147,6 +148,13 @@ const SignUp = ({ navigation }) => {
     );
   };
 
+  const setLoadingButton = (value) => {
+    setData({
+      ...data,
+      isLoading: value,
+    });
+  };
+
   const signUp = () => {
     if (!data.isAvailableEmail) {
       setAlertData({
@@ -175,6 +183,8 @@ const SignUp = ({ navigation }) => {
       return false;
     }
 
+    setLoadingButton(true);
+
     COMMON.axiosCall(
       'user/register',
       {
@@ -182,7 +192,8 @@ const SignUp = ({ navigation }) => {
         password: data.password,
       },
       (object) => {
-        if (object.data.success) {
+        setLoadingButton(false);
+        if (COMMON.checkSuccess(object, alertData, setAlertData)) {
           setAlertData({
             show: true,
             message: '회원가입을 축하드립니다!',
@@ -190,12 +201,10 @@ const SignUp = ({ navigation }) => {
               navigation.navigate('SignIn');
             },
           });
-        } else
-          setAlertData({
-            ...alertData,
-            show: true,
-            message: '회원가입에 실패하였습니다. 관리자에게 문의해주세요.',
-          });
+        }
+      },
+      (error) => {
+        setLoadingButton(false);
       },
     );
   };
@@ -266,6 +275,7 @@ const SignUp = ({ navigation }) => {
               title="회원가입"
               raised={true}
               onPress={signUp}
+              loading={data.isLoading}
             />
           </ButtonWrap>
           <ButtonWrap>

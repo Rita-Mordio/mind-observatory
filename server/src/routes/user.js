@@ -140,7 +140,12 @@ router.post("/register", (request, response) => {
   const user = new User(request.body);
 
   user.save((error, result) => {
-    if (error) return response.json({ success: false, error });
+    if (error)
+      return response.json({
+        success: false,
+        message: "회원가입에 실패하였습니다. 관리자에게 문의해주세요.",
+        error,
+      });
     return response.status(200).json({
       success: true,
     });
