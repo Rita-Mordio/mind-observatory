@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 const Image = styled.Image`
   width: 30px;
   height: 30px;
-  margin-right: 10px;
+  margin-left: 10px;
 `;
 
 const WeatherView = ({ value }) => {
