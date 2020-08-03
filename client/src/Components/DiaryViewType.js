@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -36,7 +36,7 @@ const ButtonWrap = styled.View`
 //###################################
 //###################################
 
-const ViewType = ({ viewType, handleVieTypeToggle }) => {
+const DiaryViewType = ({ diaryViewType, handleVieTypeToggle }) => {
   return (
     <Container>
       <Text>나의 기록</Text>
@@ -51,7 +51,7 @@ const ViewType = ({ viewType, handleVieTypeToggle }) => {
             size={30}
             style={{
               marginRight: 15,
-              color: viewType === 'image' ? '#3f3e3c' : '#d9d9d9',
+              color: diaryViewType === 'image' ? '#3f3e3c' : '#d9d9d9',
             }}
           />
         </TouchableWithoutFeedback>
@@ -63,7 +63,7 @@ const ViewType = ({ viewType, handleVieTypeToggle }) => {
           <Icon
             name="text-box-outline"
             size={30}
-            style={{ color: viewType === 'text' ? '#3f3e3c' : '#d9d9d9' }}
+            style={{ color: diaryViewType === 'text' ? '#3f3e3c' : '#d9d9d9' }}
           />
         </TouchableWithoutFeedback>
       </ButtonWrap>
@@ -71,4 +71,4 @@ const ViewType = ({ viewType, handleVieTypeToggle }) => {
   );
 };
 
-export default ViewType;
+export default DiaryViewType;

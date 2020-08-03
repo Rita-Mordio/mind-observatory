@@ -52,11 +52,19 @@ router.post("/getMyDiaries", (request, response) => {
           response.status(200).json({ success: true, diaries });
         })
         .catch((error) => {
-          response.status(400).json({ success: false, error });
+          response.status(400).json({
+            success: false,
+            message: "일기 리스트를 가져오는데 실패하였습니다.",
+            error,
+          });
         });
     })
     .catch((error) => {
-      response.status(400).json({ success: false, error });
+      response.status(400).json({
+        success: false,
+        message: "사용자 정보를 가져오는데 실패하였습니다.",
+        error,
+      });
     });
 });
 

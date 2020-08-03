@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 
 import TodayStatus from '../Components/TodayStatus';
-import ViewType from '../Components/ViewType';
+import DiaryViewType from '../Components/DiaryViewType';
 import ImageTypeDiary from '../Components/ImageTypeDiary';
 import TextTypeDiary from '../Components/TextTypeDiary';
 import Context from '../Redux/contexts/context';
@@ -37,6 +37,10 @@ const Home = ({ navigation }) => {
   const { setHeader } = useContext(Context);
 
   useEffect(() => {
+    getDiaries();
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
       setHeader({ headerColor: '#efc4cd', headerTitle: '홈' });
     });
@@ -44,7 +48,8 @@ const Home = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  const [viewType, setViewType] = useState('image');
+  const [diaryViewType, setDiaryViewType] = useState('image');
+  const [diariesData, setDiariesData] = useState([]);
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -53,25 +58,19 @@ const Home = ({ navigation }) => {
   });
 
   const handleVieTypeToggle = (nextType) => {
-    if (nextType !== viewType)
-      setViewType(viewType === 'image' ? 'text' : 'image');
+    if (nextType !== diaryViewType)
+      setDiaryViewType(diaryViewType === 'image' ? 'text' : 'image');
   };
-
-  useEffect(() => {
-    getDiaries()
-  }, [])
 
   const getDiaries = () => {
     COMMON.getStoreData(
       '@userToken',
       (value) => {
-        COMMON.axiosCall(
-          'diary/getDetailMyDiaries',
-          { token: value },
-          (object) => {
-            console.log(object)
-          },
-        );
+        COMMON.axiosCall('diary/getMyDiaries', { token: value }, (object) => {
+          if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+            setDiariesData(object.data.diaries);
+          }
+        });
       },
       () => {
         setAlertData({
@@ -84,20 +83,36 @@ const Home = ({ navigation }) => {
   };
 
   const renderDiaries = () => {
-    // COMMON.axiosCall('diary/getDetailMyDiaries')
+    if (diaryViewType === 'image') {
+      return diariesData.map((diary, index) => {
+        return (
+          <ImageTypeDiary key={diary._id} diary={diary} />
+        );
+      });
+    } else if (diaryViewType === 'text') {
+      return diariesData.map((diary, index) => {
+        return <TextTypeDiary />;
+      });
+    }
   };
 
   return (
     <Container>
       <TodayStatus navigation={navigation} />
-      <ViewType viewType={viewType} handleVieTypeToggle={handleVieTypeToggle} />
+      <DiaryViewType
+        diaryViewType={diaryViewType}
+        handleVieTypeToggle={handleVieTypeToggle}
+      />
       <DiaryScroll>
+        {renderDiaries()}
+
         {/*<TextTypeDiary />*/}
         {/*<TextTypeDiary />*/}
         {/*<TextTypeDiary />*/}
-        <ImageTypeDiary />
-        <ImageTypeDiary />
-        <ImageTypeDiary />
+
+        {/*<ImageTypeDiary />*/}
+        {/*<ImageTypeDiary />*/}
+        {/*<ImageTypeDiary />*/}
       </DiaryScroll>
 
       <Alert alertData={alertData} setAlertData={setAlertData} />

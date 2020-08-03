@@ -1,6 +1,9 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+import moment from 'moment';
+
+import WeatherView from './WeatherView';
 
 const { width } = Dimensions.get('screen');
 
@@ -44,11 +47,6 @@ const Title = styled.Text`
   margin-top: 7px;
 `;
 
-const Weather = styled.Image`
-  width: 30px;
-  height: 30px;
-`;
-
 const Contents = styled.Text`
   color: #3f3e3c;
   margin-top: 20px;
@@ -60,30 +58,22 @@ const Contents = styled.Text`
 //###################################
 //###################################
 
-const ImageTypeDiary = () => {
+const ImageTypeDiary = ({ diary }) => {
+  console.log(diary);
+
   return (
     <Container>
-      <Image
-        source={{
-          uri:
-            'https://lh3.googleusercontent.com/proxy/K97X0dgTBmtg6ahchEkhX-JlLEYT7vqP0QfQT92I3liS9A2M8dufJoBSBC6_GC-0V8IXIW_egDjmA5Jx0MCQ1cJlYpEZoe-jRlCKoA0b8tNIP2FhjBTgH-XCOSl8rBspvnG4',
-        }}
-      />
+      <Image source={{ uri: diary.images[0] }} />
       <BottomView>
         <ViewWrapper>
-          <CreatedTime>2020년 06월 21일</CreatedTime>
-          <Weather
-            source={{
-              uri:
-                'https://png.pngitem.com/pimgs/s/178-1780522_png-file-rainy-weather-icon-png-white-weather.png',
-            }}
-          />
+          <CreatedTime>
+            {moment(diary.registerDate).format('YYYY년 MM월 DD일')}
+          </CreatedTime>
+          <WeatherView value={diary.weather} />
         </ViewWrapper>
-        <Title>햇빛이 햇빛이 햇빛</Title>
-        <Contents ellipsizeMode='tail' numberOfLines={3}>
-          오랜만의 공원. 날이 더 더워지기 전에 가길 잘한 것 같다. 언제 이렇게
-          더워졌는지 신기할 따름이다. 돌아오는 길에 아이스크림 하나를 샀다. 내가
-          제일...
+        <Title>{diary.title}</Title>
+        <Contents ellipsizeMode="tail" numberOfLines={3}>
+          {diary.contents[0]}
         </Contents>
       </BottomView>
     </Container>
