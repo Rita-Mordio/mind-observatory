@@ -54,13 +54,13 @@ const DiarySchema = new Schema({
   //작성 일자
   registerDate: {
     type: Date,
-    default: moment(Date.now()).add(9, 'hours')
+    default: Date.now()
   },
 
   //수정 일자
   updateDate: {
     type: Date,
-    default: moment(Date.now()).add(9, 'hours')
+    default: Date.now()
   },
 });
 
