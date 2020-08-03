@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     getDiaries();
-  }, []);
+  });
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
