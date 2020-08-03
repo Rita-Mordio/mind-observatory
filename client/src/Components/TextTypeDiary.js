@@ -21,6 +21,7 @@ const Container = styled.View`
 const ViewWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const CreatedTime = styled.Text`
@@ -44,8 +45,10 @@ const TextTypeDiary = ({ diary }) => {
   return (
     <Container>
       <ViewWrapper>
-        <CreatedTime>{moment(diary.registerDate).format('YYYY년 MM월 DD일')}</CreatedTime>
-          <WeatherView value={diary.weather} />
+        <CreatedTime>
+          {moment(diary.registerDate).format('YYYY년 MM월 DD일')}
+        </CreatedTime>
+        <WeatherView value={diary.weather} />
       </ViewWrapper>
       <Title>{diary.title}</Title>
     </Container>
