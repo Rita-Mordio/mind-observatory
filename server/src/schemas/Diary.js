@@ -9,8 +9,8 @@ const DiarySchema = new Schema({
     ref: 'User'
   },
 
-  //템플릿 넘버
-  template: {
+  //템플릿 타입
+  templateType: {
     type: Number,
     required: true,
   },

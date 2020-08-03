@@ -93,7 +93,7 @@ const EditDiarySimple = ({ route }) => {
       setDiary({
         ...getDiary(),
         token: result,
-        templateNumber: route.params.templateNumber,
+        templateType: route.params.templateType,
       });
     });
   }, []);

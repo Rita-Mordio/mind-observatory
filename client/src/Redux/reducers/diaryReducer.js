@@ -2,7 +2,7 @@ import { SET_DIARY } from '../constants/actionTypes';
 
 export const initialDiaryState = {
   token: '',
-  templateNumber: 1,
+  templateType: 1,
   title: '',
   weather: 'sun',
   contents: [''],
@@ -20,7 +20,7 @@ export const diaryReducer = (prevState, action) => {
     case SET_DIARY:
       const {
         token,
-        templateNumber,
+        templateType,
         title,
         weather,
         contents,
@@ -30,7 +30,7 @@ export const diaryReducer = (prevState, action) => {
       return {
         ...prevState,
         token,
-        templateNumber,
+        templateType,
         title,
         weather,
         contents,

@@ -56,7 +56,7 @@ class Template extends Component {
         viewData={item.viewData}
         navigation={() => {
           this.props.navigation.navigate(item.navigationName, {
-            templateNumber: item.template,
+              templateType: item.template,
           });
         }}
       />
