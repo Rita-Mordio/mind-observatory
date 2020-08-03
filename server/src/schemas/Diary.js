@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import moment from 'moment';
 
 const { Schema } = mongoose;
 
@@ -53,13 +54,13 @@ const DiarySchema = new Schema({
   //작성 일자
   registerDate: {
     type: Date,
-    default: Date.now,
+    default: moment(Date.now()).add(9, 'hours')
   },
 
   //수정 일자
   updateDate: {
     type: Date,
-    default: Date.now,
+    default: moment(Date.now()).add(9, 'hours')
   },
 });
 

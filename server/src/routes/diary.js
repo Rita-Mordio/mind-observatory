@@ -1,4 +1,5 @@
 import express from "express";
+import moment from "moment";
 
 import Diary from "../schemas/Diary";
 import User from "../schemas/User";
@@ -47,7 +48,8 @@ router.post("/getMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
       // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
-      Diary.find({ userFrom: user._id }).sort({ "registerDate" : -1 })
+      Diary.find({ userFrom: user._id })
+        .sort({ registerDate: -1 })
         .then((diaries) => {
           response.status(200).json({ success: true, diaries });
         })
