@@ -85,13 +85,11 @@ const Home = ({ navigation }) => {
   const renderDiaries = () => {
     if (diaryViewType === 'image') {
       return diariesData.map((diary, index) => {
-        return (
-          <ImageTypeDiary key={diary._id} diary={diary} />
-        );
+        return <ImageTypeDiary key={diary._id} diary={diary} />;
       });
     } else if (diaryViewType === 'text') {
       return diariesData.map((diary, index) => {
-        return <TextTypeDiary />;
+        return <TextTypeDiary key={diary._id} diary={diary} />;
       });
     }
   };

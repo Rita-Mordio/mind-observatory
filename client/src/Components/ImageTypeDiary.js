@@ -59,8 +59,6 @@ const Contents = styled.Text`
 //###################################
 
 const ImageTypeDiary = ({ diary }) => {
-  console.log(diary);
-
   return (
     <Container>
       <Image source={{ uri: diary.images[0] }} />

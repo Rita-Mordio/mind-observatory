@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import moment from 'moment';
+
+import WeatherView from './WeatherView';
 
 //##################################
 //##################################
@@ -12,7 +15,7 @@ const Container = styled.View`
   margin-bottom: 30px;
   border-width: 1px;
   border-color: #d9d9d9;
-  padding: 10px;
+  padding: 10px 10px 20px 10px;
 `;
 
 const ViewWrapper = styled.View`
@@ -22,12 +25,6 @@ const ViewWrapper = styled.View`
 
 const CreatedTime = styled.Text`
   color: #9d9d9d;
-`;
-
-const Weather = styled.Image`
-  width: 24px;
-  height: 24px;
-  margin-left: 10px;
 `;
 
 const Title = styled.Text`
@@ -43,19 +40,14 @@ const Title = styled.Text`
 //###################################
 //###################################
 
-const TextTypeDiary = () => {
+const TextTypeDiary = ({ diary }) => {
   return (
     <Container>
       <ViewWrapper>
-        <CreatedTime>2020년 06월 21일</CreatedTime>
-        <Weather
-          source={{
-            uri:
-              'https://png.pngitem.com/pimgs/s/178-1780522_png-file-rainy-weather-icon-png-white-weather.png',
-          }}
-        />
+        <CreatedTime>{moment(diary.registerDate).format('YYYY년 MM월 DD일')}</CreatedTime>
+          <WeatherView value={diary.weather} />
       </ViewWrapper>
-      <Title>햇빛이 쨍쨍</Title>
+      <Title>{diary.title}</Title>
     </Container>
   );
 };
