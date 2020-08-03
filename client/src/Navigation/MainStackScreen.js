@@ -28,15 +28,15 @@ const MainStackScreen = ({ navigation }) => {
   const saveDairy = () => {
     const diaryData = getDiary();
 
-    if(COMMON.isEmptyValue(diaryData.title)){
-        alert('제목을 입력해 주세요.')
-        return false
-    } else if(COMMON.isEmptyValue(diaryData.contents[0])){
-        alert('내용을 입력해 주세요.')
-        return false
-    } else if(COMMON.isEmptyValue(diaryData.images[0].uri)){
-        alert('이미지를 선택해 주세요.')
-        return false
+    if (COMMON.isEmptyValue(diaryData.title)) {
+      alert('제목을 입력해 주세요.');
+      return false;
+    } else if (COMMON.isEmptyValue(diaryData.contents[0])) {
+      alert('내용을 입력해 주세요.');
+      return false;
+    } else if (COMMON.isEmptyValue(diaryData.images[0].uri)) {
+      alert('이미지를 선택해 주세요.');
+      return false;
     }
 
     RNS3.put(diaryData.images[0], awsConfig)
@@ -67,6 +67,7 @@ const MainStackScreen = ({ navigation }) => {
         component={MainTabScreen}
         options={{
           title: getTheme().headerTitle,
+          headerTitleAlign: 'center',
           headerStyle: { backgroundColor: getTheme().headerColor },
           headerTitleStyle: {
             color: '#ffffff',
@@ -89,6 +90,7 @@ const MainStackScreen = ({ navigation }) => {
         options={{
           title: '일기 쓰기',
           headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
           },
@@ -110,6 +112,7 @@ const MainStackScreen = ({ navigation }) => {
         options={{
           title: '일기 쓰기',
           headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
           },

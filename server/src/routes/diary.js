@@ -7,15 +7,26 @@ const router = express.Router();
 
 //일기 작성
 router.post("/addDiary", (request, response) => {
-  const diary = new Diary(request.body);
+  User.findOne({ token: request.body.token })
+    .then((user) => {
+      request.body.userFrom = user._id;
+      delete request.body.token;
 
-  diary.save((error, result) => {
-    if (error)
-      return response
-        .status(400)
-        .json({ success: false, message: "서버문제로 일기 저장에 실패하였습니다.", error });
-    return response.status(200).json({ success: true, result });
-  });
+      const diary = new Diary(request.body);
+
+      diary.save((error, result) => {
+        if (error)
+          return response.status(400).json({
+            success: false,
+            message: "서버문제로 일기 저장에 실패하였습니다.",
+            error,
+          });
+        return response.status(200).json({ success: true, result });
+      });
+    })
+    .catch((error) => {
+      response.status(400).json({ success: false, error });
+    });
 });
 
 //일기 수정
@@ -32,7 +43,7 @@ router.post("/editDiary", (request, response) => {
 });
 
 //내가 작성한 일기List 가져오기
-router.post("/getDetailMyDiaries", (request, response) => {
+router.post("/getMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
       // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })

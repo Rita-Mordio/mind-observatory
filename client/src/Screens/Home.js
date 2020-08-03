@@ -6,6 +6,9 @@ import ViewType from '../Components/ViewType';
 import ImageTypeDiary from '../Components/ImageTypeDiary';
 import TextTypeDiary from '../Components/TextTypeDiary';
 import Context from '../Redux/contexts/context';
+import COMMON from '../common';
+
+import Alert from '../Components/Alert';
 
 //##################################
 //##################################
@@ -43,12 +46,46 @@ const Home = ({ navigation }) => {
 
   const [viewType, setViewType] = useState('image');
 
+  const [alertData, setAlertData] = useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
+
   const handleVieTypeToggle = (nextType) => {
     if (nextType !== viewType)
       setViewType(viewType === 'image' ? 'text' : 'image');
   };
 
-  const renderDiaries = () => {};
+  useEffect(() => {
+    getDiaries()
+  }, [])
+
+  const getDiaries = () => {
+    COMMON.getStoreData(
+      '@userToken',
+      (value) => {
+        COMMON.axiosCall(
+          'diary/getDetailMyDiaries',
+          { token: value },
+          (object) => {
+            console.log(object)
+          },
+        );
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '일기 리스트를 가져오는데 실패하였습니다.',
+        });
+      },
+    );
+  };
+
+  const renderDiaries = () => {
+    // COMMON.axiosCall('diary/getDetailMyDiaries')
+  };
 
   return (
     <Container>
@@ -62,6 +99,8 @@ const Home = ({ navigation }) => {
         <ImageTypeDiary />
         <ImageTypeDiary />
       </DiaryScroll>
+
+      <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );
 };

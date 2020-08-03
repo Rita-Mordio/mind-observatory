@@ -20,7 +20,7 @@ const SafeAreaView = styled.SafeAreaView`
 
 const Container = styled.View`
   flex: 1;
-  padding: 30px 0px;
+  padding: 25px 0px 20px 0px;
   background-color: #ffffff;
 `;
 
@@ -55,7 +55,9 @@ class Template extends Component {
         description={item.description}
         viewData={item.viewData}
         navigation={() => {
-          this.props.navigation.navigate(item.navigationName);
+          this.props.navigation.navigate(item.navigationName, {
+            templateNumber: item.template,
+          });
         }}
       />
     );

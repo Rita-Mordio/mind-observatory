@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Dimensions,
   Keyboard,
@@ -14,6 +14,7 @@ import moment from 'moment';
 import Context from '../Redux/contexts/context';
 import Alert from '../Components/Alert';
 import WeatherChoiceModal from '../Components/WeatherChoiceModal';
+import COMMON from '../common';
 
 const { width } = Dimensions.get('screen');
 
@@ -84,8 +85,18 @@ const Title = styled.TextInput`
 //###################################
 //###################################
 
-const EditDiarySimple = () => {
+const EditDiarySimple = ({ route }) => {
   const { setDiary, getDiary } = useContext(Context);
+
+  useEffect(() => {
+    COMMON.getStoreData('@userToken', (result) => {
+      setDiary({
+        ...getDiary(),
+        token: result,
+        templateNumber: route.params.templateNumber,
+      });
+    });
+  }, []);
 
   const [imageUrl, setImageUrl] = useState(
     'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',

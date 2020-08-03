@@ -15,7 +15,7 @@ const Container = styled.View`
   margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 30px;
-  padding: 30px 10px 20px 10px;
+  padding: 25px 10px 20px 10px;
   shadow-color: #000000;
   shadow-opacity: 0.3;
   shadow-radius: 6.27;
@@ -27,7 +27,7 @@ const TemplateTitle = styled.Text`
   color: #3f3e3c;
   text-align: center;
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const Area = styled.View`
@@ -41,7 +41,7 @@ const Area = styled.View`
 
 const AreaTitle = styled.Text`
   color: #3f3e3c;
-  font-size: 19px;
+  font-size: 17px;
 `;
 
 const Description = styled.Text`
@@ -58,6 +58,7 @@ const Description = styled.Text`
 //###################################
 
 const TemplateView = ({ title, description, viewData, navigation }) => {
+
   const renderAreaWrap = (template) => {
     return template.map((item, index) => {
       return (
