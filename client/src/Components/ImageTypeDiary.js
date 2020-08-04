@@ -18,11 +18,14 @@ const Container = styled.View`
   margin-bottom: 30px;
   border-width: 1px;
   border-color: #d9d9d9;
+  border-radius: 10px;
 `;
 
 const Image = styled.Image`
   width: 100%;
   height: ${Math.round(width * 0.3)}px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const BottomView = styled.View`

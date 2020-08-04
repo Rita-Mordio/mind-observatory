@@ -16,6 +16,7 @@ const Container = styled.View`
   border-width: 1px;
   border-color: #d9d9d9;
   padding: 10px 15px 20px 15px;
+  border-radius: 10px;
 `;
 
 const ViewWrapper = styled.View`
