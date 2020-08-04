@@ -64,7 +64,7 @@ const ImageTypeDiary = ({ diary }) => {
       <BottomView>
         <ViewWrapper>
           <CreatedTime>
-            {moment(diary.registerDate).format('YYYY년 MM월 DD일')}
+            {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
           </CreatedTime>
           <WeatherView value={diary.weather} />
         </ViewWrapper>

@@ -49,7 +49,7 @@ router.post("/getMyDiaries", (request, response) => {
     .then((user) => {
       // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
       Diary.find({ userFrom: user._id })
-        .sort({ registerDate: -1 })
+        .sort({ createdAt: -1 })
         .then((diaries) => {
           response.status(200).json({ success: true, diaries });
         })
