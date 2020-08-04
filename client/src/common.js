@@ -4,14 +4,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 const COMMON = {
   axiosCall: (url, data, successCallBack, errorCallBack) => {
     Axios.post(`http://3.35.12.224:4000/api/${url}`, data)
-    //   Axios.post(`http://127.0.0.1:4000/api/${url}`, data)
-    //   Axios.post(`http://10.0.2.2:4000/api/${url}`, data)
+      //   Axios.post(`http://127.0.0.1:4000/api/${url}`, data)
+      //   Axios.post(`http://10.0.2.2:4000/api/${url}`, data)
       .then((result) => {
         successCallBack(result);
       })
       .catch((error) => {
-        alert('서버쪽 응답이 없습니다. 관리자에게 문의해주세요.');
-        errorCallBack(error)
+        if (errorCallBack === undefined) {
+          alert('서버쪽 응답이 없습니다. 관리자에게 문의해주세요.');
+        } else {
+          errorCallBack(error);
+        }
       });
   },
 

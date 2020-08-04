@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     getDiaries();
-  });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
@@ -66,17 +66,28 @@ const Home = ({ navigation }) => {
     COMMON.getStoreData(
       '@userToken',
       (value) => {
-        COMMON.axiosCall('diary/getMyDiaries', { token: value }, (object) => {
-          if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-            setDiariesData(object.data.diaries);
-          }
-        });
+        COMMON.axiosCall(
+          'diary/getMyDiaries',
+          { token: value },
+          (object) => {
+            if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              setDiariesData(object.data.diaries);
+            }
+          },
+          () => {
+            setAlertData({
+              ...alertData,
+              show: true,
+              message: '일기 리스트를 가져오는데 실패하였습니다.',
+            });
+          },
+        );
       },
       () => {
         setAlertData({
           ...alertData,
           show: true,
-          message: '일기 리스트를 가져오는데 실패하였습니다.',
+          message: '사용자 토큰정보를 가져오는데 실패하였습니다.',
         });
       },
     );
