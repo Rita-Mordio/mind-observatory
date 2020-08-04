@@ -33,6 +33,7 @@ const BottomView = styled.View`
 const ViewWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const CreatedTime = styled.Text`

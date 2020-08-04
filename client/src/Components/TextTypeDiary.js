@@ -15,12 +15,13 @@ const Container = styled.View`
   margin-bottom: 30px;
   border-width: 1px;
   border-color: #d9d9d9;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 15px 20px 15px;
 `;
 
 const ViewWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const CreatedTime = styled.Text`
