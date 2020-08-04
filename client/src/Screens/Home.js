@@ -37,15 +37,19 @@ const Home = ({ navigation }) => {
   const { setHeader } = useContext(Context);
 
   useEffect(() => {
-    getDiaries();
-  }, []);
+    const focusListener = navigation.addListener('focus', () => {
+      getDiaries();
+    });
+
+    return focusListener;
+  });
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', (e) => {
+    const tabPressListener = navigation.addListener('tabPress', (e) => {
       setHeader({ headerColor: '#efc4cd', headerTitle: '홈' });
     });
 
-    return unsubscribe;
+    return tabPressListener;
   }, [navigation]);
 
   const [diaryViewType, setDiaryViewType] = useState('image');
