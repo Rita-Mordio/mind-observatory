@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
+import _ from 'lodash';
 
 import TodayStatus from '../Components/TodayStatus';
 import DiaryViewType from '../Components/DiaryViewType';
@@ -20,7 +21,7 @@ const Container = styled.ScrollView`
   flex: 1;
 `;
 
-const DiaryScroll = styled.View`
+const DiariesView = styled.View`
   flex: 1;
   padding: 30px 20px;
   background-color: white;
@@ -35,6 +36,10 @@ const DiaryScroll = styled.View`
 
 const Home = ({ navigation }) => {
   const { setHeader } = useContext(Context);
+
+  const [page, setPage] = useState(1);
+  const [diaryViewType, setDiaryViewType] = useState('image');
+  const [diariesData, setDiariesData] = useState([]);
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
@@ -52,8 +57,9 @@ const Home = ({ navigation }) => {
     return tabPressListener;
   }, [navigation]);
 
-  const [diaryViewType, setDiaryViewType] = useState('image');
-  const [diariesData, setDiariesData] = useState([]);
+  useEffect(() => {
+    if (page !== 1) getDiaries();
+  }, [page]);
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -67,15 +73,20 @@ const Home = ({ navigation }) => {
   };
 
   const getDiaries = () => {
+    console.log(page);
+
     COMMON.getStoreData(
       '@userToken',
       (value) => {
         COMMON.axiosCall(
           'diary/getMyDiaries',
-          { token: value },
+          {
+            token: value,
+            page: page,
+          },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-              setDiariesData(object.data.diaries);
+              setDiariesData(diariesData.concat(object.data.diaries));
             }
           },
           () => {
@@ -109,16 +120,36 @@ const Home = ({ navigation }) => {
     }
   };
 
+  const isCloseToBottom = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }) => {
+    const paddingToBottom = 1;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
+
+  const setPageThrottle = _.throttle(() => {
+    setPage(page + 1);
+  }, 500);
+
   return (
-    <Container>
+    <Container
+      onScroll={({ nativeEvent }) => {
+        if (isCloseToBottom(nativeEvent)) {
+          setPageThrottle();
+        }
+      }}
+    >
       <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
       <DiaryViewType
         diaryViewType={diaryViewType}
         handleVieTypeToggle={handleVieTypeToggle}
       />
-      <DiaryScroll>
-        {renderDiaries()}
-      </DiaryScroll>
+      <DiariesView>{renderDiaries()}</DiariesView>
 
       <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>

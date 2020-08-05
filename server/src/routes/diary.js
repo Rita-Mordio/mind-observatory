@@ -50,6 +50,8 @@ router.post("/getMyDiaries", (request, response) => {
       // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
       Diary.find({ userFrom: user._id })
         .sort({ createdAt: -1 })
+        .skip((request.body.page - 1) * 2)
+        .limit(2)
         .then((diaries) => {
           response.status(200).json({ success: true, diaries });
         })
