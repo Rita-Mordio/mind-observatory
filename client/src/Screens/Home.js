@@ -111,21 +111,13 @@ const Home = ({ navigation }) => {
 
   return (
     <Container>
-      <TodayStatus navigation={navigation} />
+      <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
       <DiaryViewType
         diaryViewType={diaryViewType}
         handleVieTypeToggle={handleVieTypeToggle}
       />
       <DiaryScroll>
         {renderDiaries()}
-
-        {/*<TextTypeDiary />*/}
-        {/*<TextTypeDiary />*/}
-        {/*<TextTypeDiary />*/}
-
-        {/*<ImageTypeDiary />*/}
-        {/*<ImageTypeDiary />*/}
-        {/*<ImageTypeDiary />*/}
       </DiaryScroll>
 
       <Alert alertData={alertData} setAlertData={setAlertData} />
