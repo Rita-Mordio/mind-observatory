@@ -9,14 +9,16 @@ import {
   SIGN_OUT,
   SET_DIARY,
   SET_HEADER,
+  SET_COMMON,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
+import { themeReducer, initialThemeState } from './Redux/reducers/themeReducer';
+import { commonReducer, initialCommonState } from './Redux/reducers/commonReducer';
 
 import RootStackScreen from './Navigation/RootStackScreen';
 import DrawerContentScreen from './Navigation/DrawerContentScreen';
 import MainStackScreen from './Navigation/MainStackScreen';
-import { initialThemeState, themeReducer } from './Redux/reducers/themeReducer';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,6 +35,10 @@ const App = () => {
   const [themeState, themeDispatch] = useReducer(
     themeReducer,
     initialThemeState,
+  );
+  const [commonState, commonDispatch] = useReducer(
+    commonReducer,
+    initialCommonState,
   );
 
   const context = useMemo(
@@ -55,8 +61,14 @@ const App = () => {
       getTheme: () => {
         return themeState;
       },
+      setCommon: (value) => {
+        commonDispatch({ type: SET_COMMON, value: value });
+      },
+      getCommon: () => {
+        return commonState;
+      },
     }),
-    [diaryState, themeState],
+    [commonState, diaryState, themeState],
   );
 
   return (

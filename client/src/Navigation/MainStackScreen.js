@@ -14,7 +14,7 @@ import COMMON from '../common';
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ navigation }) => {
-  const { getTheme, getDiary } = useContext(Context);
+  const { getTheme, getDiary, setCommon } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -48,6 +48,7 @@ const MainStackScreen = ({ navigation }) => {
           (result) => {
             if (!result.data.success)
               alert('서버 문제로 저장에 실패하였습니다.');
+            setCommon(true);
             navigation.navigate('Main');
           },
           (error) => {

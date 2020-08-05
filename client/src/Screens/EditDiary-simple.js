@@ -43,6 +43,7 @@ const Date = styled.Text`
   color: #3f3e3c;
   font-size: 18px;
   align-self: center;
+  margin-left: 32px;
 `;
 
 const Weather = styled.Image`
@@ -164,7 +165,7 @@ const EditDiarySimple = ({ route }) => {
           <Container>
             <TopWrap>
               <View />
-              <Date>2020년 07월 31일</Date>
+              <Date>{moment().format('YYYY년 MM월 DD일')}</Date>
               <TouchableWithoutFeedback onPress={toggleModal}>
                 <Weather source={weather}></Weather>
               </TouchableWithoutFeedback>

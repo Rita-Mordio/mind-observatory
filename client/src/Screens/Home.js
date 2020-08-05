@@ -35,7 +35,7 @@ const DiariesView = styled.View`
 //###################################
 
 const Home = ({ navigation }) => {
-  const { setHeader } = useContext(Context);
+  const { setHeader, setCommon, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
   const [diaryViewType, setDiaryViewType] = useState('image');
@@ -43,7 +43,10 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
-      getDiaries();
+      if (getCommon().isChangeDiaryData) {
+        setPage(1);
+        getDiaries();
+      }
     });
 
     return focusListener;
@@ -61,6 +64,10 @@ const Home = ({ navigation }) => {
     if (page !== 1) getDiaries();
   }, [page]);
 
+  useEffect(() => {
+    getDiaries();
+  }, []);
+
   const [alertData, setAlertData] = useState({
     show: false,
     message: '',
@@ -76,15 +83,21 @@ const Home = ({ navigation }) => {
     COMMON.getStoreData(
       '@userToken',
       (value) => {
+        console.log("page : ", page)
         COMMON.axiosCall(
           'diary/getMyDiaries',
           {
             token: value,
-            page: page,
+            page: getCommon().isChangeDiaryData ? 1 : page,
           },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-              setDiariesData(diariesData.concat(object.data.diaries));
+              if (getCommon().isChangeDiaryData) {
+                setDiariesData(object.data.diaries);
+                setCommon(false);
+              } else {
+                setDiariesData(diariesData.concat(object.data.diaries));
+              }
             }
           },
           () => {
