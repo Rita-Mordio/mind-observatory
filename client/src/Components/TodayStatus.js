@@ -32,9 +32,13 @@ const WindowImage = styled.Image`
 
 const TodayText = styled.Text`
   margin-top: ${() => {
-    if (Platform.OS === 'ios') return '35px';
+    if (Platform.OS === 'ios') return '40px';
     else return '15px';
   }};
+  margin-bottom: ${() => {
+  if (Platform.OS === 'ios') return '25px';
+  else return '0px';
+}};
   font-family: NotoSerifKR-Regular;
   font-size: 24px;
   color: #3f3e3c;
@@ -111,7 +115,7 @@ export default TodayStatus;
 const styles = StyleSheet.create({
   containerStyle: {
     width: 150,
-    marginTop: Platform.OS === 'ios' ? 25 : 15,
+    marginTop: Platform.OS === 'ios' ? 15 : 15,
     marginBottom: Platform.OS === 'ios' ? 25 : 25
   },
 
