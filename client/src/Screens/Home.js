@@ -73,8 +73,6 @@ const Home = ({ navigation }) => {
   };
 
   const getDiaries = () => {
-    console.log(page);
-
     COMMON.getStoreData(
       '@userToken',
       (value) => {
