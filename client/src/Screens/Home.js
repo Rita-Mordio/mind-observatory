@@ -38,6 +38,7 @@ const Home = ({ navigation }) => {
   const { setHeader, setCommon, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
+  const [isLastPage, setIsLastPage] = useState(false);
   const [diaryViewType, setDiaryViewType] = useState('image');
   const [diariesData, setDiariesData] = useState([]);
 
@@ -83,7 +84,6 @@ const Home = ({ navigation }) => {
     COMMON.getStoreData(
       '@userToken',
       (value) => {
-        console.log("page : ", page)
         COMMON.axiosCall(
           'diary/getMyDiaries',
           {
@@ -95,8 +95,10 @@ const Home = ({ navigation }) => {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
                 setCommon(false);
+                setIsLastPage(false)
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));
+                setIsLastPage(object.data.diaries.length === 0);
               }
             }
           },
@@ -144,7 +146,7 @@ const Home = ({ navigation }) => {
   };
 
   const setPageThrottle = _.throttle(() => {
-    setPage(page + 1);
+    if (!isLastPage) setPage(page + 1);
   }, 500);
 
   return (
