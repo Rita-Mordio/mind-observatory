@@ -57,8 +57,8 @@ router.post("/getMyDiaries", (request, response) => {
 
       Diary.find({ userFrom: user._id })
         .sort({ createdAt: -1 })
-        .skip((request.body.page - 1) * 2)
-        .limit(2)
+        .skip((request.body.page - 1) * 10)
+        .limit(10)
         .then((diaries) => {
           response.status(200).json({ success: true, diaries });
         })
