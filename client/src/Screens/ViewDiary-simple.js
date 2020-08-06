@@ -12,6 +12,7 @@ const SafeAreaView = styled.SafeAreaView`
 const Container = styled.View`
   flex: 1;
   padding: 20px;
+  background-color: #ffffff;
 `;
 
 const TopWrap = styled.View`
@@ -52,15 +53,15 @@ const BottomWrap = styled.View`
 
 const Title = styled.Text`
   color: #3f3e3c;
-  margin-top: 20px;
-  height: 40px;
-  font-size: 18px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
 const Contents = styled.Text`
   color: #3f3e3c;
-  font-size: 16px;
+  font-size: 17px;
 `
 
 const ViewDiarySimple = ({ route }) => {

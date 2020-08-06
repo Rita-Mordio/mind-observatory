@@ -113,7 +113,7 @@ const Home = ({ navigation }) => {
               }
             }
           },
-          () => {
+          (error) => {
             setShowSpinner(false);
             setAlertData({
               ...alertData,

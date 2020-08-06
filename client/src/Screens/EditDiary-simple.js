@@ -31,6 +31,7 @@ const SafeAreaView = styled.SafeAreaView`
 const Container = styled.View`
   flex: 1;
   padding: 20px;
+  background-color: #ffffff;
 `;
 
 const TopWrap = styled.View`

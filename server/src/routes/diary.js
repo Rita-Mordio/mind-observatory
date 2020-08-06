@@ -47,7 +47,14 @@ router.post("/editDiary", (request, response) => {
 router.post("/getMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
-      // Diary.find({ userFrom: user._id }).populate({ path: 'userFrom' })
+      if (!user)
+        return response
+          .status(200)
+          .json({
+            success: false,
+            message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
+          });
+
       Diary.find({ userFrom: user._id })
         .sort({ createdAt: -1 })
         .skip((request.body.page - 1) * 2)
