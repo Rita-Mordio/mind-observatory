@@ -1,6 +1,9 @@
 import React from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import moment from 'moment';
+
+import COMMON from '../common';
 
 import WeatherView from './WeatherView';
 
@@ -42,17 +45,25 @@ const Title = styled.Text`
 //###################################
 //###################################
 
-const TextTypeDiary = ({ diary }) => {
+const TextTypeDiary = ({ diary, navigation }) => {
   return (
-    <Container>
-      <ViewWrapper>
-        <CreatedTime>
-          {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
-        </CreatedTime>
-        <WeatherView value={diary.weather} />
-      </ViewWrapper>
-      <Title>{diary.title}</Title>
-    </Container>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate(COMMON.getTemplateNameByNo(diary.templateType), {
+          diary,
+        });
+      }}
+    >
+      <Container>
+        <ViewWrapper>
+          <CreatedTime>
+            {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
+          </CreatedTime>
+          <WeatherView value={diary.weather} />
+        </ViewWrapper>
+        <Title>{diary.title}</Title>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 

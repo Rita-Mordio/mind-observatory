@@ -6,6 +6,7 @@ import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
 import EditDiarySimple from '../Screens/EditDiary-simple';
+import ViewDiarySimple from '../Screens/ViewDiary-simple';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
@@ -42,7 +43,10 @@ const MainStackScreen = ({ navigation }) => {
     RNS3.put(diaryData.images[0], awsConfig)
       .then((result) => {
         diaryData.images[0] = result.body.postResponse.location;
-        COMMON.axiosCall('diary/addDiary', diaryData, (result) => {
+        COMMON.axiosCall(
+          'diary/addDiary',
+          diaryData,
+          (result) => {
             if (!result.data.success)
               alert('서버 문제로 저장에 실패하였습니다.');
             setCommon(true);
@@ -54,7 +58,9 @@ const MainStackScreen = ({ navigation }) => {
         );
       })
       .catch((error) => {
-        alert("이미지를 서버로 전송중 문제가 발생하였습니다. 관리자에게 문의해주세요.")
+        alert(
+          '이미지를 서버로 전송중 문제가 발생하였습니다. 관리자에게 문의해주세요.',
+        );
       });
   };
 
@@ -77,6 +83,28 @@ const MainStackScreen = ({ navigation }) => {
               backgroundColor={getTheme().headerColor}
               onPress={() => {
                 navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+      <MainStack.Screen
+        name="ViewDiarySimple"
+        component={ViewDiarySimple}
+        options={{
+          title: '기록 보관소',
+          headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                navigation.goBack();
               }}
             />
           ),

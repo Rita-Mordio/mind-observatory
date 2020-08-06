@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import moment from 'moment';
+
+import COMMON from "../common";
 
 import WeatherView from './WeatherView';
 
@@ -61,23 +63,31 @@ const Contents = styled.Text`
 //###################################
 //###################################
 
-const ImageTypeDiary = ({ diary }) => {
+const ImageTypeDiary = ({ diary, navigation }) => {
   return (
-    <Container>
-      <Image source={{ uri: diary.images[0] }} />
-      <BottomView>
-        <ViewWrapper>
-          <CreatedTime>
-            {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
-          </CreatedTime>
-          <WeatherView value={diary.weather} />
-        </ViewWrapper>
-        <Title>{diary.title}</Title>
-        <Contents ellipsizeMode="tail" numberOfLines={3}>
-          {diary.contents[0]}
-        </Contents>
-      </BottomView>
-    </Container>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate(COMMON.getTemplateNameByNo(diary.templateType), {
+          diary,
+        });
+      }}
+    >
+      <Container>
+        <Image source={{ uri: diary.images[0] }} />
+        <BottomView>
+          <ViewWrapper>
+            <CreatedTime>
+              {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
+            </CreatedTime>
+            <WeatherView value={diary.weather} />
+          </ViewWrapper>
+          <Title>{diary.title}</Title>
+          <Contents ellipsizeMode="tail" numberOfLines={3}>
+            {diary.contents[0]}
+          </Contents>
+        </BottomView>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 

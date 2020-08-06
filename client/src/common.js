@@ -64,18 +64,12 @@ const COMMON = {
     }
   },
 
-  // getWeatherIconPathByName: (name) => {
-  //   switch (name) {
-  //     case 'sun':
-  //       return require(`../../assets/images/weather-sun.png`);
-  //     case 'rain':
-  //       return require(`../../assets/images/weather-rain.png`);
-  //     case 'cloud':
-  //       return require(`../../assets/images/weather-cloud.png`);
-  //     case 'thunder':
-  //       return require(`../../assets/images/weather-thunder.png`);
-  //   }
-  // },
+  getTemplateNameByNo: (number) => {
+    switch (number) {
+      case 1:
+        return 'ViewDiarySimple';
+    }
+  },
 };
 
 export default COMMON;
