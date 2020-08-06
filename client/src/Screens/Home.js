@@ -95,7 +95,7 @@ const Home = ({ navigation }) => {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
                 setCommon(false);
-                setIsLastPage(false)
+                setIsLastPage(false);
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));
                 setIsLastPage(object.data.diaries.length === 0);
@@ -106,7 +106,8 @@ const Home = ({ navigation }) => {
             setAlertData({
               ...alertData,
               show: true,
-              message: '일기 리스트를 가져오는데 실패하였습니다.',
+              message:
+                '서버 응답 지연으로, 일기목록을 가져오지 못했습니다. 관리자에게 문의해주세요.',
             });
           },
         );

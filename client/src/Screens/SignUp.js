@@ -139,15 +139,9 @@ const SignUp = ({ navigation }) => {
         email: data.email,
       },
       (object) => {
-        const isAvailable = object.data.isAvailable;
-
-        if (isAvailable) setData({ ...data, isAvailableEmail: true });
-        else
-          setAlertData({
-            ...alertData,
-            show: true,
-            message: '이미 사용중인 이메일 입니다.',
-          });
+        if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+          setData({ ...data, isAvailableEmail: true });
+        }
       },
     );
   };

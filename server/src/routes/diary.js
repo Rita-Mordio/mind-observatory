@@ -56,7 +56,7 @@ router.post("/getMyDiaries", (request, response) => {
           response.status(200).json({ success: true, diaries });
         })
         .catch((error) => {
-          response.status(400).json({
+          response.status(200).json({
             success: false,
             message: "일기 리스트를 가져오는데 실패하였습니다.",
             error,
@@ -64,7 +64,7 @@ router.post("/getMyDiaries", (request, response) => {
         });
     })
     .catch((error) => {
-      response.status(400).json({
+      response.status(200).json({
         success: false,
         message: "사용자 정보를 가져오는데 실패하였습니다.",
         error,

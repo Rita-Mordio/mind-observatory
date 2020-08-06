@@ -62,15 +62,24 @@ router.post("/authEmailSend", (request, response) => {
 router.post("/availableEmail", (request, response) => {
   User.findOne({ email: request.body.email })
     .then((result) => {
-      return response.status(200).json({
-        success: true,
-        isAvailable: result ? false : true,
-      });
+      if (result) {
+        return response.status(200).json({
+          success: false,
+          isAvailable: true,
+          message: "이미 사용중인 이메일 입니다.",
+        });
+      } else {
+        return response.status(200).json({
+          success: true,
+          isAvailable: true,
+        });
+      }
     })
     .catch((error) => {
-      return response.json({
+      return response.status(200).json({
         success: false,
-        message: "이메일 중복확인 실패.",
+        message:
+          "이메일 중복확인중 문제가 발생했습니다, 관리자에게 문의해주세요.",
         error: error,
       });
     });
@@ -119,15 +128,16 @@ router.post("/changeRandomPassword", (request, response, next) => {
           });
         })
         .catch((error) => {
-          return response.json({
+          return response.status(200).json({
             success: false,
-            message: "임시 비밀번호 생성 실패",
+            message:
+              "회원정보에 임시 비밀번호를 저장중 문제가 발생했습니다. 관리자에게 문의해 주세요",
             error: error,
           });
         });
     })
     .catch((error) => {
-      return response.json({
+      return response.status(200).json({
         success: false,
         message: "존재하지 않는 이메일 입니다.",
         error: error,
@@ -141,7 +151,7 @@ router.post("/register", (request, response) => {
 
   user.save((error, result) => {
     if (error)
-      return response.json({
+      return response.status(200).json({
         success: false,
         message: "회원가입에 실패하였습니다. 관리자에게 문의해주세요.",
         error,
@@ -157,20 +167,24 @@ router.post("/signIn", (request, response) => {
   User.findOne({ email: request.body.email })
     .then((result) => {
       if (!result) {
-        return response.json({
+        return response.status(200).json({
           success: false,
-          message: "존재하지 않는 E-mail 입니다.",
+          message: "존재하지 않는 이메일 입니다.",
         });
       } else {
         result.comparePassword(request.body.password, (error, isMatch) => {
           if (!isMatch)
-            return response.json({
+            return response.status(200).json({
               success: false,
               message: "비밀번호가 일치하지 않습니다.",
             });
 
           result.generateToken((error, user) => {
-            if (error) return response.status(400).send(error);
+            if (error)
+              return response.status(200).json({
+                success: false,
+                message: "사용자 토큰 생성중 문제가 발생했습니다.",
+              });
 
             response.status(200).json({
               success: true,

@@ -42,10 +42,7 @@ const MainStackScreen = ({ navigation }) => {
     RNS3.put(diaryData.images[0], awsConfig)
       .then((result) => {
         diaryData.images[0] = result.body.postResponse.location;
-        COMMON.axiosCall(
-          'diary/addDiary',
-          diaryData,
-          (result) => {
+        COMMON.axiosCall('diary/addDiary', diaryData, (result) => {
             if (!result.data.success)
               alert('서버 문제로 저장에 실패하였습니다.');
             setCommon(true);
@@ -57,7 +54,7 @@ const MainStackScreen = ({ navigation }) => {
         );
       })
       .catch((error) => {
-        console.log(error);
+        alert("이미지를 서버로 전송중 문제가 발생하였습니다. 관리자에게 문의해주세요.")
       });
   };
 
