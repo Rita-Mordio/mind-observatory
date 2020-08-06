@@ -19,6 +19,7 @@ import Alert from '../Components/Alert';
 
 const Container = styled.ScrollView`
   flex: 1;
+  background-color: #ffffff;
 `;
 
 const DiariesView = styled.View`
@@ -26,6 +27,10 @@ const DiariesView = styled.View`
   padding: 30px 20px;
   background-color: white;
   align-items: center;
+`;
+
+const ActivityIndicator = styled.ActivityIndicator`
+  margin-bottom: 50px;
 `;
 
 //###################################
@@ -38,6 +43,7 @@ const Home = ({ navigation }) => {
   const { setHeader, setCommon, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
   const [diaryViewType, setDiaryViewType] = useState('image');
   const [diariesData, setDiariesData] = useState([]);
@@ -46,6 +52,7 @@ const Home = ({ navigation }) => {
     const focusListener = navigation.addListener('focus', () => {
       if (getCommon().isChangeDiaryData) {
         setPage(1);
+        setShowSpinner(true);
         getDiaries();
       }
     });
@@ -62,7 +69,10 @@ const Home = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (page !== 1) getDiaries();
+    if (page !== 1) {
+      setShowSpinner(true);
+      getDiaries();
+    }
   }, [page]);
 
   useEffect(() => {
@@ -91,6 +101,7 @@ const Home = ({ navigation }) => {
             page: getCommon().isChangeDiaryData ? 1 : page,
           },
           (object) => {
+            setShowSpinner(false);
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
@@ -103,6 +114,7 @@ const Home = ({ navigation }) => {
             }
           },
           () => {
+            setShowSpinner(false);
             setAlertData({
               ...alertData,
               show: true,
@@ -113,6 +125,7 @@ const Home = ({ navigation }) => {
         );
       },
       () => {
+        setShowSpinner(false);
         setAlertData({
           ...alertData,
           show: true,
@@ -164,6 +177,7 @@ const Home = ({ navigation }) => {
         handleVieTypeToggle={handleVieTypeToggle}
       />
       <DiariesView>{renderDiaries()}</DiariesView>
+      {showSpinner && <ActivityIndicator size="large" color="#efc4cd" />}
 
       <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
