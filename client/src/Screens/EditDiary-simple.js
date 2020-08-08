@@ -26,12 +26,12 @@ const { width } = Dimensions.get('screen');
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
+  background-color: #ffffff;
 `;
 
 const Container = styled.View`
   flex: 1;
   padding: 20px;
-  background-color: #ffffff;
 `;
 
 const TopWrap = styled.View`
