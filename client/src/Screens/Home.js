@@ -3,9 +3,9 @@ import styled from 'styled-components/native';
 import _ from 'lodash';
 
 import TodayStatus from '../Components/TodayStatus';
-import DiaryViewType from '../Components/DiaryViewType';
-import ImageTypeDiary from '../Components/ImageTypeDiary';
-import TextTypeDiary from '../Components/TextTypeDiary';
+import SelectDiaryViewType from '../Components/SelectDiaryViewType';
+import ImageTypeDiaryItem from '../Components/ImageTypeDiaryItem';
+import TextTypeDiaryItem from '../Components/TextTypeDiaryItem';
 import Context from '../Redux/contexts/context';
 import COMMON from '../common';
 
@@ -147,7 +147,7 @@ const Home = ({ navigation }) => {
     if (diaryViewType === 'image') {
       return diariesData.map((diary, index) => {
         return (
-          <ImageTypeDiary
+          <ImageTypeDiaryItem
             key={diary._id}
             diary={diary}
             navigation={navigation}
@@ -157,7 +157,7 @@ const Home = ({ navigation }) => {
     } else if (diaryViewType === 'text') {
       return diariesData.map((diary, index) => {
         return (
-          <TextTypeDiary
+          <TextTypeDiaryItem
             key={diary._id}
             diary={diary}
             navigation={navigation}
@@ -197,7 +197,7 @@ const Home = ({ navigation }) => {
           }}
         >
           <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
-          <DiaryViewType
+          <SelectDiaryViewType
             diaryViewType={diaryViewType}
             handleVieTypeToggle={handleVieTypeToggle}
           />

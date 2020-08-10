@@ -33,7 +33,7 @@ const Weather = styled.Image`
 //###################################
 //###################################
 
-const ViewDiaryTop = ({ createdAt, weather }) => {
+const DiaryTopInfo = ({ createdAt, weather }) => {
   const renderWeather = () => {
     switch (weather) {
       case 'sun':
@@ -56,4 +56,4 @@ const ViewDiaryTop = ({ createdAt, weather }) => {
   );
 };
 
-export default ViewDiaryTop;
+export default DiaryTopInfo;

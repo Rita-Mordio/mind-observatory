@@ -1,13 +1,11 @@
 import React from 'react';
-import { Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
-import COMMON from "../common";
+import COMMON from '../common';
 
-import WeatherView from './WeatherView';
-
-const { width } = Dimensions.get('screen');
+import WeatherIcon from './WeatherIcon';
 
 //##################################
 //##################################
@@ -20,19 +18,8 @@ const Container = styled.View`
   margin-bottom: 30px;
   border-width: 1px;
   border-color: #d9d9d9;
+  padding: 10px 15px 20px 15px;
   border-radius: 10px;
-`;
-
-const Image = styled.Image`
-  width: 100%;
-  height: ${Math.round(width * 0.3)}px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
-const BottomView = styled.View`
-  width: 100%;
-  padding: 25px 15px;
 `;
 
 const ViewWrapper = styled.View`
@@ -52,18 +39,13 @@ const Title = styled.Text`
   margin-top: 7px;
 `;
 
-const Contents = styled.Text`
-  color: #3f3e3c;
-  margin-top: 20px;
-`;
-
 //###################################
 //###################################
 //############ Component ############
 //###################################
 //###################################
 
-const ImageTypeDiary = ({ diary, navigation }) => {
+const TextTypeDiaryItem = ({ diary, navigation }) => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -73,22 +55,16 @@ const ImageTypeDiary = ({ diary, navigation }) => {
       }}
     >
       <Container>
-        <Image source={{ uri: diary.images[0] }} />
-        <BottomView>
-          <ViewWrapper>
-            <CreatedTime>
-              {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
-            </CreatedTime>
-            <WeatherView value={diary.weather} />
-          </ViewWrapper>
-          <Title>{diary.title}</Title>
-          <Contents ellipsizeMode="tail" numberOfLines={3}>
-            {diary.contents[0]}
-          </Contents>
-        </BottomView>
+        <ViewWrapper>
+          <CreatedTime>
+            {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
+          </CreatedTime>
+          <WeatherIcon value={diary.weather} />
+        </ViewWrapper>
+        <Title>{diary.title}</Title>
       </Container>
     </TouchableWithoutFeedback>
   );
 };
 
-export default ImageTypeDiary;
+export default TextTypeDiaryItem;

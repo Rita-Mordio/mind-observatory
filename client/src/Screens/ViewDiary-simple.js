@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 
-import ViewDiaryTop from "../Components/ViewDiaryTop";
+import DiaryTopInfo from "../Components/DiaryTopInfo";
 
 const { width } = Dimensions.get('screen');
 
@@ -65,7 +65,7 @@ const ViewDiarySimple = ({ route }) => {
   return (
     <SafeAreaView>
       <Container>
-        <ViewDiaryTop createdAt={diary.createdAt} weather={diary.weather} />
+        <DiaryTopInfo createdAt={diary.createdAt} weather={diary.weather} />
         <ImageWrap>
           <Image source={{ uri: diary.images[0] }} resizeMode="cover" />
         </ImageWrap>

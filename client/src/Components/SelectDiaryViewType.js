@@ -36,7 +36,7 @@ const ButtonWrap = styled.View`
 //###################################
 //###################################
 
-const DiaryViewType = ({ diaryViewType, handleVieTypeToggle }) => {
+const SelectDiaryViewType = ({ diaryViewType, handleVieTypeToggle }) => {
   return (
     <Container>
       <Text>나의 기록</Text>
@@ -71,4 +71,4 @@ const DiaryViewType = ({ diaryViewType, handleVieTypeToggle }) => {
   );
 };
 
-export default DiaryViewType;
+export default SelectDiaryViewType;

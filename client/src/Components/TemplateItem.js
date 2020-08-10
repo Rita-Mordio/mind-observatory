@@ -57,7 +57,7 @@ const Description = styled.Text`
 //###################################
 //###################################
 
-const TemplateView = ({ title, description, viewData, navigation }) => {
+const TemplateItem = ({ title, description, viewData, navigation }) => {
 
   const renderAreaWrap = (template) => {
     return template.map((item, index) => {
@@ -101,4 +101,4 @@ const TemplateView = ({ title, description, viewData, navigation }) => {
   );
 };
 
-export default TemplateView;
+export default TemplateItem;

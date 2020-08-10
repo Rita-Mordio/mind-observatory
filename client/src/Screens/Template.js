@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import Carousel from 'react-native-snap-carousel';
 import TemplateViewData from '../TemplateViewData';
-import TemplateView from '../Components/TemplateView';
+import TemplateItem from '../Components/TemplateItem';
 
 const { width } = Dimensions.get('screen');
 
@@ -50,7 +50,7 @@ class Template extends Component {
 
   renderTemplate = ({ item }) => {
     return (
-      <TemplateView
+      <TemplateItem
         title={item.title}
         description={item.description}
         viewData={item.viewData}

@@ -7,7 +7,7 @@ const Image = styled.Image`
   margin-left: 10px;
 `;
 
-const WeatherView = ({ value }) => {
+const WeatherIcon = ({ value }) => {
   const [weather, setWeather] = useState(value);
 
   const getSource = () => {
@@ -27,4 +27,4 @@ const WeatherView = ({ value }) => {
   return <Image source={getSource()} />;
 };
 
-export default WeatherView;
+export default WeatherIcon;
