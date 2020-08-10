@@ -7,7 +7,7 @@ const Image = styled.Image`
   margin-left: 10px;
 `;
 
-const WeatherIcon = ({ value }) => {
+const WeatherIcon = ({ value, id }) => {
   const [weather, setWeather] = useState(value);
 
   const getSource = () => {
@@ -24,7 +24,7 @@ const WeatherIcon = ({ value }) => {
     }
   };
 
-  return <Image source={getSource()} />;
+  return <Image key={`${id}${Math.random()}`} source={getSource()} />;
 };
 
 export default WeatherIcon;

@@ -88,14 +88,16 @@ const Title = styled.TextInput`
 //###################################
 
 const EditDiarySimple = ({ route }) => {
-  const { setDiary, getDiary } = useContext(Context);
+  const diary = route.params.diary;
 
-  const [imageUrl, setImageUrl] = useState(
-    'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
-  );
+  const { setDiary, getDiary } = useContext(Context);
 
   const [weather, setWeather] = useState(
     require(`../../assets/images/weather-sun.png`),
+  );
+
+  const [imageUrl, setImageUrl] = useState(
+    'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
   );
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -107,7 +109,6 @@ const EditDiarySimple = ({ route }) => {
   });
 
   useEffect(() => {
-    const diary = route.params.diary;
     if (COMMON.isEmptyValue(diary)) {
       COMMON.getStoreData('@userToken', (result) => {
         setDiary({
@@ -122,8 +123,8 @@ const EditDiarySimple = ({ route }) => {
     }
   }, []);
 
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
+  const toggleModal = (value) => {
+    setModalVisible(value);
   };
 
   const choosePhotoFromLibrary = () => {
@@ -173,7 +174,7 @@ const EditDiarySimple = ({ route }) => {
             <TopWrap>
               <View />
               <Date>{moment().format('YYYY년 MM월 DD일')}</Date>
-              <TouchableWithoutFeedback onPress={toggleModal}>
+              <TouchableWithoutFeedback onPress={() => {toggleModal(true)}}>
                 <Weather source={weather}></Weather>
               </TouchableWithoutFeedback>
             </TopWrap>
@@ -185,11 +186,7 @@ const EditDiarySimple = ({ route }) => {
 
             <BottomWrap>
               <Title
-                defaultValue={
-                  COMMON.isEmptyValue(route.params.diary)
-                    ? ''
-                    : route.params.diary.title
-                }
+                defaultValue={COMMON.isEmptyValue(diary) ? '' : diary.title}
                 placeholder="제목"
                 placeholderTextColor="#3f3e3c"
                 onChangeText={(value) => {
@@ -201,9 +198,7 @@ const EditDiarySimple = ({ route }) => {
                 style={styles.textarea}
                 maxLength={100}
                 defaultValue={
-                  COMMON.isEmptyValue(route.params.diary)
-                    ? ''
-                    : route.params.diary.contents[0]
+                  COMMON.isEmptyValue(diary) ? '' : diary.contents[0]
                 }
                 placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
                 placeholderTextColor={'#3f3e3c'}
@@ -218,6 +213,7 @@ const EditDiarySimple = ({ route }) => {
               visible={modalVisible}
               toggleModal={toggleModal}
               setWeather={setWeather}
+              defaultWeather={COMMON.isEmptyValue(diary) ? '' : diary.weather}
             />
             <Alert alertData={alertData} setAlertData={setAlertData} />
           </Container>

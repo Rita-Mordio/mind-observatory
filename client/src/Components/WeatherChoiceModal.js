@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { TouchableWithoutFeedback, StyleSheet } from 'react-native';
@@ -22,11 +22,17 @@ const Weather = styled.Image`
   height: 32px;
 `;
 
-const WeatherChoiceModal = ({ visible, toggleModal, setWeather }) => {
+const WeatherChoiceModal = ({ visible, toggleModal, setWeather, defaultWeather }) => {
   const { setDiary, getDiary } = useContext(Context);
 
+  useEffect(() => {
+    if(defaultWeather !== ''){
+      handleIconChange(defaultWeather)
+    }
+  }, [])
+
   const handleIconChange = (name) => {
-    toggleModal();
+    toggleModal(false);
 
     setDiary({
       ...getDiary(),
@@ -48,7 +54,7 @@ const WeatherChoiceModal = ({ visible, toggleModal, setWeather }) => {
   return (
     <Overlay
       isVisible={visible}
-      onBackdropPress={toggleModal}
+      onBackdropPress={() => {toggleModal(false)}}
       overlayStyle={styles.overlayStyle}
     >
       <View>
