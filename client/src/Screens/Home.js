@@ -117,7 +117,7 @@ const Home = ({ navigation }) => {
                 setIsLastPage(false);
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));
-                setIsLastPage(object.data.diaries.length === 0);
+                setIsLastPage(object.data.diaries.length < 10);
               }
             }
           },
