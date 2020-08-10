@@ -28,6 +28,7 @@ const MainStackScreen = ({ route, navigation }) => {
 
   const saveDairy = () => {
     const diaryData = getDiary();
+    let url = '';
 
     if (COMMON.isEmptyValue(diaryData.title)) {
       alert('제목을 입력해 주세요.');
@@ -40,11 +41,17 @@ const MainStackScreen = ({ route, navigation }) => {
       return false;
     }
 
+    if (COMMON.isEmptyValue(diaryData.diaryId)) {
+      url = 'diary/addDiary';
+    } else {
+      url = 'diary/editDiary';
+    }
+
     RNS3.put(diaryData.images[0], awsConfig)
       .then((result) => {
         diaryData.images[0] = result.body.postResponse.location;
         COMMON.axiosCall(
-          'diary/addDiary',
+          url,
           diaryData,
           (result) => {
             if (!result.data.success)

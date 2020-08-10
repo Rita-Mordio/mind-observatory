@@ -1,6 +1,7 @@
 import { SET_DIARY } from '../constants/actionTypes';
 
 export const initialDiaryState = {
+  diaryId: '',
   token: '',
   templateType: 1,
   title: '',
@@ -19,6 +20,7 @@ export const diaryReducer = (prevState, action) => {
   switch (action.type) {
     case SET_DIARY:
       const {
+        diaryId,
         token,
         templateType,
         title,
@@ -29,6 +31,7 @@ export const diaryReducer = (prevState, action) => {
 
       return {
         ...prevState,
+        diaryId,
         token,
         templateType,
         title,
