@@ -20,8 +20,8 @@ const LoadingContainer = styled.View`
 `;
 
 const LoadingImage = styled.Image`
-  width: ${height_logo};
-  height: ${height_logo};
+  width: ${Math.round(height_logo)}px;
+  height: ${Math.round(height_logo)}px;
 `;
 
 const LoadingText = styled.Text`

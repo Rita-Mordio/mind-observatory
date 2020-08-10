@@ -12,12 +12,13 @@ router.post("/addDiary", (request, response) => {
     .then((user) => {
       request.body.userFrom = user._id;
       delete request.body.token;
+      delete request.body._id;
 
       const diary = new Diary(request.body);
 
       diary.save((error, result) => {
         if (error)
-          return response.status(400).json({
+          return response.status(200).json({
             success: false,
             message: "서버문제로 일기 저장에 실패하였습니다.",
             error,
@@ -26,20 +27,22 @@ router.post("/addDiary", (request, response) => {
       });
     })
     .catch((error) => {
-      response.status(400).json({ success: false, error });
+      response.status(200).json({ success: false, error });
     });
 });
 
 //일기 수정
 //일기 Id를 클라이언트에서 보내줘야함
 router.post("/editDiary", (request, response) => {
-  request.body.updateDate = Date.now();
-  Diary.update({ _id: request.body.diaryId }, { $set: request.body })
+
+    console.log(request.body)
+
+    Diary.update({ _id: request.body._id }, { $set: request.body })
     .then((result) => {
       response.status(200).json({ success: true, result });
     })
     .catch((error) => {
-      response.status(400).json({ success: false, error });
+      response.status(200).json({ success: false, error });
     });
 });
 
@@ -48,12 +51,10 @@ router.post("/getMyDiaries", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
       if (!user)
-        return response
-          .status(200)
-          .json({
-            success: false,
-            message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
-          });
+        return response.status(200).json({
+          success: false,
+          message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
+        });
 
       Diary.find({ userFrom: user._id })
         .sort({ createdAt: -1 })

@@ -106,7 +106,8 @@ const TodayStatus = ({ navigation, recentDiary }) => {
   if (recentDiary === undefined) {
     return <Container>{renderDefaultWindow()}</Container>;
   } else {
-    return <Container>{renderTodayWindow()}</Container>;
+    // return <Container>{renderTodayWindow()}</Container>;
+    return <Container>{renderDefaultWindow()}</Container>;
   }
 };
 

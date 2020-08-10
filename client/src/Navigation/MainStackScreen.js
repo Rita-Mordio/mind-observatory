@@ -26,7 +26,22 @@ const MainStackScreen = ({ route, navigation }) => {
     successActionStatus: 201,
   };
 
-  const saveDiary = () => {
+  const saveDiary = (url, diaryData) => {
+    COMMON.axiosCall(
+      url,
+      diaryData,
+      (result) => {
+        if (!result.data.success) alert(result.data.message);
+        setCommon(true);
+        navigation.navigate('Main');
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
+
+  const processDiary = () => {
     const diaryData = getDiary();
     let url = '';
 
@@ -36,39 +51,28 @@ const MainStackScreen = ({ route, navigation }) => {
     } else if (COMMON.isEmptyValue(diaryData.contents[0])) {
       alert('내용을 입력해 주세요.');
       return false;
-    } else if (COMMON.isEmptyValue(diaryData.images[0].uri)) {
+    } else if (COMMON.isEmptyValue(diaryData.images.length === 0)) {
       alert('이미지를 선택해 주세요.');
       return false;
     }
 
-    if (COMMON.isEmptyValue(diaryData.diaryId)) {
-      url = 'diary/addDiary';
-    } else {
-      url = 'diary/editDiary';
-    }
+    if (COMMON.isEmptyValue(diaryData._id)) url = 'diary/addDiary';
+    else url = 'diary/editDiary';
 
-    RNS3.put(diaryData.images[0], awsConfig)
-      .then((result) => {
-        diaryData.images[0] = result.body.postResponse.location;
-        COMMON.axiosCall(
-          url,
-          diaryData,
-          (result) => {
-            if (!result.data.success)
-              alert('서버 문제로 저장에 실패하였습니다.');
-            setCommon(true);
-            navigation.navigate('Main');
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
-      })
-      .catch((error) => {
-        alert(
-          '이미지를 서버로 전송중 문제가 발생하였습니다. 관리자에게 문의해주세요.',
-        );
-      });
+    if (typeof diaryData.images[0] === 'string') {
+      saveDiary(url, diaryData);
+    } else {
+      RNS3.put(diaryData.images[0], awsConfig)
+        .then((result) => {
+          diaryData.images[0] = result.body.postResponse.location;
+          saveDiary(url, diaryData);
+        })
+        .catch((error) => {
+          alert(
+            '이미지를 서버로 전송중 문제가 발생하였습니다. 관리자에게 문의해주세요.',
+          );
+        });
+    }
   };
 
   return (
@@ -180,7 +184,7 @@ const MainStackScreen = ({ route, navigation }) => {
               name="edit"
               size={24}
               backgroundColor="#efc4cd"
-              onPress={saveDiary}
+              onPress={processDiary}
             />
           ),
         }}

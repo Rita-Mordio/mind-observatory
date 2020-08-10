@@ -117,6 +117,7 @@ const EditDiarySimple = ({ route }) => {
         });
       });
     } else {
+      setImageUrl(diary.images[0]);
       setDiary(diary);
     }
   }, []);
@@ -184,6 +185,11 @@ const EditDiarySimple = ({ route }) => {
 
             <BottomWrap>
               <Title
+                defaultValue={
+                  COMMON.isEmptyValue(route.params.diary)
+                    ? ''
+                    : route.params.diary.title
+                }
                 placeholder="제목"
                 placeholderTextColor="#3f3e3c"
                 onChangeText={(value) => {
@@ -194,6 +200,11 @@ const EditDiarySimple = ({ route }) => {
                 containerStyle={styles.textareaContainer}
                 style={styles.textarea}
                 maxLength={100}
+                defaultValue={
+                  COMMON.isEmptyValue(route.params.diary)
+                    ? ''
+                    : route.params.diary.contents[0]
+                }
                 placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
                 placeholderTextColor={'#3f3e3c'}
                 underlineColorAndroid={'transparent'}

@@ -114,8 +114,8 @@ const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
   logo: {
-    width: height_logo,
-    height: height_logo,
+    width: Math.round(height_logo),
+    height: Math.round(height_logo),
   },
   bottom: {
     flex: 1,
