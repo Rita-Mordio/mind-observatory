@@ -33,7 +33,7 @@ const TemplateTitle = styled.Text`
 const Area = styled.View`
   flex: 1;
   background-color: #cee1e9;
-  border-radius: 15px;
+  border-radius: 10px;
   margin: 5px;
   justify-content: center;
   align-items: center;

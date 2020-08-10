@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 
@@ -10,6 +11,7 @@ import Context from '../Redux/contexts/context';
 import COMMON from '../common';
 
 import Alert from '../Components/Alert';
+import Loader from '../Components/Loader';
 
 //##################################
 //##################################
@@ -43,16 +45,17 @@ const Home = ({ navigation }) => {
   const { setHeader, setCommon, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
-  const [showSpinner, setShowSpinner] = useState(false);
-  const [isLastPage, setIsLastPage] = useState(false);
-  const [diaryViewType, setDiaryViewType] = useState('image');
-  const [diariesData, setDiariesData] = useState([]);
+  const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
+  const [showBottomSpinner, setShowBottomSpinner] = useState(false); //하단 스피너 여부
+  const [isLastPage, setIsLastPage] = useState(false); //마지막 페이지인지 확인용, 마지막 페이지 일때는 하단 스크롤을 해도 더이상 Axios 호출을 안함
+  const [diaryViewType, setDiaryViewType] = useState('image'); //일기 모양을 이미지형 or 글자형 보여질 형태 선택
+  const [diariesData, setDiariesData] = useState([]); //가져온 다이어리 데이터들
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
       if (getCommon().isChangeDiaryData) {
         setPage(1);
-        setShowSpinner(true);
+        setShowBottomSpinner(true);
         getDiaries();
       }
     });
@@ -70,7 +73,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     if (page !== 1) {
-      setShowSpinner(true);
+      setShowBottomSpinner(true);
       getDiaries();
     }
   }, [page]);
@@ -101,7 +104,8 @@ const Home = ({ navigation }) => {
             page: getCommon().isChangeDiaryData ? 1 : page,
           },
           (object) => {
-            setShowSpinner(false);
+            setShowLoader(false)
+            setShowBottomSpinner(false);
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
@@ -114,7 +118,7 @@ const Home = ({ navigation }) => {
             }
           },
           (error) => {
-            setShowSpinner(false);
+            setShowBottomSpinner(false);
             setAlertData({
               ...alertData,
               show: true,
@@ -125,7 +129,7 @@ const Home = ({ navigation }) => {
         );
       },
       () => {
-        setShowSpinner(false);
+        setShowBottomSpinner(false);
         setAlertData({
           ...alertData,
           show: true,
@@ -138,16 +142,29 @@ const Home = ({ navigation }) => {
   const renderDiaries = () => {
     if (diaryViewType === 'image') {
       return diariesData.map((diary, index) => {
-        return <ImageTypeDiary key={diary._id} diary={diary} navigation={navigation} />;
+        return (
+          <ImageTypeDiary
+            key={diary._id}
+            diary={diary}
+            navigation={navigation}
+          />
+        );
       });
     } else if (diaryViewType === 'text') {
       return diariesData.map((diary, index) => {
-        return <TextTypeDiary key={diary._id} diary={diary} navigation={navigation} />;
+        return (
+          <TextTypeDiary
+            key={diary._id}
+            diary={diary}
+            navigation={navigation}
+          />
+        );
       });
     }
   };
 
   const isCloseToBottom = ({
+    // 스크롤이 맨 밑으로 내려갔는지 확인
     layoutMeasurement,
     contentOffset,
     contentSize,
@@ -163,25 +180,31 @@ const Home = ({ navigation }) => {
     if (!isLastPage) setPage(page + 1);
   }, 500);
 
-  return (
-    <Container
-      onScroll={({ nativeEvent }) => {
-        if (isCloseToBottom(nativeEvent)) {
-          setPageThrottle();
-        }
-      }}
-    >
-      <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
-      <DiaryViewType
-        diaryViewType={diaryViewType}
-        handleVieTypeToggle={handleVieTypeToggle}
-      />
-      <DiariesView>{renderDiaries()}</DiariesView>
-      {showSpinner && <ActivityIndicator size="large" color="#efc4cd" />}
+  if (showLoader) {
+    return <Loader />;
+  } else {
+    return (
+      <Container
+        onScroll={({ nativeEvent }) => {
+          if (isCloseToBottom(nativeEvent)) {
+            setPageThrottle();
+          }
+        }}
+      >
+        <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
+        <DiaryViewType
+          diaryViewType={diaryViewType}
+          handleVieTypeToggle={handleVieTypeToggle}
+        />
+        <DiariesView>{renderDiaries()}</DiariesView>
+        {showBottomSpinner && (
+          <ActivityIndicator size="large" color="#efc4cd" />
+        )}
 
-      <Alert alertData={alertData} setAlertData={setAlertData} />
-    </Container>
-  );
+        <Alert alertData={alertData} setAlertData={setAlertData} />
+      </Container>
+    );
+  }
 };
 
 export default Home;

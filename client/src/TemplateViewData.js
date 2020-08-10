@@ -10,7 +10,7 @@ const TemplateViewData = [
                 title: ['이미지'],
             },
             {
-                flex: 1,
+                flex: 1.3,
                 title: ['제목'],
             },
             {
@@ -30,7 +30,7 @@ const TemplateViewData = [
                 title: ['이미지'],
             },
             {
-                flex: 1,
+                flex: 1.3,
                 title: ['제목'],
             },
             {
