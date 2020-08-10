@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 
@@ -12,6 +11,7 @@ import COMMON from '../common';
 
 import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
+import * as Animatable from 'react-native-animatable';
 
 //##################################
 //##################################
@@ -19,7 +19,11 @@ import Loader from '../Components/Loader';
 //##################################
 //##################################
 
-const Container = styled.ScrollView`
+const Container = styled.View`
+  flex: 1;
+`;
+
+const ScrollView = styled.ScrollView`
   flex: 1;
   background-color: #ffffff;
 `;
@@ -104,7 +108,7 @@ const Home = ({ navigation }) => {
             page: getCommon().isChangeDiaryData ? 1 : page,
           },
           (object) => {
-            setShowLoader(false)
+            setShowLoader(false);
             setShowBottomSpinner(false);
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               if (getCommon().isChangeDiaryData) {
@@ -184,24 +188,26 @@ const Home = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <Container
-        onScroll={({ nativeEvent }) => {
-          if (isCloseToBottom(nativeEvent)) {
-            setPageThrottle();
-          }
-        }}
-      >
-        <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
-        <DiaryViewType
-          diaryViewType={diaryViewType}
-          handleVieTypeToggle={handleVieTypeToggle}
-        />
-        <DiariesView>{renderDiaries()}</DiariesView>
-        {showBottomSpinner && (
-          <ActivityIndicator size="large" color="#efc4cd" />
-        )}
+      <Container as={Animatable.View} animation="fadeIn" duration={1500}>
+        <ScrollView
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              setPageThrottle();
+            }
+          }}
+        >
+          <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
+          <DiaryViewType
+            diaryViewType={diaryViewType}
+            handleVieTypeToggle={handleVieTypeToggle}
+          />
+          <DiariesView>{renderDiaries()}</DiariesView>
+          {showBottomSpinner && (
+            <ActivityIndicator size="large" color="#efc4cd" />
+          )}
 
-        <Alert alertData={alertData} setAlertData={setAlertData} />
+          <Alert alertData={alertData} setAlertData={setAlertData} />
+        </ScrollView>
       </Container>
     );
   }
