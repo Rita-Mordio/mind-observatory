@@ -26,7 +26,7 @@ const MainStackScreen = ({ route, navigation }) => {
     successActionStatus: 201,
   };
 
-  const saveDairy = () => {
+  const saveDiary = () => {
     const diaryData = getDiary();
     let url = '';
 
@@ -115,6 +115,22 @@ const MainStackScreen = ({ route, navigation }) => {
               }}
             />
           ),
+          headerRight: () => (
+            <FontAwesome.Button
+              name="pencil-ruler"
+              size={24}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                const diary = route.state.routes[1].params.diary;
+                navigation.navigate(
+                  COMMON.getEditTemplateNameByNo(diary.templateType),
+                  {
+                    diary,
+                  },
+                );
+              }}
+            />
+          ),
         }}
       />
       <MainStack.Screen
@@ -164,7 +180,7 @@ const MainStackScreen = ({ route, navigation }) => {
               name="edit"
               size={24}
               backgroundColor="#efc4cd"
-              onPress={saveDairy}
+              onPress={saveDiary}
             />
           ),
         }}

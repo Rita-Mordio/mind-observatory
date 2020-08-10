@@ -90,16 +90,6 @@ const Title = styled.TextInput`
 const EditDiarySimple = ({ route }) => {
   const { setDiary, getDiary } = useContext(Context);
 
-  useEffect(() => {
-    COMMON.getStoreData('@userToken', (result) => {
-      setDiary({
-        ...getDiary(),
-        token: result,
-        templateType: route.params.templateType,
-      });
-    });
-  }, []);
-
   const [imageUrl, setImageUrl] = useState(
     'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
   );
@@ -115,6 +105,21 @@ const EditDiarySimple = ({ route }) => {
     message: '',
     onConfirmPressed: null,
   });
+
+  useEffect(() => {
+    const diary = route.params.diary;
+    if (COMMON.isEmptyValue(diary)) {
+      COMMON.getStoreData('@userToken', (result) => {
+        setDiary({
+          ...getDiary(),
+          token: result,
+          templateType: route.params.templateType,
+        });
+      });
+    } else {
+      setDiary(diary);
+    }
+  }, []);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
