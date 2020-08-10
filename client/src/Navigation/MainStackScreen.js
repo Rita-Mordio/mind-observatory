@@ -14,7 +14,7 @@ import COMMON from '../common';
 
 const MainStack = createStackNavigator();
 
-const MainStackScreen = ({ navigation }) => {
+const MainStackScreen = ({ route, navigation }) => {
   const { getTheme, getDiary, setCommon } = useContext(Context);
 
   const awsConfig = {

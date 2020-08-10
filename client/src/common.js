@@ -64,10 +64,17 @@ const COMMON = {
     }
   },
 
-  getTemplateNameByNo: (number) => {
+  getViewTemplateNameByNo: (number) => {
     switch (number) {
       case 1:
         return 'ViewDiarySimple';
+    }
+  },
+
+  getEditTemplateNameByNo: (number) => {
+    switch (number) {
+      case 1:
+        return 'EditDiarySimple';
     }
   },
 };

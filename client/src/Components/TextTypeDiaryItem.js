@@ -49,7 +49,7 @@ const TextTypeDiaryItem = ({ diary, navigation }) => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate(COMMON.getTemplateNameByNo(diary.templateType), {
+        navigation.navigate(COMMON.getViewTemplateNameByNo(diary.templateType), {
           diary,
         });
       }}
