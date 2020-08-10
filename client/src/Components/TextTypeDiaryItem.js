@@ -59,7 +59,7 @@ const TextTypeDiaryItem = ({ diary, navigation }) => {
           <CreatedTime>
             {moment(diary.createdAt).format('YYYY년 MM월 DD일')}
           </CreatedTime>
-          <WeatherIcon value={diary.weather} />
+          <WeatherIcon value={diary.weather} key={`${diary._id}${Math.random()}`} id={diary._id} />
         </ViewWrapper>
         <Title>{diary.title}</Title>
       </Container>
