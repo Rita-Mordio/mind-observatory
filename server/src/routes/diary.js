@@ -34,9 +34,6 @@ router.post("/addDiary", (request, response) => {
 //일기 수정
 //일기 Id를 클라이언트에서 보내줘야함
 router.post("/editDiary", (request, response) => {
-
-    console.log(request.body)
-
     Diary.update({ _id: request.body._id }, { $set: request.body })
     .then((result) => {
       response.status(200).json({ success: true, result });
