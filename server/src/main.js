@@ -18,8 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
-// console.log(process.memoryUsage());
-// app.get("/", (req, res) => res.send("Hello World!"));
+//모든 요청에 다 실행
+// app.use((req, res, next) => {
+//   console.log(process.memoryUsage())
+//   next()
+// })
 
 app.use("/api/user", userRouter);
 app.use("/api/diary", diaryRouter);
