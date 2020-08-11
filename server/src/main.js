@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
-require('express-async-errors')
-import morgan from "morgan"
+require("express-async-errors");
+import morgan from "morgan";
 import cors from "cors";
 
 import connect from "./schemas";
@@ -13,7 +13,7 @@ const app = express();
 dotenv.config();
 connect();
 
-app.use(morgan('combined'))
+app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,6 +27,10 @@ app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/diary", diaryRouter);
+
+app.use((error, request, response, next) => {
+  response.status(500).render("error");
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`서버 가동중 http://localhost:${process.env.PORT}`);
