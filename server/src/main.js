@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+require('express-async-errors')
 import morgan from "morgan"
 import cors from "cors";
 
