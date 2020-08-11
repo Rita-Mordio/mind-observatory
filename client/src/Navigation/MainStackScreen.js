@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
+
 import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
@@ -121,7 +123,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
           headerRight: () => (
             <FontAwesome.Button
-              name="pencil-ruler"
+              name="edit"
               size={24}
               backgroundColor="#efc4cd"
               onPress={() => {
@@ -180,9 +182,9 @@ const MainStackScreen = ({ route, navigation }) => {
             />
           ),
           headerRight: () => (
-            <FontAwesome.Button
-              name="edit"
-              size={24}
+            <Feather.Button
+              name="check-square"
+              size={26}
               backgroundColor="#efc4cd"
               onPress={processDiary}
             />
