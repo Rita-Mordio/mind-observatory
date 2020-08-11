@@ -1,5 +1,4 @@
 import express from "express";
-import moment from "moment";
 
 import Diary from "../schemas/Diary";
 import User from "../schemas/User";
@@ -27,19 +26,19 @@ router.post("/addDiary", (request, response) => {
       });
     })
     .catch((error) => {
-      response.status(200).json({ success: false, error });
+      return response.status(200).json({ success: false, error });
     });
 });
 
 //일기 수정
 //일기 Id를 클라이언트에서 보내줘야함
 router.post("/editDiary", (request, response) => {
-    Diary.update({ _id: request.body._id }, { $set: request.body })
+  Diary.update({ _id: request.body._id }, { $set: request.body })
     .then((result) => {
-      response.status(200).json({ success: true, result });
+      return response.status(200).json({ success: true, result });
     })
     .catch((error) => {
-      response.status(200).json({ success: false, error });
+      return response.status(200).json({ success: false, error });
     });
 });
 
@@ -58,10 +57,10 @@ router.post("/getMyDiaries", (request, response) => {
         .skip((request.body.page - 1) * 10)
         .limit(10)
         .then((diaries) => {
-          response.status(200).json({ success: true, diaries });
+          return response.status(200).json({ success: true, diaries });
         })
         .catch((error) => {
-          response.status(200).json({
+          return response.status(200).json({
             success: false,
             message: "일기 리스트를 가져오는데 실패하였습니다.",
             error,
@@ -69,7 +68,7 @@ router.post("/getMyDiaries", (request, response) => {
         });
     })
     .catch((error) => {
-      response.status(200).json({
+      return response.status(200).json({
         success: false,
         message: "사용자 정보를 가져오는데 실패하였습니다.",
         error,
@@ -82,10 +81,10 @@ router.post("/getMyDiaries", (request, response) => {
 router.post("/getDiary", (request, response) => {
   Diary.findOne({ _id: request.body.id })
     .then((result) => {
-      response.status(200).json({ success: true, result });
+      return response.status(200).json({ success: true, result });
     })
     .catch((error) => {
-      response.status(400).json({ success: false, error });
+      return response.status(400).json({ success: false, error });
     });
 });
 
@@ -95,14 +94,14 @@ router.post("/searchMyDiariesByTitle", (request, response) => {
     .then((user) => {
       Diary.find({ userFrom: user._id, title: { $regex: request.body.title } })
         .then((result) => {
-          response.status(200).json({ success: true, result });
+          return response.status(200).json({ success: true, result });
         })
         .catch((error) => {
-          response.status(400).json({ success: false, error });
+          return response.status(400).json({ success: false, error });
         });
     })
     .catch((error) => {
-      response.status(400).json({ success: false, error });
+      return response.status(400).json({ success: false, error });
     });
 });
 

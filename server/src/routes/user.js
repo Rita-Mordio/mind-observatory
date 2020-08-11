@@ -186,7 +186,7 @@ router.post("/signIn", (request, response) => {
                 message: "사용자 토큰 생성중 문제가 발생했습니다.",
               });
 
-            response.status(200).json({
+            return response.status(200).json({
               success: true,
               userId: user._id,
               token: user.token,
