@@ -1,7 +1,5 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import { RNS3 } from 'react-native-aws3';
-import AWS_KEY from "./AWS_Key";
 
 const COMMON = {
   axiosCall: (url, data, successCallBack, errorCallBack) => {

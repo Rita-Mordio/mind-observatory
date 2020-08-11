@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import morgan from "morgan"
 import cors from "cors";
 
 import connect from "./schemas";
@@ -11,12 +12,14 @@ const app = express();
 dotenv.config();
 connect();
 
+app.use(morgan('combined'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
-app.get("/", (req, res) => res.send("Hello World!"));
+// console.log(process.memoryUsage());
+// app.get("/", (req, res) => res.send("Hello World!"));
 
 app.use("/api/user", userRouter);
 app.use("/api/diary", diaryRouter);
