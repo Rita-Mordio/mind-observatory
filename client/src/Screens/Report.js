@@ -1,7 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
-import _ from 'lodash'
+import _ from 'lodash';
+
+import COMMON from '../common';
+import Alert from '../Components/Alert';
 import ReportDayItem from '../Components/ReportDayItem';
 
 //##################################
@@ -31,45 +34,85 @@ const ReportWeekItem = styled.View`
 const Report = ({ navigation }) => {
   const { setHeader } = useContext(Context);
 
+  const [weather, setWeather] = useState([]);
+  const [alertData, setAlertData] = useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
+
   useEffect(() => {
     setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
+    getReportWeather();
 
     const unsubscribe = navigation.addListener('tabPress', (e) => {
       setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
+      getReportWeather();
     });
 
     return unsubscribe;
   }, [navigation]);
 
+  const getReportWeather = () => {
+    COMMON.getStoreData(
+      '@userToken',
+      (value) => {
+        COMMON.axiosCall(
+          'diary/getReportWeather',
+          {
+            token: value,
+          },
+          (object) => {
+            if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              setWeather(object.data.weather);
+            }
+          },
+          () => {
+            setAlertData({
+              ...alertData,
+              show: true,
+              message:
+                '서버 응답 지연으로, 날씨정보를 가져오지 못했습니다. 관리자에게 문의해주세요.',
+            });
+          },
+        );
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '사용자 토큰정보를 가져오는데 실패하였습니다.',
+        });
+      },
+    );
+
+    // COMMON.axiosCall('diary/getReportWeather', {})
+  };
+
   const renderWeather = (value) => {
-    const dummy = [
-        { weather: 'sun', date: '09 / 26' },
-        { weather: 'rain', date: '09 / 26' },
-        { weather: 'sun', date: '09 / 26' },
-        { weather: 'sun', date: '09 / 26' },
-        { weather: 'cloud', date: '09 / 26' },
-        { weather: 'sun', date: '09 / 26' },
-        { weather: 'cloud', date: '09 / 26' },
-        { weather: 'thunder', date: '09 / 26' },
-        { weather: 'sun', date: '09 / 26' },
-        { weather: 'rain', date: '09 / 26' }
-        ];
+    const weatherData = _.chunk(weather, 5);
 
-    const dummy2 = _.chunk(dummy, 5)
-
-    return dummy2[value].map((item, index) => {
-      return <ReportDayItem weather={item.weather} date={item.date} key={Math.random()} />;
-    });
+    if (weatherData.length !== 0) {
+      return weatherData[value].map((item, index) => {
+        return (
+          <ReportDayItem
+            weather={item.weather}
+            date={item.createdAt}
+            key={item._id}
+          />
+        );
+      });
+    }
   };
 
   return (
     <Container>
       <ReportWeekItem style={{ borderColor: '#dddddd', borderTopWidth: 1 }}>
-          {renderWeather(0)}
+        {renderWeather(0)}
       </ReportWeekItem>
-      <ReportWeekItem>
-          {renderWeather(1)}
-      </ReportWeekItem>
+      <ReportWeekItem>{renderWeather(1)}</ReportWeekItem>
+
+      <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );
 };

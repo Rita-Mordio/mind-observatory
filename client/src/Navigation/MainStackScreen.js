@@ -19,7 +19,7 @@ import COMMON from '../common';
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ route, navigation }) => {
-  const { getTheme, getDiary, setCommon } = useContext(Context);
+  const { getTheme, initDiary, getDiary, setCommon } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -37,6 +37,7 @@ const MainStackScreen = ({ route, navigation }) => {
       (result) => {
         if (!result.data.success) alert(result.data.message);
         setCommon(true);
+        initDiary();
         navigation.navigate('Main');
       },
       (error) => {

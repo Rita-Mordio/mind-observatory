@@ -8,13 +8,17 @@ import {
   SIGN_IN,
   SIGN_OUT,
   SET_DIARY,
+  INIT_DIARY,
   SET_HEADER,
   SET_COMMON,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
 import { themeReducer, initialThemeState } from './Redux/reducers/themeReducer';
-import { commonReducer, initialCommonState } from './Redux/reducers/commonReducer';
+import {
+  commonReducer,
+  initialCommonState,
+} from './Redux/reducers/commonReducer';
 
 import RootStackScreen from './Navigation/RootStackScreen';
 import DrawerContentScreen from './Navigation/DrawerContentScreen';
@@ -54,6 +58,9 @@ const App = () => {
       },
       getDiary: () => {
         return diaryState;
+      },
+      initDiary: () => {
+        diaryDispatch({ type: INIT_DIARY });
       },
       setHeader: (theme) => {
         themeDispatch({ type: SET_HEADER, theme: theme });

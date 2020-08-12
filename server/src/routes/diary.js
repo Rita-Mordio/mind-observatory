@@ -52,7 +52,7 @@ router.post("/getMyDiaries", (request, response) => {
           message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
         });
 
-      Diary.find({ userFrom: user._id })
+      Diary.find({ userFrom: user._id, isVisible: true })
         .sort({ createdAt: -1 })
         .skip((request.body.page - 1) * 10)
         .limit(10)
@@ -92,7 +92,11 @@ router.post("/getDiary", (request, response) => {
 router.post("/searchMyDiariesByTitle", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
-      Diary.find({ userFrom: user._id, title: { $regex: request.body.title } })
+      Diary.find({
+        userFrom: user._id,
+        isVisible: true,
+        title: { $regex: request.body.title },
+      })
         .then((result) => {
           return response.status(200).json({ success: true, result });
         })
@@ -102,6 +106,42 @@ router.post("/searchMyDiariesByTitle", (request, response) => {
     })
     .catch((error) => {
       return response.status(400).json({ success: false, error });
+    });
+});
+
+//최근 10일간의 날씨를 가져오기
+router.post("/getReportWeather", (request, response) => {
+  User.findOne({ token: request.body.token })
+    .then((user) => {
+      if (!user)
+        return response.status(200).json({
+          success: false,
+          message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
+        });
+
+      Diary.find(
+        { userFrom: user._id, isVisible: true },
+        { weather: 1, createdAt: 1 }
+      )
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .then((weather) => {
+          return response.status(200).json({ success: true, weather });
+        })
+        .catch((error) => {
+          return response.status(200).json({
+            success: false,
+            message: "날씨 정보를 가져오는데 실패하였습니다.",
+            error,
+          });
+        });
+    })
+    .catch((error) => {
+      return response.status(200).json({
+        success: false,
+        message: "사용자 정보를 가져오는데 실패하였습니다.",
+        error,
+      });
     });
 });
 
