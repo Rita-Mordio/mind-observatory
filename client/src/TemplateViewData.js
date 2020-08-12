@@ -20,7 +20,7 @@ const TemplateViewData = [
         ],
     },
     {
-        navigationName: 'EditDiarySimple',
+        navigationName: 'EditDiaryDetail',
         template: 2,
         title: '디테일형',
         description: '오늘 하루를 자세하게 남길 수 있어요.',

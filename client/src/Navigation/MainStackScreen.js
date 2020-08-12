@@ -8,7 +8,9 @@ import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
 import EditDiarySimple from '../Screens/EditDiary-simple';
+import EditDiaryDetail from '../Screens/EditDiary-detail';
 import ViewDiarySimple from '../Screens/ViewDiary-simple';
+import ViewDiaryDetail from '../Screens/ViewDiary-detail';
 import Context from '../Redux/contexts/context';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
@@ -140,6 +142,44 @@ const MainStackScreen = ({ route, navigation }) => {
         }}
       />
       <MainStack.Screen
+        name="ViewDiaryDetail"
+        component={ViewDiaryDetail}
+        options={{
+          title: '기록 보관소',
+          headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+          headerRight: () => (
+            <FontAwesome.Button
+              name="edit"
+              size={24}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                const diary = route.state.routes[1].params.diary;
+                navigation.navigate(
+                  COMMON.getEditTemplateNameByNo(diary.templateType),
+                  {
+                    diary,
+                  },
+                );
+              }}
+            />
+          ),
+        }}
+      />
+      <MainStack.Screen
         name="Template"
         component={Template}
         options={{
@@ -164,6 +204,36 @@ const MainStackScreen = ({ route, navigation }) => {
       <MainStack.Screen
         name="EditDiarySimple"
         component={EditDiarySimple}
+        options={{
+          title: '일기 쓰기',
+          headerStyle: { backgroundColor: '#efc4cd' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#efc4cd"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+          headerRight: () => (
+            <Feather.Button
+              name="check-square"
+              size={26}
+              backgroundColor="#efc4cd"
+              onPress={processDiary}
+            />
+          ),
+        }}
+      />
+      <MainStack.Screen
+        name="EditDiaryDetail"
+        component={EditDiaryDetail}
         options={{
           title: '일기 쓰기',
           headerStyle: { backgroundColor: '#efc4cd' },

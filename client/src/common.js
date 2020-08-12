@@ -68,6 +68,8 @@ const COMMON = {
     switch (number) {
       case 1:
         return 'ViewDiarySimple';
+      case 2:
+        return 'ViewDiaryDetail';
     }
   },
 
@@ -75,6 +77,8 @@ const COMMON = {
     switch (number) {
       case 1:
         return 'EditDiarySimple';
+      case 2:
+        return 'EditDiaryDetail';
     }
   },
 };
