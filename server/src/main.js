@@ -34,12 +34,12 @@ app.use((error, request, response, next) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`서버 가동중 http://localhost:${process.env.PORT}`);
-  // process.send("ready");
+  process.send("ready");
 });
 
-// process.on("SIGINT", () => {
-//   app.close(() => {
-//     console.log("server closed");
-//     process.exit(0);
-//   });
-// });
+process.on("SIGINT", () => {
+  app.close(() => {
+    console.log("server closed");
+    process.exit(0);
+  });
+});
