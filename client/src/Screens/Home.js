@@ -69,7 +69,7 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const tabPressListener = navigation.addListener('tabPress', (e) => {
-      setHeader({ headerColor: '#efc4cd', headerTitle: '홈' });
+      setHeader({ headerColor: '#efc4cd', headerTitle: '내 마음 관측소' });
     });
 
     return tabPressListener;

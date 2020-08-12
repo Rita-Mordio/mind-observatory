@@ -2,7 +2,7 @@ import { SET_HEADER } from '../constants/actionTypes';
 
 export const initialThemeState = {
   headerColor: '#efc4cd',
-  headerTitle: '홈'
+  headerTitle: '내 마음 관측소'
 };
 
 export const themeReducer = (prevState, action) => {

@@ -1,16 +1,16 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import Context from '../Redux/contexts/context';
 
-const Observatory = ({ navigation }) => {
+const Report = ({ navigation }) => {
   const { setHeader } = useContext(Context);
 
   useEffect(() => {
-    setHeader({ headerColor: '#AAD4EC', headerTitle: '내 마음 관측소' });
+    setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
 
     const unsubscribe = navigation.addListener('tabPress', (e) => {
-      setHeader({ headerColor: '#AAD4EC', headerTitle: '내 마음 관측소' });
+      setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
     });
 
     return unsubscribe;
@@ -30,4 +30,4 @@ const Observatory = ({ navigation }) => {
   );
 };
 
-export default Observatory;
+export default Report;

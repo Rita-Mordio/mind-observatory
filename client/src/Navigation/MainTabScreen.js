@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from '../Screens/Home';
-import Observatory from '../Screens/Observatory';
+import Report from '../Screens/Report';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,7 +18,7 @@ const MainTabScreen = () => {
         name="HomeTab"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Observatory',
           tabBarColor: '#efc4cd',
           tabBarIcon: ({ color }) => (
             <Icon name="ios-home" color={color} size={26} />
@@ -26,13 +26,13 @@ const MainTabScreen = () => {
         }}
       />
       <Tab.Screen
-        name="ObservatoryTab"
-        component={Observatory}
+        name="ReportTab"
+        component={Report}
         options={{
-          tabBarLabel: 'Observatory',
+          tabBarLabel: 'Report',
           tabBarColor: '#AAD4EC',
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-happy" color={color} size={26} />
+            <Icon name="ios-bar-chart-sharp" color={color} size={26} />
           ),
         }}
       />

@@ -61,24 +61,13 @@ const DrawerContentScreen = (props) => {
               )}
               label="홈"
               onPress={() => {
-                setHeader({ headerColor: '#efc4cd', headerTitle: '홈' });
+                setHeader({
+                  headerColor: '#efc4cd',
+                  headerTitle: '내 마음 관측소',
+                });
                 props.navigation.navigate('HomeTab');
               }}
             />
-            {/* <DrawerItem*/}
-            {/*     icon={({ color, size }) => <Icon name="ios-create" color={color} size={size} />}*/}
-            {/*     label="일기 작성"*/}
-            {/*     onPress={() => {*/}
-            {/*       props.navigation.navigate('Template');*/}
-            {/*     }}*/}
-            {/* />*/}
-            {/* <DrawerItem*/}
-            {/*   icon={({ color, size }) => <Icon name="ios-cog" color={color} size={size} />}*/}
-            {/*   label="설정"*/}
-            {/*   onPress={() => {*/}
-            {/*     props.navigation.navigate('Setting');*/}
-            {/*   }}*/}
-            {/*/>*/}
           </Drawer.Section>
           <Drawer.Section title="테마 변경">
             <TouchableRipple
