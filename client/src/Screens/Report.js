@@ -1,7 +1,32 @@
-import { Text, View } from 'react-native';
-import * as React from 'react';
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
+import _ from 'lodash'
+import ReportDayItem from '../Components/ReportDayItem';
+
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
+const Container = styled.View`
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+`;
+
+const ReportWeekItem = styled.View`
+  flex-direction: row;
+  border-color: #dddddd;
+  border-left-width: 1px;
+`;
+
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
 
 const Report = ({ navigation }) => {
   const { setHeader } = useContext(Context);
@@ -16,17 +41,36 @@ const Report = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  const renderWeather = (value) => {
+    const dummy = [
+        { weather: 'sun', date: '09 / 26' },
+        { weather: 'rain', date: '09 / 26' },
+        { weather: 'sun', date: '09 / 26' },
+        { weather: 'sun', date: '09 / 26' },
+        { weather: 'cloud', date: '09 / 26' },
+        { weather: 'sun', date: '09 / 26' },
+        { weather: 'cloud', date: '09 / 26' },
+        { weather: 'thunder', date: '09 / 26' },
+        { weather: 'sun', date: '09 / 26' },
+        { weather: 'rain', date: '09 / 26' }
+        ];
+
+    const dummy2 = _.chunk(dummy, 5)
+
+    return dummy2[value].map((item, index) => {
+      return <ReportDayItem weather={item.weather} date={item.date} key={Math.random()} />;
+    });
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>
-        관측소에서 한달 전체를 모두 보여주는건 힘들꺼 같고 "최근" 일주일 또는
-        10일정도를 보여주는게 좋을꺼 같아요
-      </Text>
-      <Text style={{ marginTop: 20 }}>
-        아마 표시되야 할껀 해당 날짜 / 그 날짜에 대한 날씨를 표로 보여주고 표에
-        나온 날씨들의 평균값을 보여주면 어떨까해요
-      </Text>
-    </View>
+    <Container>
+      <ReportWeekItem style={{ borderColor: '#dddddd', borderTopWidth: 1 }}>
+          {renderWeather(0)}
+      </ReportWeekItem>
+      <ReportWeekItem>
+          {renderWeather(1)}
+      </ReportWeekItem>
+    </Container>
   );
 };
 

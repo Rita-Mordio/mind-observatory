@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 
 const Image = styled.Image`
   width: 30px;
   height: 30px;
-  margin-left: 10px;
 `;
 
 const WeatherIcon = ({ value, id }) => {
-  const [weather, setWeather] = useState(value);
 
   const getSource = () => {
 
-    switch (weather) {
+    switch (value) {
       case 'sun':
         return require(`../../assets/images/weather-sun.png`);
       case 'rain':
