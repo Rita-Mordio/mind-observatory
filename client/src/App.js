@@ -11,7 +11,7 @@ import {
   INIT_DIARY,
   SET_HEADER,
   SET_IS_CHANGE_DIARY_DATA,
-  SET_HISTORY,
+  SET_HISTORY_COUNT,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
@@ -72,8 +72,8 @@ const App = () => {
       setIsChangeDiaryData: (value) => {
         commonDispatch({ type: SET_IS_CHANGE_DIARY_DATA, payload: value });
       },
-      setHistory: (value) => {
-        commonDispatch({ type: SET_HISTORY, payload: value });
+      setHistoryCount: (value) => {
+        commonDispatch({ type: SET_HISTORY_COUNT, payload: value });
       },
       getCommon: () => {
         return commonState;

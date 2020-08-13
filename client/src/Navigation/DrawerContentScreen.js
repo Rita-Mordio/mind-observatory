@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Avatar, Drawer } from 'react-native-paper';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
+import COMMON from '../common';
 import Context from '../Redux/contexts/context';
+import Alert from '../Components/Alert';
 
 //##################################
 //##################################
@@ -74,8 +76,37 @@ const HistoryCaption = styled.Text`
 
 const DrawerContentScreen = (props) => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+  const [alertData, setAlertData] = useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
 
-  const { signOut, setHeader } = useContext(Context);
+  const { signOut, setHeader, setHistoryCount, getCommon } = useContext(
+    Context,
+  );
+
+  useEffect(() => {
+    getHistoryCount();
+  }, []);
+
+  const getHistoryCount = () => {
+    COMMON.getStoreData(
+      '@historyCount',
+      (value) => {
+        if (!COMMON.isEmptyValue(value)) {
+          setHistoryCount(value);
+        }
+      },
+      (error) => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '기록 전체 개수 정보를 가져오는데 문제가 발생하였습니다.',
+        });
+      },
+    );
+  };
 
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
@@ -100,7 +131,7 @@ const DrawerContentScreen = (props) => {
               </NicknameSection>
             </AvatarContent>
             <HistorySection>
-              <Day>80</Day>
+              <Day>{getCommon().historyCount}</Day>
               <HistoryCaption>일의 기록이 있어요</HistoryCaption>
             </HistorySection>
           </UserInfoSection>
@@ -132,21 +163,25 @@ const DrawerContentScreen = (props) => {
 
           <Drawer.Section>
             <DrawerItem
-                icon={({ color, size }) => (
-                    <Icon name="ios-chatbubbles-sharp" color={color} size={size} />
-                )}
-                label="문의하기"
-                onPress={() => {}}
+              icon={({ color, size }) => (
+                <Icon name="ios-chatbubbles-sharp" color={color} size={size} />
+              )}
+              label="문의하기"
+              onPress={() => {}}
             />
           </Drawer.Section>
 
           <Drawer.Section>
             <DrawerItem
-                icon={({ color, size }) => (
-                    <Icon name="information-circle-sharp" color={color} size={size} />
-                )}
-                label="앱 정보"
-                onPress={() => {}}
+              icon={({ color, size }) => (
+                <Icon
+                  name="information-circle-sharp"
+                  color={color}
+                  size={size}
+                />
+              )}
+              label="앱 정보"
+              onPress={() => {}}
             />
           </Drawer.Section>
 
@@ -177,6 +212,8 @@ const DrawerContentScreen = (props) => {
           }}
         />
       </Drawer.Section>
+
+      <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );
 };

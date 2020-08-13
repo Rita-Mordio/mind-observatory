@@ -1,8 +1,8 @@
-import { SET_IS_CHANGE_DIARY_DATA, SET_HISTORY } from '../constants/actionTypes';
+import { SET_IS_CHANGE_DIARY_DATA, SET_HISTORY_COUNT } from '../constants/actionTypes';
 
 export const initialCommonState = {
   isChangeDiaryData: false,
-  history: 0,
+  historyCount: 0,
 };
 
 export const commonReducer = (prevState, action) => {
@@ -12,10 +12,10 @@ export const commonReducer = (prevState, action) => {
         ...prevState,
         isChangeDiaryData: action.payload,
       };
-    case SET_HISTORY:
+    case SET_HISTORY_COUNT:
       return {
         ...prevState,
-        history: action.payload,
+        historyCount: action.payload,
       };
   }
 };
