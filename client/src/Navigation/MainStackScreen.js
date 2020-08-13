@@ -12,14 +12,20 @@ import EditDiaryDetail from '../Screens/EditDiary-detail';
 import ViewDiarySimple from '../Screens/ViewDiary-simple';
 import ViewDiaryDetail from '../Screens/ViewDiary-detail';
 import Context from '../Redux/contexts/context';
+import COMMON from '../common';
 import AWS_KEY from '../AWS_Key';
 import Template from '../Screens/Template';
-import COMMON from '../common';
 
 const MainStack = createStackNavigator();
 
 const MainStackScreen = ({ route, navigation }) => {
-  const { getTheme, initDiary, getDiary, setIsChangeDiaryData } = useContext(Context);
+  const {
+    getTheme,
+    initDiary,
+    getDiary,
+    setIsChangeDiaryData,
+    setHistoryCount,
+  } = useContext(Context);
 
   const awsConfig = {
     keyPrefix: 'images/',
@@ -37,6 +43,10 @@ const MainStackScreen = ({ route, navigation }) => {
       (result) => {
         if (!result.data.success) alert(result.data.message);
         setIsChangeDiaryData(true);
+        COMMON.setStoreData('@historyCount', result.data.count, () => {
+          alert('기록 전체 개수를 저장하는데 문제가 발생했습니다.');
+        });
+        setHistoryCount(result.data.count);
         initDiary();
         navigation.navigate('Main');
       },

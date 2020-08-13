@@ -22,16 +22,23 @@ router.post("/addDiary", (request, response) => {
             message: "서버문제로 일기 저장에 실패하였습니다.",
             error,
           });
-        return response.status(200).json({ success: true, result });
 
-        // const myDiariesCount = Diary.find({
-        //   userFrom: user._id,
-        //   isVisible: true,
-        // }).count();
-        //
-        // console.log('myDiariesCount : ', myDiariesCount)
-        //
-        // return response.status(200).json({ success: true, result });
+        Diary.countDocuments(
+          {
+            userFrom: user._id,
+            isVisible: true,
+          },
+          (error, result) => {
+            if (error)
+              return response.status(200).json({
+                success: false,
+                message: "서버문제로 일기 개수를 가져오는데 실패하였습니다.",
+                error,
+              });
+
+            return response.status(200).json({ success: true, count : result });
+          }
+        );
       });
     })
     .catch((error) => {
