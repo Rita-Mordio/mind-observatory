@@ -49,7 +49,7 @@ const AvatarCaption = styled.Text`
 `;
 
 const HistorySection = styled.View`
-  margin-top: 20px;
+  margin-top: 30px;
   flex-direction: row;
   align-items: center;
 `;
@@ -117,6 +117,36 @@ const DrawerContentScreen = (props) => {
                 });
                 props.navigation.navigate('ObservatoryTab');
               }}
+            />
+          </Drawer.Section>
+
+          <Drawer.Section>
+            <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="ios-settings" color={color} size={size} />
+              )}
+              label="내 정보 변경"
+              onPress={() => {}}
+            />
+          </Drawer.Section>
+
+          <Drawer.Section>
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="ios-chatbubbles-sharp" color={color} size={size} />
+                )}
+                label="문의하기"
+                onPress={() => {}}
+            />
+          </Drawer.Section>
+
+          <Drawer.Section>
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="information-circle-sharp" color={color} size={size} />
+                )}
+                label="앱 정보"
+                onPress={() => {}}
             />
           </Drawer.Section>
 
