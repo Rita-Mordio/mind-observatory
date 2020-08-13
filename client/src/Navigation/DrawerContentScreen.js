@@ -1,19 +1,76 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from 'react-native-paper';
+import { Avatar, Drawer } from 'react-native-paper';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 import Context from '../Redux/contexts/context';
+
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
+
+const Container = styled.View`
+  flex: 1;
+`;
+
+const DrawerContent = styled.View`
+  flex: 1;
+`;
+
+const UserInfoSection = styled.View`
+  padding-left: 20px;
+`;
+
+const AvatarContent = styled.View`
+  flex-direction: row;
+  margin-top: 15px;
+`;
+
+const NicknameSection = styled.View`
+  margin-left: 15px;
+  flex-direction: column;
+`;
+
+const Nickname = styled.Text`
+  color: #3f3e3c;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 3px;
+`;
+
+const AvatarCaption = styled.Text`
+  color: #3f3e3c;
+  font-size: 13px;
+  margin-top: 2px;
+`;
+
+const HistorySection = styled.View`
+  margin-top: 20px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Day = styled.Text`
+  color: #3f3e3c;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 3px;
+`;
+
+const HistoryCaption = styled.Text`
+  color: #3f3e3c;
+  font-size: 14px;
+`;
+
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
 
 const DrawerContentScreen = (props) => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
@@ -25,11 +82,11 @@ const DrawerContentScreen = (props) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <Container>
       <DrawerContentScrollView {...props}>
-        <View style={styles.drawerContent}>
-          <View style={styles.userInfoSection}>
-            <View style={{ flexDirection: 'row', marginTop: 15 }}>
+        <DrawerContent>
+          <UserInfoSection>
+            <AvatarContent>
               <Avatar.Image
                 source={{
                   uri:
@@ -37,23 +94,16 @@ const DrawerContentScreen = (props) => {
                 }}
                 size={50}
               />
-              <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                <Title style={styles.title}>김신예</Title>
-                <Caption style={styles.caption}>
-                  오늘은 어떤 일이 기다릴까요?
-                </Caption>
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>
-                  80
-                </Paragraph>
-                <Caption style={styles.caption}>일의 기록이 있어요</Caption>
-              </View>
-            </View>
-          </View>
-
+              <NicknameSection>
+                <Nickname>김신예</Nickname>
+                <AvatarCaption>오늘은 어떤 일이 있었나요?</AvatarCaption>
+              </NicknameSection>
+            </AvatarContent>
+            <HistorySection>
+              <Day>80</Day>
+              <HistoryCaption>일의 기록이 있어요</HistoryCaption>
+            </HistorySection>
+          </UserInfoSection>
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
@@ -84,7 +134,7 @@ const DrawerContentScreen = (props) => {
           {/*    </View>*/}
           {/*  </TouchableRipple>*/}
           {/*</Drawer.Section>*/}
-        </View>
+        </DrawerContent>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
@@ -97,42 +147,13 @@ const DrawerContentScreen = (props) => {
           }}
         />
       </Drawer.Section>
-    </View>
+    </Container>
   );
 };
 
 export default DrawerContentScreen;
 
 const styles = StyleSheet.create({
-  drawerContent: {
-    flex: 1,
-  },
-  userInfoSection: {
-    paddingLeft: 20,
-  },
-  title: {
-    fontSize: 16,
-    marginTop: 3,
-    fontWeight: 'bold',
-  },
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-  },
-  row: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  paragraph: {
-    fontWeight: 'bold',
-    marginRight: 3,
-  },
   drawerSection: {
     marginTop: 15,
   },
