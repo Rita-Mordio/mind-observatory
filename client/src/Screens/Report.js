@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
-import _ from 'lodash';
 
 import COMMON from '../common';
 import Alert from '../Components/Alert';
