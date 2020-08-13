@@ -8,7 +8,7 @@ export const initialThemeState = {
 export const themeReducer = (prevState, action) => {
   switch (action.type) {
     case SET_HEADER:
-      const { headerColor, headerTitle } = action.theme;
+      const { headerColor, headerTitle } = action.payload;
 
       return {
         ...prevState,

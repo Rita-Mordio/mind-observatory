@@ -46,7 +46,7 @@ const ActivityIndicator = styled.ActivityIndicator`
 //###################################
 
 const Observatory = ({ navigation }) => {
-  const { setHeader, setCommon, getCommon } = useContext(Context);
+  const { setHeader, setIsChangeDiaryData, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
   const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
@@ -113,7 +113,7 @@ const Observatory = ({ navigation }) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
-                setCommon(false);
+                setIsChangeDiaryData(false);
                 setIsLastPage(false);
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));

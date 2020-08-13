@@ -10,7 +10,7 @@ export const authReducer = (prevState, action) => {
     case SIGN_IN:
       return {
         ...prevState,
-        userToken: action.userToken,
+        userToken: action.payload,
       };
     case SIGN_OUT:
       COMMON.removeStoreData('@userToken', () => {

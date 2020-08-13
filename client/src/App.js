@@ -10,7 +10,8 @@ import {
   SET_DIARY,
   INIT_DIARY,
   SET_HEADER,
-  SET_COMMON,
+  SET_IS_CHANGE_DIARY_DATA,
+  SET_HISTORY,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
@@ -48,13 +49,13 @@ const App = () => {
   const context = useMemo(
     () => ({
       signIn: (userToken) => {
-        authDispatch({ type: SIGN_IN, userToken: userToken });
+        authDispatch({ type: SIGN_IN, payload: userToken });
       },
       signOut: () => {
         authDispatch({ type: SIGN_OUT });
       },
       setDiary: (diary) => {
-        diaryDispatch({ type: SET_DIARY, diary: diary });
+        diaryDispatch({ type: SET_DIARY, payload: diary });
       },
       getDiary: () => {
         return diaryState;
@@ -63,13 +64,16 @@ const App = () => {
         diaryDispatch({ type: INIT_DIARY });
       },
       setHeader: (theme) => {
-        themeDispatch({ type: SET_HEADER, theme: theme });
+        themeDispatch({ type: SET_HEADER, payload: theme });
       },
       getTheme: () => {
         return themeState;
       },
-      setCommon: (value) => {
-        commonDispatch({ type: SET_COMMON, value: value });
+      setIsChangeDiaryData: (value) => {
+        commonDispatch({ type: SET_IS_CHANGE_DIARY_DATA, payload: value });
+      },
+      setHistory: (value) => {
+        commonDispatch({ type: SET_HISTORY, payload: value });
       },
       getCommon: () => {
         return commonState;

@@ -7,4 +7,5 @@ export const INIT_DIARY = 'diary/INIT_DIARY'
 export const SET_THEME = 'theme/SET_THEME'
 export const SET_HEADER = 'theme/SET_HEADER'
 
-export const SET_COMMON = 'common/SET_COMMON'
+export const SET_IS_CHANGE_DIARY_DATA = 'common/SET_IS_CHANGE_DIARY_DATA'
+export const SET_HISTORY = 'common/SET_HISTORY'

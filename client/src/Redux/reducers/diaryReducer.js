@@ -27,7 +27,7 @@ export const diaryReducer = (prevState, action) => {
         weather,
         contents,
         images,
-      } = action.diary;
+      } = action.payload;
 
       return {
         ...prevState,
