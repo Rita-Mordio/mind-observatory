@@ -65,24 +65,25 @@ const DrawerContentScreen = (props) => {
                   headerColor: '#efc4cd',
                   headerTitle: '내 마음 관측소',
                 });
-                props.navigation.navigate('HomeTab');
+                props.navigation.navigate('ObservatoryTab');
               }}
             />
           </Drawer.Section>
-          <Drawer.Section title="테마 변경">
-            <TouchableRipple
-              onPress={() => {
-                toggleTheme();
-              }}
-            >
-              <View style={styles.preference}>
-                <Text>Dark Theme</Text>
-                <View pointerEvents="none">
-                  <Switch value={isDarkTheme} />
-                </View>
-              </View>
-            </TouchableRipple>
-          </Drawer.Section>
+
+          {/*<Drawer.Section title="테마 변경">*/}
+          {/*  <TouchableRipple*/}
+          {/*    onPress={() => {*/}
+          {/*      toggleTheme();*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <View style={styles.preference}>*/}
+          {/*      <Text>Dark Theme</Text>*/}
+          {/*      <View pointerEvents="none">*/}
+          {/*        <Switch value={isDarkTheme} />*/}
+          {/*      </View>*/}
+          {/*    </View>*/}
+          {/*  </TouchableRipple>*/}
+          {/*</Drawer.Section>*/}
         </View>
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>

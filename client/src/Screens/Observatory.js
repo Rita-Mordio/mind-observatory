@@ -45,7 +45,7 @@ const ActivityIndicator = styled.ActivityIndicator`
 //###################################
 //###################################
 
-const Home = ({ navigation }) => {
+const Observatory = ({ navigation }) => {
   const { setHeader, setCommon, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
@@ -213,4 +213,4 @@ const Home = ({ navigation }) => {
   }
 };
 
-export default Home;
+export default Observatory;

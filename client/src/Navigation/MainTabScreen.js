@@ -2,7 +2,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Home from '../Screens/Home';
+import Observatory from '../Screens/Observatory';
 import Report from '../Screens/Report';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -10,13 +10,13 @@ const Tab = createMaterialBottomTabNavigator();
 const MainTabScreen = () => {
   return (
     <Tab.Navigator
-      initialRouteName="HomeTab"
+      initialRouteName="ObservatoryTab"
       activeColor="#fff"
       shifting={true}
     >
       <Tab.Screen
-        name="HomeTab"
-        component={Home}
+        name="ObservatoryTab"
+        component={Observatory}
         options={{
           tabBarLabel: 'Observatory',
           tabBarColor: '#efc4cd',
