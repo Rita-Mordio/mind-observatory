@@ -1,11 +1,21 @@
-import { Dimensions, StyleSheet } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 
 import COMMON from '../common';
 import Context from '../Redux/contexts/context';
+
+import Alert from '../Components/Alert';
+
+const { height } = Dimensions.get('screen');
+
+//##################################
+//##################################
+//############# Styled #############
+//##################################
+//##################################
 
 const Container = styled.View`
   flex: 1;
@@ -16,6 +26,21 @@ const TopView = styled.View`
   flex: 1.2;
   align-items: center;
   justify-content: center;
+`;
+
+const Logo = styled.Image`
+  width: ${Math.round(height * 0.28)}px;
+  height: ${Math.round(height * 0.28)}px;
+`;
+
+const BottomView = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding-top: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
 `;
 
 const BottomTitle = styled.Text`
@@ -40,10 +65,21 @@ const BottomButtonWrap = styled.View`
   justify-content: center;
 `;
 
+//###################################
+//###################################
+//############ Component ############
+//###################################
+//###################################
+
 const Intro = ({ navigation }) => {
   const { signIn } = useContext(Context);
 
   const [userToken, setUserToken] = useState(null);
+  const [alertData, setAlertData] = useState({
+    show: false,
+    message: '',
+    onConfirmPressed: null,
+  });
 
   useEffect(() => {
     COMMON.getStoreData(
@@ -58,13 +94,21 @@ const Intro = ({ navigation }) => {
               }
             },
             () => {
-              alert('사용자 토큰 가져오기 실패');
+              setAlertData({
+                ...alertData,
+                show: true,
+                message: '사용자 토큰정보를 가져오는데 문제가 발생했습니다.',
+              });
             },
           );
         }
       },
       () => {
-        alert('자동 로그인 정보 가져오기 실패');
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '자동 로그인정보를 가져오는데 문제가 발생했습니다.',
+        });
       },
     );
   }, []);
@@ -72,17 +116,18 @@ const Intro = ({ navigation }) => {
   return (
     <Container>
       <TopView>
-        <Animatable.Image
+        <Logo
+          as={Animatable.Image}
           animation="bounce"
           duration={2500}
           iterationDelay={650}
           source={require('../../assets/images/logo-background-void.png')}
-          style={styles.logo}
           resizeMode="stretch"
           iterationCount="infinite"
         />
       </TopView>
-      <Animatable.View style={styles.bottom} animation="fadeInUpBig">
+
+      <BottomView as={Animatable.View} animation="fadeInUpBig">
         <BottomContentWrap>
           <BottomTitle>당신의 마음을 관측합니다.</BottomTitle>
           <BottomContent>내 마음 관측소에 어서오세요.</BottomContent>
@@ -91,7 +136,7 @@ const Intro = ({ navigation }) => {
         </BottomContentWrap>
         <BottomButtonWrap>
           <Button
-            buttonStyle={styles.buttonStyle}
+            buttonStyle={{ backgroundColor: '#efc4cd' }}
             title="시작하기"
             raised={true}
             iconRight={true}
@@ -102,30 +147,11 @@ const Intro = ({ navigation }) => {
             }}
           />
         </BottomButtonWrap>
-      </Animatable.View>
+      </BottomView>
+
+      <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );
 };
 
 export default Intro;
-
-const { height } = Dimensions.get('screen');
-const height_logo = height * 0.28;
-
-const styles = StyleSheet.create({
-  logo: {
-    width: Math.round(height_logo),
-    height: Math.round(height_logo),
-  },
-  bottom: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingTop: 50,
-    paddingHorizontal: 30,
-  },
-  buttonStyle: {
-    backgroundColor: '#efc4cd',
-  },
-});
