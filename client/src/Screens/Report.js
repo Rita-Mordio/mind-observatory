@@ -21,6 +21,7 @@ const Container = styled.View`
 
 const ReportWeekItem = styled.View`
   flex-direction: row;
+  flex-wrap: wrap;
   border-color: #dddddd;
   border-left-width: 1px;
 `;
@@ -85,17 +86,14 @@ const Report = ({ navigation }) => {
         });
       },
     );
-
-    // COMMON.axiosCall('diary/getReportWeather', {})
   };
 
-  const renderWeather = (value) => {
-    const weatherData = _.chunk(weather, 5);
-
-    if (weatherData.length !== 0) {
-      return weatherData[value].map((item, index) => {
+  const renderWeather = () => {
+    if (weather.length !== 0) {
+      return weather.map((item, index) => {
         return (
           <ReportDayItem
+            index={index}
             weather={item.weather}
             date={item.createdAt}
             key={item._id}
@@ -107,11 +105,7 @@ const Report = ({ navigation }) => {
 
   return (
     <Container>
-      <ReportWeekItem style={{ borderColor: '#dddddd', borderTopWidth: 1 }}>
-        {renderWeather(0)}
-      </ReportWeekItem>
-      <ReportWeekItem>{renderWeather(1)}</ReportWeekItem>
-
+      <ReportWeekItem>{renderWeather()}</ReportWeekItem>
       <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>
   );

@@ -8,18 +8,20 @@ const Container = styled.View`
   align-items: center;
   border-color: #dddddd;
   border-right-width: 1px;
+  border-top-width: ${props => props.index >= 5 ? '0px' : '1px' };
   border-bottom-width: 1px;
   padding: 10px;
 `;
 
 const Text = styled.Text`
   color: #3f3e3c;
+  font-size: 12.5px;
   margin-top: 4px;
 `;
 
-const ReportDayItem = ({ weather, date }) => {
+const ReportDayItem = ({ index, weather, date }) => {
   return (
-    <Container>
+    <Container index={index} >
       <WeatherIcon value={weather} id={Math.random()} />
       <Text>{moment(date).format('MM / DD')}</Text>
     </Container>
