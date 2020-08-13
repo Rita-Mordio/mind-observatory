@@ -23,6 +23,15 @@ router.post("/addDiary", (request, response) => {
             error,
           });
         return response.status(200).json({ success: true, result });
+
+        // const myDiariesCount = Diary.find({
+        //   userFrom: user._id,
+        //   isVisible: true,
+        // }).count();
+        //
+        // console.log('myDiariesCount : ', myDiariesCount)
+        //
+        // return response.status(200).json({ success: true, result });
       });
     })
     .catch((error) => {
