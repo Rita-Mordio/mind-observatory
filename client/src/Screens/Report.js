@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
 import moment from 'moment';
+import { Picker } from '@react-native-community/picker';
 
 import COMMON from '../common';
 import Alert from '../Components/Alert';
@@ -24,6 +25,25 @@ const ReportWeekItem = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
 `;
+
+const DatePickerWrap = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
+
+const Border = styled.View`
+  margin: 0px 5px;
+  border-width: 1px;
+  border-color: #dddddd;
+  border-radius: 10px;
+  width: 40%;
+`;
+
+const DatePicker = styled.View`
+  
+`;
+
 
 //###################################
 //###################################
@@ -112,8 +132,8 @@ const Report = ({ navigation }) => {
   const handlePickerChange = (name, value) => {
     setSelectDate({
       ...selectDate,
-      [name] : value
-    })
+      [name]: value,
+    });
   };
 
   if (showLoader) {
@@ -121,7 +141,43 @@ const Report = ({ navigation }) => {
   } else {
     return (
       <Container>
-        
+        <DatePickerWrap>
+          <Border>
+            <DatePicker
+              as={Picker}
+              selectedValue={selectDate.year}
+              onValueChange={(itemValue) => {
+                handlePickerChange('year', itemValue);
+              }}
+            >
+              <Picker.Item color="#3f3e3c" label="2020년" value="2020" />
+              <Picker.Item color="#3f3e3c" label="2021년" value="2021" />
+              <Picker.Item color="#3f3e3c" label="2022년" value="2022" />
+            </DatePicker>
+          </Border>
+          <Border>
+            <DatePicker
+              as={Picker}
+              selectedValue={selectDate.month}
+              onValueChange={(itemValue) => {
+                handlePickerChange('month', itemValue);
+              }}
+            >
+              <Picker.Item color="#3f3e3c" label="1월" value="01" />
+              <Picker.Item color="#3f3e3c" label="2월" value="02" />
+              <Picker.Item color="#3f3e3c" label="3월" value="03" />
+              <Picker.Item color="#3f3e3c" label="4월" value="04" />
+              <Picker.Item color="#3f3e3c" label="5월" value="05" />
+              <Picker.Item color="#3f3e3c" label="6월" value="06" />
+              <Picker.Item color="#3f3e3c" label="7월" value="07" />
+              <Picker.Item color="#3f3e3c" label="8월" value="08" />
+              <Picker.Item color="#3f3e3c" label="9월" value="09" />
+              <Picker.Item color="#3f3e3c" label="10월" value="10" />
+              <Picker.Item color="#3f3e3c" label="11월" value="11" />
+              <Picker.Item color="#3f3e3c" label="12월" value="12" />
+            </DatePicker>
+          </Border>
+        </DatePickerWrap>
         <ReportWeekItem>{renderWeather()}</ReportWeekItem>
         <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>

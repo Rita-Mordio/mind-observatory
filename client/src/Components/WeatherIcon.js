@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const Image = styled.Image`
-  width: 30px;
-  height: 30px;
+  width: ${props => props.size ? props.size : 30}px;
+  height: ${props => props.size ? props.size : 30}px;
 `;
 
-const WeatherIcon = ({ value, id }) => {
+const WeatherIcon = ({ value, id, size }) => {
 
   const getSource = () => {
 
@@ -22,7 +22,7 @@ const WeatherIcon = ({ value, id }) => {
     }
   };
 
-  return <Image key={`${id}${Math.random()}`} source={getSource()} />;
+  return <Image key={`${id}${Math.random()}`} source={getSource()} size={size} />;
 };
 
 export default WeatherIcon;

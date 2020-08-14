@@ -4,12 +4,12 @@ import moment from 'moment';
 import WeatherIcon from './WeatherIcon';
 
 const Container = styled.View`
-  width: ${Math.floor(100 / 6)}%;
+  width: ${Math.floor(100 / 7)}%;
   align-items: center;
-  border-color: #efefef;
-  border-top-width: ${props => props.index >= 6 ? '0px' : '1px' };
-  border-bottom-width: 1px;
   padding: 15px 0px;
+  border-color: #dddddd;
+  border-top-width: ${(props) => (props.index >= 7 ? '0px' : '1px')};
+  border-bottom-width: 1px;
 `;
 
 const Text = styled.Text`
@@ -20,8 +20,8 @@ const Text = styled.Text`
 
 const ReportDayItem = ({ index, weather, date }) => {
   return (
-    <Container index={index} >
-      <WeatherIcon value={weather} id={Math.random()} />
+    <Container index={index}>
+      <WeatherIcon value={weather} id={Math.random()} size={24} />
       <Text>{moment(date).format('D')}일</Text>
     </Container>
   );
