@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
 import moment from 'moment';
-import { Picker } from '@react-native-community/picker';
 
 import COMMON from '../common';
 import Alert from '../Components/Alert';
@@ -122,35 +121,7 @@ const Report = ({ navigation }) => {
   } else {
     return (
       <Container>
-        <Picker
-          selectedValue={selectDate.year}
-          onValueChange={(itemValue) => {
-            handlePickerChange('year', itemValue);
-          }}
-        >
-          <Picker.Item label="2020" value="2020" />
-          <Picker.Item label="2021" value="2021" />
-          <Picker.Item label="2022" value="2022" />
-        </Picker>
-        <Picker
-          selectedValue={selectDate.month}
-          onValueChange={(itemValue) => {
-            handlePickerChange('month', itemValue);
-          }}
-        >
-          <Picker.Item label="1" value="01" />
-          <Picker.Item label="2" value="02" />
-          <Picker.Item label="3" value="03" />
-          <Picker.Item label="4" value="04" />
-          <Picker.Item label="5" value="05" />
-          <Picker.Item label="6" value="06" />
-          <Picker.Item label="7" value="07" />
-          <Picker.Item label="8" value="08" />
-          <Picker.Item label="9" value="09" />
-          <Picker.Item label="10" value="10" />
-          <Picker.Item label="11" value="11" />
-          <Picker.Item label="12" value="12" />
-        </Picker>
+        
         <ReportWeekItem>{renderWeather()}</ReportWeekItem>
         <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>
