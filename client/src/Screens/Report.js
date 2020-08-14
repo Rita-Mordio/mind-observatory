@@ -21,8 +21,6 @@ const Container = styled.View`
 const ReportWeekItem = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  border-color: #dddddd;
-  border-left-width: 1px;
 `;
 
 //###################################
