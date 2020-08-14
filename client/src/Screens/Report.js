@@ -40,10 +40,7 @@ const Border = styled.View`
   width: 40%;
 `;
 
-const DatePicker = styled.View`
-  
-`;
-
+const DatePicker = styled.View``;
 
 //###################################
 //###################################
@@ -52,7 +49,7 @@ const DatePicker = styled.View`
 //###################################
 
 const Report = ({ navigation }) => {
-  const { setHeader } = useContext(Context);
+  const { setHeader, setRefreshReport, getCommon } = useContext(Context);
 
   const [weather, setWeather] = useState([]); //서버에서 가져온 날씨들
   const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
@@ -67,12 +64,22 @@ const Report = ({ navigation }) => {
   });
 
   useEffect(() => {
+    const focusListener = navigation.addListener('focus', () => {
+      if (getCommon().refreshReport) {
+        setShowLoader(true);
+        getReportWeather();
+      }
+    });
+
+    return focusListener;
+  });
+
+  useEffect(() => {
     setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
     getReportWeather();
 
     const unsubscribe = navigation.addListener('tabPress', (e) => {
       setHeader({ headerColor: '#AAD4EC', headerTitle: '관측 보고서' });
-      getReportWeather();
     });
 
     return unsubscribe;
@@ -91,6 +98,7 @@ const Report = ({ navigation }) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               setWeather(object.data.weather);
               setShowLoader(false);
+              setRefreshReport(false);
             }
           },
           () => {

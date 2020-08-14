@@ -11,6 +11,7 @@ import {
   INIT_DIARY,
   SET_HEADER,
   SET_REFRESH_OBSERVATORY,
+  SET_REFRESH_REPORT,
   SET_HISTORY_COUNT,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
@@ -71,6 +72,9 @@ const App = () => {
       },
       setRefreshObservatory: (value) => {
         commonDispatch({ type: SET_REFRESH_OBSERVATORY, payload: value });
+      },
+      setRefreshReport: (value) => {
+        commonDispatch({ type: SET_REFRESH_REPORT, payload: value });
       },
       setHistoryCount: (value) => {
         commonDispatch({ type: SET_HISTORY_COUNT, payload: value });

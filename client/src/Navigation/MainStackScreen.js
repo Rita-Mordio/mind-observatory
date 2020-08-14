@@ -24,6 +24,7 @@ const MainStackScreen = ({ route, navigation }) => {
     initDiary,
     getDiary,
     setRefreshObservatory,
+    setRefreshReport,
     setHistoryCount,
   } = useContext(Context);
 
@@ -44,6 +45,7 @@ const MainStackScreen = ({ route, navigation }) => {
       (result) => {
         if (!result.data.success) alert(result.data.message);
         setRefreshObservatory(true); //홈 화면 데이터 새로 불러오도록 변경
+        setRefreshReport(true); //리포트 화면 데이터 새로 불러오도록 변경
         if (COMMON.isEmptyValue(diaryData._id)) {
           setHistoryCount(result.data.count); // 전체 기록 일수 변경
           COMMON.setStoreData('@historyCount', result.data.count, () => {
