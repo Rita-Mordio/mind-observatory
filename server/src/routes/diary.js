@@ -1,4 +1,6 @@
 import express from "express";
+import moment from "moment"
+import _ from "lodash"
 
 import Diary from "../schemas/Diary";
 import User from "../schemas/User";
@@ -142,12 +144,13 @@ router.post("/getReport", (request, response) => {
           userFrom: user._id,
           isVisible: true,
           createdAt: {
-            $gte: `${date.year}-${date.month}-01`,
-            $lte: `${date.year}-${date.month}-31`,
+            $gte: `${date.year}-${date.month}-01 00:00:00`,
+            $lte: `${date.year}-${date.month}-31 23:59:59`,
           },
         },
         { weather: 1, createdAt: 1 }
       )
+        .sort({ createdAt: 1 })
         .then((weather) => {
           return response.status(200).json({ success: true, weather });
         })
