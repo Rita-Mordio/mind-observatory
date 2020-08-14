@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
 import moment from 'moment';
-import { Picker } from '@react-native-community/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 import COMMON from '../common';
 import Alert from '../Components/Alert';
@@ -38,9 +39,36 @@ const Border = styled.View`
   border-color: #dddddd;
   border-radius: 10px;
   width: 40%;
+  height: 50px;
 `;
 
-const DatePicker = styled.View``;
+const PickerIcon = styled.View`
+  position: absolute;
+  background-color: transparent;
+  border-top-width: 7px;
+  border-top-color: gray;
+  border-right-width: 7px;
+  border-right-color: transparent;
+  border-left-width: 7px;
+  border-left-color: transparent;
+  width: 0px;
+  height: 0px;
+  top: ${Platform.OS === 'ios' ? 19 : 21}px;
+  right: 15px;
+`;
+
+const pickerStyle = {
+  inputIOS: {
+    color: '#3f3e3c',
+    paddingTop: 14,
+    paddingHorizontal: 15,
+    paddingBottom: 12,
+  },
+  inputAndroid: {
+    color: '#3f3e3c',
+  },
+  underline: { borderTopWidth: 0 },
+};
 
 //###################################
 //###################################
@@ -152,39 +180,49 @@ const Report = ({ navigation }) => {
       <Container>
         <DatePickerWrap>
           <Border>
-            <DatePicker
-              as={Picker}
-              selectedValue={selectDate.year}
-              onValueChange={(itemValue) => {
-                handlePickerChange('year', itemValue);
+            <RNPickerSelect
+              value={selectDate.year}
+              placeholder={{}}
+              style={pickerStyle}
+              Icon={() => {
+                return <PickerIcon />;
               }}
-            >
-              <Picker.Item color="#3f3e3c" label="2020년" value="2020" />
-              <Picker.Item color="#3f3e3c" label="2021년" value="2021" />
-              <Picker.Item color="#3f3e3c" label="2022년" value="2022" />
-            </DatePicker>
+              onValueChange={(value) => {
+                handlePickerChange('year', value);
+              }}
+              items={[
+                { label: '2020년', value: '2020' },
+                { label: '2021년', value: '2021' },
+                { label: '2022년', value: '2022' },
+              ]}
+            />
           </Border>
           <Border>
-            <DatePicker
-              as={Picker}
-              selectedValue={selectDate.month}
-              onValueChange={(itemValue) => {
-                handlePickerChange('month', itemValue);
+            <RNPickerSelect
+              value={selectDate.month}
+              placeholder={{}}
+              style={pickerStyle}
+              Icon={() => {
+                return <PickerIcon />;
               }}
-            >
-              <Picker.Item color="#3f3e3c" label="1월" value="01" />
-              <Picker.Item color="#3f3e3c" label="2월" value="02" />
-              <Picker.Item color="#3f3e3c" label="3월" value="03" />
-              <Picker.Item color="#3f3e3c" label="4월" value="04" />
-              <Picker.Item color="#3f3e3c" label="5월" value="05" />
-              <Picker.Item color="#3f3e3c" label="6월" value="06" />
-              <Picker.Item color="#3f3e3c" label="7월" value="07" />
-              <Picker.Item color="#3f3e3c" label="8월" value="08" />
-              <Picker.Item color="#3f3e3c" label="9월" value="09" />
-              <Picker.Item color="#3f3e3c" label="10월" value="10" />
-              <Picker.Item color="#3f3e3c" label="11월" value="11" />
-              <Picker.Item color="#3f3e3c" label="12월" value="12" />
-            </DatePicker>
+              onValueChange={(value) => {
+                handlePickerChange('month', value);
+              }}
+              items={[
+                { label: '1월', value: '01' },
+                { label: '2월', value: '02' },
+                { label: '3월', value: '03' },
+                { label: '4월', value: '04' },
+                { label: '5월', value: '05' },
+                { label: '6월', value: '06' },
+                { label: '7월', value: '07' },
+                { label: '8월', value: '08' },
+                { label: '9월', value: '09' },
+                { label: '10월', value: '10' },
+                { label: '11월', value: '11' },
+                { label: '12월', value: '12' },
+              ]}
+            />
           </Border>
         </DatePickerWrap>
         <ReportWeekItem>{renderWeather()}</ReportWeekItem>
