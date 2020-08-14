@@ -14,6 +14,7 @@
     "@codler/react-native-keyboard-aware-scroll-view": "^1.0.1",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/picker": "^1.6.6",
     "@react-navigation/drawer": "^5.8.6",
     "@react-navigation/material-bottom-tabs": "^5.2.14",
     "@react-navigation/native": "^5.7.1",

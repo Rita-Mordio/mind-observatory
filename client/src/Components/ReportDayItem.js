@@ -7,7 +7,7 @@ const Container = styled.View`
   width: ${Math.floor(100 / 6)}%;
   align-items: center;
   border-color: #efefef;
-  border-top-width: ${props => props.index >= 5 ? '0px' : '1px' };
+  border-top-width: ${props => props.index >= 6 ? '0px' : '1px' };
   border-bottom-width: 1px;
   padding: 15px 0px;
 `;

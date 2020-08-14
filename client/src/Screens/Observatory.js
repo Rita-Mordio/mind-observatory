@@ -108,16 +108,18 @@ const Observatory = ({ navigation }) => {
             page: getCommon().isChangeDiaryData ? 1 : page,
           },
           (object) => {
-            setShowLoader(false);
-            setShowBottomSpinner(false);
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               if (getCommon().isChangeDiaryData) {
                 setDiariesData(object.data.diaries);
                 setIsChangeDiaryData(false);
                 setIsLastPage(false);
+                setShowLoader(false);
+                setShowBottomSpinner(false);
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));
                 setIsLastPage(object.data.diaries.length < 10);
+                setShowLoader(false);
+                setShowBottomSpinner(false);
               }
             }
           },
