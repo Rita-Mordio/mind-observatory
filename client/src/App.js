@@ -10,7 +10,7 @@ import {
   SET_DIARY,
   INIT_DIARY,
   SET_HEADER,
-  SET_IS_CHANGE_DIARY_DATA,
+  SET_REFRESH_OBSERVATORY,
   SET_HISTORY_COUNT,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
@@ -69,8 +69,8 @@ const App = () => {
       getTheme: () => {
         return themeState;
       },
-      setIsChangeDiaryData: (value) => {
-        commonDispatch({ type: SET_IS_CHANGE_DIARY_DATA, payload: value });
+      setRefreshObservatory: (value) => {
+        commonDispatch({ type: SET_REFRESH_OBSERVATORY, payload: value });
       },
       setHistoryCount: (value) => {
         commonDispatch({ type: SET_HISTORY_COUNT, payload: value });

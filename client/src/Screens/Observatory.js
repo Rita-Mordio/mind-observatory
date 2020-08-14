@@ -46,7 +46,7 @@ const ActivityIndicator = styled.ActivityIndicator`
 //###################################
 
 const Observatory = ({ navigation }) => {
-  const { setHeader, setIsChangeDiaryData, getCommon } = useContext(Context);
+  const { setHeader, setRefreshObservatory, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
   const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
@@ -57,7 +57,7 @@ const Observatory = ({ navigation }) => {
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
-      if (getCommon().isChangeDiaryData) {
+      if (getCommon().refreshObservatory) {
         setPage(1);
         setShowBottomSpinner(true);
         getDiaries();
@@ -105,13 +105,13 @@ const Observatory = ({ navigation }) => {
           'diary/getMyDiaries',
           {
             token: value,
-            page: getCommon().isChangeDiaryData ? 1 : page,
+            page: getCommon().refreshObservatory ? 1 : page,
           },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-              if (getCommon().isChangeDiaryData) {
+              if (getCommon().refreshObservatory) {
                 setDiariesData(object.data.diaries);
-                setIsChangeDiaryData(false);
+                setRefreshObservatory(false);
                 setIsLastPage(false);
                 setShowLoader(false);
                 setShowBottomSpinner(false);

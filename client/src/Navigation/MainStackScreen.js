@@ -23,7 +23,7 @@ const MainStackScreen = ({ route, navigation }) => {
     getTheme,
     initDiary,
     getDiary,
-    setIsChangeDiaryData,
+    setRefreshObservatory,
     setHistoryCount,
   } = useContext(Context);
 
@@ -36,18 +36,21 @@ const MainStackScreen = ({ route, navigation }) => {
     successActionStatus: 201,
   };
 
+  //일기 저장
   const saveDiary = (url, diaryData) => {
     COMMON.axiosCall(
       url,
       diaryData,
       (result) => {
         if (!result.data.success) alert(result.data.message);
-        setIsChangeDiaryData(true);
-        COMMON.setStoreData('@historyCount', result.data.count, () => {
-          alert('기록 전체 개수를 저장하는데 문제가 발생했습니다.');
-        });
-        setHistoryCount(result.data.count);
-        initDiary();
+        setRefreshObservatory(true); //홈 화면 데이터 새로 불러오도록 변경
+        if (COMMON.isEmptyValue(diaryData._id)) {
+          setHistoryCount(result.data.count); // 전체 기록 일수 변경
+          COMMON.setStoreData('@historyCount', result.data.count, () => {
+            alert('기록 전체 개수를 저장하는데 문제가 발생했습니다.');
+          });
+        }
+        initDiary(); //저장하기위해 담아뒀던 일기 객체 초기화
         navigation.navigate('Main');
       },
       (error) => {
@@ -56,6 +59,7 @@ const MainStackScreen = ({ route, navigation }) => {
     );
   };
 
+  //일기 저장을 위한 준비
   const processDiary = () => {
     const diaryData = getDiary();
     let url = '';
@@ -71,12 +75,14 @@ const MainStackScreen = ({ route, navigation }) => {
       return false;
     }
 
+    //저장 할지 수정 할지 분기처리
     if (COMMON.isEmptyValue(diaryData._id)) url = 'diary/addDiary';
     else url = 'diary/editDiary';
 
     if (typeof diaryData.images[0] === 'string') {
       saveDiary(url, diaryData);
     } else {
+      //S3에 이미지 업로드
       RNS3.put(diaryData.images[0], awsConfig)
         .then((result) => {
           diaryData.images[0] = result.body.postResponse.location;

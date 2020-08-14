@@ -1,16 +1,20 @@
-import { SET_IS_CHANGE_DIARY_DATA, SET_HISTORY_COUNT } from '../constants/actionTypes';
+import {
+  SET_REFRESH_OBSERVATORY,
+  SET_HISTORY_COUNT,
+} from '../constants/actionTypes';
 
 export const initialCommonState = {
-  isChangeDiaryData: false,
+  refreshObservatory: false,
+  refreshReport: false,
   historyCount: 0,
 };
 
 export const commonReducer = (prevState, action) => {
   switch (action.type) {
-    case SET_IS_CHANGE_DIARY_DATA:
+    case SET_REFRESH_OBSERVATORY:
       return {
         ...prevState,
-        isChangeDiaryData: action.payload,
+        refreshObservatory: action.payload
       };
     case SET_HISTORY_COUNT:
       return {
