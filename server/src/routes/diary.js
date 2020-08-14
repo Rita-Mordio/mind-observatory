@@ -1,6 +1,6 @@
 import express from "express";
-import moment from "moment"
-import _ from "lodash"
+import moment from "moment";
+import _ from "lodash";
 
 import Diary from "../schemas/Diary";
 import User from "../schemas/User";
@@ -152,7 +152,15 @@ router.post("/getReport", (request, response) => {
       )
         .sort({ createdAt: 1 })
         .then((weather) => {
-          return response.status(200).json({ success: true, weather });
+          const count = _.countBy(weather, "weather");
+
+          const report = {
+            mostNumerous: Object.keys(count)[0],
+            count,
+            weather,
+          };
+
+          return response.status(200).json({ success: true, report });
         })
         .catch((error) => {
           return response.status(200).json({
