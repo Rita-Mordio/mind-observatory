@@ -36,7 +36,7 @@ router.post("/addDiary", (request, response) => {
                 error,
               });
 
-            return response.status(200).json({ success: true, count : result });
+            return response.status(200).json({ success: true, count: result });
           }
         );
       });
@@ -125,8 +125,8 @@ router.post("/searchMyDiariesByTitle", (request, response) => {
     });
 });
 
-//최근 10일간의 날씨를 가져오기
-router.post("/getReportWeather", (request, response) => {
+//리포트 데이터 가져오기
+router.post("/getReport", (request, response) => {
   User.findOne({ token: request.body.token })
     .then((user) => {
       if (!user)
@@ -135,19 +135,26 @@ router.post("/getReportWeather", (request, response) => {
           message: "존재하지 않는 사용자 정보 입니다. 다시 로그인해 주세요.",
         });
 
+      const date = request.body.selectDate;
+
       Diary.find(
-        { userFrom: user._id, isVisible: true },
+        {
+          userFrom: user._id,
+          isVisible: true,
+          createdAt: {
+            $gte: `${date.year}-${date.month}-01`,
+            $lte: `${date.year}-${date.month}-31`,
+          },
+        },
         { weather: 1, createdAt: 1 }
       )
-        .sort({ createdAt: -1 })
-        .limit(10)
         .then((weather) => {
           return response.status(200).json({ success: true, weather });
         })
         .catch((error) => {
           return response.status(200).json({
             success: false,
-            message: "날씨 정보를 가져오는데 실패하였습니다.",
+            message: "해당 날짜의 일기 정보를 가져오는데 문제가 발생했습니다.",
             error,
           });
         });

@@ -90,9 +90,10 @@ const Report = ({ navigation }) => {
       '@userToken',
       (value) => {
         COMMON.axiosCall(
-          'diary/getReportWeather',
+          'diary/getReport',
           {
             token: value,
+            selectDate,
           },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
