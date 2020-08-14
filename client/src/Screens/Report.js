@@ -97,7 +97,7 @@ const Report = ({ navigation }) => {
           },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-              setWeather(object.data.weather);
+              setWeather(object.data.report.weather);
               setShowLoader(false);
               setRefreshReport(false);
             }
