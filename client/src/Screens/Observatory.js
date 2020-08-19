@@ -173,12 +173,6 @@ const Observatory = ({ navigation }) => {
     if (!isLastPage) {
       setShowButtonSpinner(true);
       setPage(page + 1);
-    } else {
-      setAlertData({
-        ...alertData,
-        show: true,
-        message: '더 이상 가져올 기록이 없어요.',
-      });
     }
   };
 
@@ -199,7 +193,9 @@ const Observatory = ({ navigation }) => {
               <ButtonWrap>
                 <Button
                   buttonStyle={{ backgroundColor: '#efc4cd' }}
-                  title="기록 더 보기"
+                  title={
+                    isLastPage ? '더 이상 가져올 기록이 없어요' : '기록 더 보기'
+                  }
                   raised={true}
                   onPress={() => {
                     handleSetPage();
