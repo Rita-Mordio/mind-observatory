@@ -2,17 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
+import * as Animatable from 'react-native-animatable';
 
 import TodayStatus from '../Components/TodayStatus';
 import SelectDiaryViewType from '../Components/SelectDiaryViewType';
 import ImageTypeDiaryItem from '../Components/ImageTypeDiaryItem';
 import TextTypeDiaryItem from '../Components/TextTypeDiaryItem';
-import Context from '../Redux/contexts/context';
-import COMMON from '../common';
-
 import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
-import * as Animatable from 'react-native-animatable';
+import Context from '../Redux/contexts/context';
+import COMMON from '../common';
 
 //##################################
 //##################################
