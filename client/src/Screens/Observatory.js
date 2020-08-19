@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 
@@ -49,16 +50,16 @@ const Observatory = ({ navigation }) => {
   const { setHeader, setRefreshObservatory, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
-  const [showLoader, setShowLoader] = useState(true);                 //메인 로더 여부
-  const [showBottomSpinner, setShowBottomSpinner] = useState(false);  //하단 스피너 여부
-  const [isLastPage, setIsLastPage] = useState(false);                //마지막 페이지인지 확인용, 마지막 페이지 일때는 하단 스크롤을 해도 더이상 Axios 호출을 안함
-  const [diaryViewType, setDiaryViewType] = useState('image');        //일기 모양을 이미지형 or 글자형 보여질 형태 선택
-  const [diariesData, setDiariesData] = useState([]);                 //가져온 다이어리 데이터들
+  const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
+  const [showBottomSpinner, setShowBottomSpinner] = useState(false); //하단 스피너 여부
+  const [isLastPage, setIsLastPage] = useState(false); //마지막 페이지인지 확인용, 마지막 페이지 일때는 하단 스크롤을 해도 더이상 Axios 호출을 안함
+  const [diaryViewType, setDiaryViewType] = useState('image'); //일기 모양을 이미지형 or 글자형 보여질 형태 선택
+  const [diariesData, setDiariesData] = useState([]); //가져온 다이어리 데이터들
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
       if (getCommon().refreshObservatory) {
-        setShowLoader(true)
+        setShowLoader(true);
         setPage(1);
         setShowBottomSpinner(true);
         getDiaries();
@@ -200,11 +201,16 @@ const Observatory = ({ navigation }) => {
           }}
         >
           <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
-          <SelectDiaryViewType
-            diaryViewType={diaryViewType}
-            handleVieTypeToggle={handleVieTypeToggle}
-          />
-          <DiariesView>{renderDiaries()}</DiariesView>
+          {diariesData.length !== 0 && (
+            <View>
+              <SelectDiaryViewType
+                diaryViewType={diaryViewType}
+                handleVieTypeToggle={handleVieTypeToggle}
+              />
+              <DiariesView>{renderDiaries()}</DiariesView>
+            </View>
+          )}
+
           {showBottomSpinner && (
             <ActivityIndicator size="large" color="#efc4cd" />
           )}

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import COMMON from '../common';
 import SelectDate from '../Components/SelectDate';
-import ReportContents from "../Components/ReportContents";
+import ReportContents from '../Components/ReportContents';
 import ReportDayItem from '../Components/ReportDayItem';
 import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
@@ -35,6 +35,22 @@ const DatePickerWrap = styled.View`
   flex-direction: row;
   justify-content: center;
   margin-bottom: 30px;
+`;
+
+const DefaultView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+`;
+
+const DefaultImage = styled.Image`
+  width: 100px;
+  height: 100px;
+`;
+
+const DefaultText = styled.Text`
+  color: #3f3e3c;
 `;
 
 //###################################
@@ -79,6 +95,10 @@ const Report = ({ navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    getReportWeather();
+  }, [selectDate]);
 
   const getReportWeather = () => {
     COMMON.getStoreData(
@@ -157,10 +177,21 @@ const Report = ({ navigation }) => {
             handlePickerChange={handlePickerChange}
           />
         </DatePickerWrap>
-        <ScrollView>
-          <ReportContents data={reportData} />
-          <CalendarItem>{renderDayItem()}</CalendarItem>
-        </ScrollView>
+        {reportData.weather.length === 0 && (
+          <DefaultView>
+            <DefaultImage
+              source={require(`../../assets/images/logo-background-void.png`)}
+            />
+            <DefaultText>관측된 일기 정보가 없어요.</DefaultText>
+          </DefaultView>
+        )}
+
+        {reportData.weather.length !== 0 && (
+          <ScrollView>
+            <ReportContents data={reportData} />
+            <CalendarItem>{renderDayItem()}</CalendarItem>
+          </ScrollView>
+        )}
         <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>
     );
