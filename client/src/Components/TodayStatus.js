@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
-import TODAY_WORD from '../TODAY_WORD';
+import TODAY_SENTENCE from '../TODAY_SENTENCE';
 
 const { width } = Dimensions.get('screen');
 
@@ -89,7 +89,7 @@ const TodayStatus = ({ navigation, recentDiary }) => {
     const today = moment().format('YYYY-MM-DD');
     const isSame = moment(writeDay).isSame(today, 'day');
     const todayWord =
-      TODAY_WORD[recentDiary.weather][Math.floor(Math.random() * 3)];
+      TODAY_SENTENCE[recentDiary.weather][Math.floor(Math.random() * 3)];
 
     if (isSame) {
       return (
