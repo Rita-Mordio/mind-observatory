@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
-import _ from 'lodash';
 
 import TodayStatus from '../Components/TodayStatus';
 import SelectDiaryViewType from '../Components/SelectDiaryViewType';
@@ -31,13 +31,13 @@ const ScrollView = styled.ScrollView`
 
 const DiariesView = styled.View`
   flex: 1;
-  padding: 30px 20px;
+  padding: 30px 20px 20px;
   background-color: white;
   align-items: center;
 `;
 
-const ActivityIndicator = styled.ActivityIndicator`
-  margin-bottom: 50px;
+const ButtonWrap = styled.View`
+  padding: 0px 20px 50px;
 `;
 
 //###################################
@@ -50,18 +50,17 @@ const Observatory = ({ navigation }) => {
   const { setHeader, setRefreshObservatory, getCommon } = useContext(Context);
 
   const [page, setPage] = useState(1);
-  const [showLoader, setShowLoader] = useState(true); //메인 로더 여부
-  const [showBottomSpinner, setShowBottomSpinner] = useState(false); //하단 스피너 여부
   const [isLastPage, setIsLastPage] = useState(false); //마지막 페이지인지 확인용, 마지막 페이지 일때는 하단 스크롤을 해도 더이상 Axios 호출을 안함
+  const [showMainLoader, setShowMainLoader] = useState(true); //메인 로더 여부
+  const [showButtonSpinner, setShowButtonSpinner] = useState(false);
   const [diaryViewType, setDiaryViewType] = useState('image'); //일기 모양을 이미지형 or 글자형 보여질 형태 선택
   const [diariesData, setDiariesData] = useState([]); //가져온 다이어리 데이터들
 
   useEffect(() => {
     const focusListener = navigation.addListener('focus', () => {
       if (getCommon().refreshObservatory) {
-        setShowLoader(true);
+        setShowMainLoader(true);
         setPage(1);
-        setShowBottomSpinner(true);
         getDiaries();
       }
     });
@@ -79,7 +78,6 @@ const Observatory = ({ navigation }) => {
 
   useEffect(() => {
     if (page !== 1) {
-      setShowBottomSpinner(true);
       getDiaries();
     }
   }, [page]);
@@ -115,18 +113,18 @@ const Observatory = ({ navigation }) => {
                 setDiariesData(object.data.diaries);
                 setRefreshObservatory(false);
                 setIsLastPage(false);
-                setShowLoader(false);
-                setShowBottomSpinner(false);
+                setShowButtonSpinner(false);
+                setShowMainLoader(false);
               } else {
                 setDiariesData(diariesData.concat(object.data.diaries));
                 setIsLastPage(object.data.diaries.length < 10);
-                setShowLoader(false);
-                setShowBottomSpinner(false);
+                setShowMainLoader(false);
+                setShowButtonSpinner(false);
               }
             }
           },
           (error) => {
-            setShowBottomSpinner(false);
+            setShowButtonSpinner(false);
             setAlertData({
               ...alertData,
               show: true,
@@ -137,7 +135,7 @@ const Observatory = ({ navigation }) => {
         );
       },
       () => {
-        setShowBottomSpinner(false);
+        setShowButtonSpinner(false);
         setAlertData({
           ...alertData,
           show: true,
@@ -171,35 +169,25 @@ const Observatory = ({ navigation }) => {
     }
   };
 
-  const isCloseToBottom = ({
-    // 스크롤이 맨 밑으로 내려갔는지 확인
-    layoutMeasurement,
-    contentOffset,
-    contentSize,
-  }) => {
-    const paddingToBottom = 1;
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    );
+  const handleSetPage = () => {
+    if (!isLastPage) {
+      setShowButtonSpinner(true);
+      setPage(page + 1);
+    } else {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '더 이상 가져올 기록이 없어요.',
+      });
+    }
   };
 
-  const setPageThrottle = _.throttle(() => {
-    if (!isLastPage) setPage(page + 1);
-  }, 500);
-
-  if (showLoader) {
+  if (showMainLoader) {
     return <Loader />;
   } else {
     return (
       <Container as={Animatable.View} animation="fadeIn" duration={1500}>
-        <ScrollView
-          onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              setPageThrottle();
-            }
-          }}
-        >
+        <ScrollView>
           <TodayStatus navigation={navigation} recentDiary={diariesData[0]} />
           {diariesData.length !== 0 && (
             <View>
@@ -208,13 +196,19 @@ const Observatory = ({ navigation }) => {
                 handleVieTypeToggle={handleVieTypeToggle}
               />
               <DiariesView>{renderDiaries()}</DiariesView>
+              <ButtonWrap>
+                <Button
+                  buttonStyle={{ backgroundColor: '#efc4cd' }}
+                  title="기록 더 보기"
+                  raised={true}
+                  onPress={() => {
+                    handleSetPage();
+                  }}
+                  loading={showButtonSpinner}
+                />
+              </ButtonWrap>
             </View>
           )}
-
-          {showBottomSpinner && (
-            <ActivityIndicator size="large" color="#efc4cd" />
-          )}
-
           <Alert alertData={alertData} setAlertData={setAlertData} />
         </ScrollView>
       </Container>
