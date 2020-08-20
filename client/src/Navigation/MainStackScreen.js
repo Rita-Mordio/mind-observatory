@@ -109,6 +109,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerStyle: { backgroundColor: getTheme().headerColor },
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button
@@ -131,6 +132,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button
@@ -169,6 +171,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button
@@ -207,6 +210,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button
@@ -229,6 +233,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button
@@ -259,6 +264,7 @@ const MainStackScreen = ({ route, navigation }) => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: '#ffffff',
+            fontWeight: 'bold',
           },
           headerLeft: () => (
             <Ionicons.Button

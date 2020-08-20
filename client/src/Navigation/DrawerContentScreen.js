@@ -157,7 +157,9 @@ const DrawerContentScreen = (props) => {
                 <Icon name="ios-settings" color={color} size={size} />
               )}
               label="내 정보 변경"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('MyAccount');
+              }}
             />
           </Drawer.Section>
 
@@ -167,7 +169,9 @@ const DrawerContentScreen = (props) => {
                 <Icon name="ios-chatbubbles-sharp" color={color} size={size} />
               )}
               label="문의하기"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('Support');
+              }}
             />
           </Drawer.Section>
 
@@ -181,7 +185,9 @@ const DrawerContentScreen = (props) => {
                 />
               )}
               label="앱 정보"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('AppInfo');
+              }}
             />
           </Drawer.Section>
 

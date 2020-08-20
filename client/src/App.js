@@ -25,6 +25,9 @@ import {
 import RootStackScreen from './Navigation/RootStackScreen';
 import DrawerContentScreen from './Navigation/DrawerContentScreen';
 import MainStackScreen from './Navigation/MainStackScreen';
+import MyAccountStackScreen from './Navigation/MyAccountStackScreen';
+import SupportStackScreen from './Navigation/SupportStackScreen';
+import AppInfoStackScreen from './Navigation/AppInfoStackScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -94,6 +97,9 @@ const App = () => {
             drawerContent={(props) => <DrawerContentScreen {...props} />}
           >
             <Drawer.Screen name="HomeDrawer" component={MainStackScreen} />
+            <Drawer.Screen name="MyAccount" component={MyAccountStackScreen} />
+            <Drawer.Screen name="Support" component={SupportStackScreen} />
+            <Drawer.Screen name="AppInfo" component={AppInfoStackScreen} />
           </Drawer.Navigator>
         ) : (
           <RootStackScreen />
