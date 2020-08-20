@@ -30,7 +30,7 @@ const ScrollView = styled.ScrollView`
 
 const DiariesView = styled.View`
   flex: 1;
-  padding: 30px 20px 20px;
+  padding: 40px 20px 20px;
   background-color: white;
   align-items: center;
 `;
@@ -189,19 +189,19 @@ const Observatory = ({ navigation }) => {
                 handleVieTypeToggle={handleVieTypeToggle}
               />
               <DiariesView>{renderDiaries()}</DiariesView>
-              <ButtonWrap>
-                <Button
-                  buttonStyle={{ backgroundColor: '#efc4cd' }}
-                  title={
-                    isLastPage ? '더 이상 가져올 기록이 없어요' : '기록 더 보기'
-                  }
-                  raised={true}
-                  onPress={() => {
-                    handleSetPage();
-                  }}
-                  loading={showButtonSpinner}
-                />
-              </ButtonWrap>
+              {!isLastPage && (
+                <ButtonWrap>
+                  <Button
+                    buttonStyle={{ backgroundColor: '#efc4cd' }}
+                    title="기록 더 보기"
+                    raised={true}
+                    onPress={() => {
+                      handleSetPage();
+                    }}
+                    loading={showButtonSpinner}
+                  />
+                </ButtonWrap>
+              )}
             </View>
           )}
           <Alert alertData={alertData} setAlertData={setAlertData} />
