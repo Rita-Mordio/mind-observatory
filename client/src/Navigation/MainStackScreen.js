@@ -7,6 +7,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
+import MyAccount from '../Screens/MyAccount';
+import Support from '../Screens/Support';
+import AppInfo from '../Screens/AppInfo';
 import EditDiarySimple from '../Screens/EditDiary-simple';
 import EditDiaryDetail from '../Screens/EditDiary-detail';
 import ViewDiarySimple from '../Screens/ViewDiary-simple';
@@ -123,6 +126,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
         }}
       />
+
       <MainStack.Screen
         name="ViewDiarySimple"
         component={ViewDiarySimple}
@@ -162,6 +166,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
         }}
       />
+
       <MainStack.Screen
         name="ViewDiaryDetail"
         component={ViewDiaryDetail}
@@ -201,6 +206,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
         }}
       />
+
       <MainStack.Screen
         name="Template"
         component={Template}
@@ -224,6 +230,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
         }}
       />
+
       <MainStack.Screen
         name="EditDiarySimple"
         component={EditDiarySimple}
@@ -255,6 +262,7 @@ const MainStackScreen = ({ route, navigation }) => {
           ),
         }}
       />
+
       <MainStack.Screen
         name="EditDiaryDetail"
         component={EditDiaryDetail}
@@ -282,6 +290,78 @@ const MainStackScreen = ({ route, navigation }) => {
               size={26}
               backgroundColor="#efc4cd"
               onPress={processDiary}
+            />
+          ),
+        }}
+      />
+
+      <MainStack.Screen
+        name="MyAccount"
+        component={MyAccount}
+        options={{
+          title: '내 정보 변경',
+          headerStyle: { backgroundColor: '#BCC74F' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#BCC74F"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+      />
+
+      <MainStack.Screen
+        name="Support"
+        component={Support}
+        options={{
+          title: '문의하기',
+          headerStyle: { backgroundColor: '#BCC74F' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#BCC74F"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+      />
+
+      <MainStack.Screen
+        name="AppInfo"
+        component={AppInfo}
+        options={{
+          title: '앱 정보',
+          headerStyle: { backgroundColor: '#BCC74F' },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: '#ffffff',
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <Ionicons.Button
+              name="arrow-back-outline"
+              size={30}
+              backgroundColor="#BCC74F"
+              onPress={() => {
+                navigation.goBack();
+              }}
             />
           ),
         }}
