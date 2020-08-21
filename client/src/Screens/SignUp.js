@@ -57,12 +57,11 @@ const BottomTitle = styled.Text`
 
 const InputWrap = styled.View`
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 12px;
   margin-bottom: ${() => {
     if (Platform.OS === 'ios') return `20px`;
     else return `0px`;
   }};
-  padding-bottom: 5px;
   border-bottom-width: 1px;
   border-color: #f2f2f2;
 `;

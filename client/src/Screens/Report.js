@@ -54,6 +54,7 @@ const DefaultImage = styled.Image`
 
 const DefaultText = styled.Text`
   font-size: 17px;
+  margin-top: 20px;
   color: #3f3e3c;
 `;
 
@@ -187,7 +188,7 @@ const Report = ({ navigation }) => {
           {reportData.weather.length === 0 && (
             <DefaultView>
               <DefaultImage
-                source={require(`../../assets/images/logo-background-void.png`)}
+                source={require(`../../assets/images/empty.png`)}
               />
               <DefaultText>관측된 일기 정보가 없어요.</DefaultText>
             </DefaultView>

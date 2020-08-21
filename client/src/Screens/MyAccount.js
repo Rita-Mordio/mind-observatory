@@ -63,12 +63,11 @@ const Title = styled.Text`
 
 const InputWrap = styled.View`
   flex-direction: row;
-  margin-top: 15px;
+  margin-top: 17px;
   margin-bottom: ${() => {
     if (Platform.OS === 'ios') return `20px`;
     else return `0px`;
   }};
-  padding-bottom: 5px;
   border-bottom-width: 1px;
   border-color: #f2f2f2;
 `;
@@ -92,6 +91,7 @@ const AutoSignInWrap = styled.View`
 const ButtonWrap = styled.View`
   width: 100%;
   margin-top: 40px;
+  margin-bottom: 10px;
 `;
 
 //###################################
@@ -101,13 +101,13 @@ const ButtonWrap = styled.View`
 //###################################
 
 const MyAccount = () => {
+  const [isAutoSignIn, setIsAutoSignIn] = useState(false);
   const [accountData, setAccountData] = useState({
     nickname: '',
     password: '',
     confirmPassword: '',
     secureTextEntry: true,
     confirmSecureTextEntry: true,
-    isAutoSignIn: false,
   });
 
   const [imageData, setImageData] = useState({
@@ -137,14 +137,17 @@ const MyAccount = () => {
           { token: value },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-              console.log(object);
+              setAccountData({
+                ...accountData,
+                nickname: object.data.user.nickname,
+              });
             }
           },
           () => {
             setAlertData({
               ...alertData,
               show: true,
-              message: '',
+              message: '서버쪽 응답이 없습니다. 관리자에게 문의해주세요.',
             });
           },
         );
@@ -154,6 +157,20 @@ const MyAccount = () => {
           ...alertData,
           show: true,
           message: '사용자 토큰정보를 가져오는데 실패하였습니다.',
+        });
+      },
+    );
+
+    COMMON.getStoreData(
+      '@isAutoSignIn',
+      (value) => {
+        setIsAutoSignIn(value === 'true' ? true : false);
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
         });
       },
     );
@@ -238,6 +255,7 @@ const MyAccount = () => {
                 placeholder="당신만의 닉네임"
                 autoCapitalize="none"
                 keyboardType="email-address"
+                value={accountData.nickname}
                 onChangeText={(value) => handleInputChange(value, 'email')}
               />
             </InputWrap>
@@ -290,13 +308,10 @@ const MyAccount = () => {
               <Title>자동 로그인 설정</Title>
               <TouchableWithoutFeedback
                 onPress={() => {
-                  setAccountData({
-                    ...accountData,
-                    isAutoSignIn: !accountData.isAutoSignIn,
-                  });
+                  setIsAutoSignIn(!isAutoSignIn);
                 }}
               >
-                <Switch value={accountData.isAutoSignIn} />
+                <Switch value={isAutoSignIn} />
               </TouchableWithoutFeedback>
             </AutoSignInWrap>
           </View>
