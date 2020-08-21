@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Keyboard,
   Dimensions,
@@ -123,6 +123,41 @@ const MyAccount = () => {
     onConfirmPressed: null,
     confirmButtonColor: '#BCC74F',
   });
+
+  useEffect(() => {
+    getAccount();
+  }, []);
+
+  const getAccount = () => {
+    COMMON.getStoreData(
+      '@userToken',
+      (value) => {
+        COMMON.axiosCall(
+          'user/getUser',
+          { token: value },
+          (object) => {
+            if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              console.log(object);
+            }
+          },
+          () => {
+            setAlertData({
+              ...alertData,
+              show: true,
+              message: '',
+            });
+          },
+        );
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '사용자 토큰정보를 가져오는데 실패하였습니다.',
+        });
+      },
+    );
+  };
 
   const handleSecureTextEntryChange = (entryName) => {
     setAccountData({

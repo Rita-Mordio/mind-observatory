@@ -145,7 +145,7 @@ const FindPassword = ({ navigation }) => {
           <InputWrap>
             <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
             <Input
-              placeholder="비밀번호가 전달 될 이메일"
+              placeholder="회원가입시 사용한 이메일"
               autoCapitalize="none"
               keyboardType="email-address"
               onChangeText={(value) => handleInputChange(value, 'email')}

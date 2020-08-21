@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import COMMON from '../common';
@@ -56,7 +57,7 @@ const BottomTitle = styled.Text`
 
 const InputWrap = styled.View`
   flex-direction: row;
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: ${() => {
     if (Platform.OS === 'ios') return `20px`;
     else return `0px`;
@@ -89,9 +90,11 @@ const ButtonWrap = styled.View`
 const SignUp = ({ navigation }) => {
   const [data, setData] = React.useState({
     email: '',
+    nickname: '',
     password: '',
     confirmPassword: '',
     isAvailableEmail: false,
+    isAvailableNickname: false,
     secureTextEntry: true,
     confirmSecureTextEntry: true,
     isLoading: false,
@@ -146,6 +149,30 @@ const SignUp = ({ navigation }) => {
     );
   };
 
+  const availableNicknameCheck = () => {
+    setData({ ...data, isAvailableNickname: false });
+
+    if(data.nickname.length > 16) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '닉네임은 16자 밑으로 해주세요.',
+      });
+    }
+
+    COMMON.axiosCall(
+      'user/availableNickname',
+      {
+        nickname: data.nickname,
+      },
+      (object) => {
+        if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+          setData({ ...data, isAvailableNickname: true });
+        }
+      },
+    );
+  };
+
   const setLoadingButton = (value) => {
     setData({
       ...data,
@@ -159,6 +186,15 @@ const SignUp = ({ navigation }) => {
         ...alertData,
         show: true,
         message: '이메일을 확인해 주세요.',
+      });
+      return false;
+    }
+
+    if (!data.isAvailableNickname) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '닉네임을 확인해 주세요.',
       });
       return false;
     }
@@ -187,6 +223,7 @@ const SignUp = ({ navigation }) => {
       'user/register',
       {
         email: data.email,
+        nickname: data.nickname,
         password: data.password,
       },
       (object) => {
@@ -217,7 +254,7 @@ const SignUp = ({ navigation }) => {
           <ScrollView>
             <BottomTitle>이메일</BottomTitle>
             <InputWrap>
-              <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
+              <FontAwesomeIcon name="user-o" color="#05375a" size={20} style={{marginRight: 2}} />
               <Input
                 placeholder="당신의 소중한 이메일"
                 autoCapitalize="none"
@@ -232,9 +269,25 @@ const SignUp = ({ navigation }) => {
               ) : null}
             </InputWrap>
 
+            <BottomTitle>닉네임</BottomTitle>
+            <InputWrap>
+              <FontistoIcon name="smiley" color="#05375a" size={18} />
+              <Input
+                placeholder="당신만의 특별한 닉네임"
+                autoCapitalize="none"
+                onChangeText={(value) => handleInputChange(value, 'nickname')}
+                onBlur={availableNicknameCheck}
+              />
+              {data.isAvailableNickname ? (
+                <Animatable.View animation="bounceIn">
+                  <FeatherIcon name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              ) : null}
+            </InputWrap>
+
             <BottomTitle>비밀번호</BottomTitle>
             <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={20} />
+              <FontAwesomeIcon name="lock" color="#05375a" size={22} style={{marginRight: 5}} />
               <Input
                 placeholder="비밀번호는 8자 이상으로"
                 secureTextEntry={data.secureTextEntry ? true : false}
@@ -251,7 +304,7 @@ const SignUp = ({ navigation }) => {
 
             <BottomTitle>비밀번호 확인</BottomTitle>
             <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={20} />
+              <FontAwesomeIcon name="lock" color="#05375a" size={22} style={{marginRight: 5}} />
               <Input
                 placeholder="중요한 건 한번 더 체크"
                 secureTextEntry={data.confirmSecureTextEntry ? true : false}
@@ -277,16 +330,16 @@ const SignUp = ({ navigation }) => {
                 loading={data.isLoading}
               />
             </ButtonWrap>
-            <ButtonWrap>
+            <ButtonWrap style={{marginBottom: 5}}>
               <Button
-                buttonStyle={{ borderColor: '#efc4cd' }}
-                titleStyle={{ color: '#efc4cd' }}
-                type="outline"
-                title="로그인 화면으로"
-                raised={true}
-                onPress={() => {
-                  navigation.navigate('SignIn');
-                }}
+                  buttonStyle={{ borderColor: '#efc4cd' }}
+                  titleStyle={{ color: '#efc4cd' }}
+                  type="outline"
+                  title="로그인 화면으로"
+                  raised={true}
+                  onPress={() => {
+                    navigation.navigate('SignIn');
+                  }}
               />
             </ButtonWrap>
           </ScrollView>

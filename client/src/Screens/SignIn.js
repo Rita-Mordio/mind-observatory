@@ -225,7 +225,7 @@ const SignIn = ({ navigation }) => {
 
           <BottomTitle>비밀번호</BottomTitle>
           <InputWrap>
-            <FontAwesomeIcon name="lock" color="#05375a" size={20} />
+            <FontAwesomeIcon name="lock" color="#05375a" size={22} />
             <Input
               placeholder="당신의 비밀스런 비밀번호"
               secureTextEntry={data.secureTextEntry ? true : false}

@@ -85,20 +85,50 @@ router.post("/availableEmail", (request, response) => {
     });
 });
 
-//닉네임 중복 체크
-//내 정보 수정시 사용중인 닉네임이 존재하나 체크
-router.post("/duplicateNicknameCheck", (request, response) => {
-  User.findOne({ nickname: request.body.nickname })
+router.post("/getUser", (request, response, next) => {
+  User.findOne({ token: request.body.token })
     .then((result) => {
       return response.status(200).json({
         success: true,
-        isDuplicate: result ? true : false,
+        user: {
+          nickname: result.nickname,
+          profileImage: result.profileImage,
+        },
       });
     })
     .catch((error) => {
       return response.json({
         success: false,
-        message: "닉네임 중복확인 실패.",
+        message:
+          "사용자 정보를 가져오는중 문제가 발생했습니다, 관리자에게 문의해주세요.",
+        error: error,
+      });
+    });
+});
+
+//닉네임 중복 체크
+//내 정보 수정시 사용중인 닉네임이 존재하나 체크
+router.post("/availableNickname", (request, response) => {
+  User.findOne({ nickname: request.body.nickname })
+    .then((result) => {
+      if (result) {
+        return response.status(200).json({
+          success: false,
+          isAvailable: true,
+          message: "이미 사용중인 닉네임 입니다.",
+        });
+      } else {
+        return response.status(200).json({
+          success: true,
+          isAvailable: true,
+        });
+      }
+    })
+    .catch((error) => {
+      return response.status(200).json({
+        success: false,
+        message:
+          "닉네임 중복확인중 문제가 발생했습니다, 관리자에게 문의해주세요..",
         error: error,
       });
     });
