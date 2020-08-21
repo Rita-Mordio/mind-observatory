@@ -130,7 +130,7 @@ const EditDiaryDetail = ({ route }) => {
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
     })
       .then((image) => {

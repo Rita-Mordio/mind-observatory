@@ -50,7 +50,7 @@ const ScrollView = styled.ScrollView`
 
 const BottomTitle = styled.Text`
   color: #3f3e3c;
-  font-size: 18px;
+  font-size: 16px;
   margin-top: 20px;
 `;
 
@@ -176,7 +176,7 @@ const SignUp = ({ navigation }) => {
       setAlertData({
         ...alertData,
         show: true,
-        message: '비밀번호는 8자리 이상으로 해주세요.',
+        message: '비밀번호가 서로 일치하지 않습니다.',
       });
       return false;
     }

@@ -76,6 +76,7 @@ const Report = ({ navigation }) => {
     show: false,
     message: '',
     onConfirmPressed: null,
+    confirmButtonColor: '#AAD4EC'
   });
 
   useEffect(() => {

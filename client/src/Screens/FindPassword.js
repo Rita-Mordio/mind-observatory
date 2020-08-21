@@ -44,7 +44,7 @@ const BottomView = styled.View`
 
 const BottomTitle = styled.Text`
   color: #3f3e3c;
-  font-size: 18px;
+  font-size: 16px;
   margin-top: 20px;
 `;
 

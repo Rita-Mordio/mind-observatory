@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
-
 import { RNS3 } from 'react-native-aws3';
 
 import MainTabScreen from './MainTabScreen';
@@ -30,15 +29,6 @@ const MainStackScreen = ({ route, navigation }) => {
     setRefreshReport,
     setHistoryCount,
   } = useContext(Context);
-
-  const awsConfig = {
-    keyPrefix: 'images/',
-    bucket: 'mind-observatory',
-    region: 'ap-northeast-2',
-    accessKey: AWS_KEY.accessKey,
-    secretKey: AWS_KEY.secretKey,
-    successActionStatus: 201,
-  };
 
   //일기 저장
   const saveDiary = (url, diaryData) => {
@@ -88,7 +78,7 @@ const MainStackScreen = ({ route, navigation }) => {
       saveDiary(url, diaryData);
     } else {
       //S3에 이미지 업로드
-      RNS3.put(diaryData.images[0], awsConfig)
+      RNS3.put(diaryData.images[0], COMMON.awsConfig)
         .then((result) => {
           diaryData.images[0] = result.body.postResponse.location;
           saveDiary(url, diaryData);
