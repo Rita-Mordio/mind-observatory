@@ -7,9 +7,11 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import ImagePicker from 'react-native-image-crop-picker';
+import * as Animatable from 'react-native-animatable';
 import { Button } from 'react-native-elements';
 import { RNS3 } from 'react-native-aws3';
-import ImagePicker from 'react-native-image-crop-picker';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
@@ -100,7 +102,7 @@ const ButtonWrap = styled.View`
 //###################################
 //###################################
 
-const MyAccount = () => {
+const MyAccount = ({ navigation }) => {
   const [isAutoSignIn, setIsAutoSignIn] = useState(false);
   const [accountData, setAccountData] = useState({
     nickname: '',
@@ -108,6 +110,7 @@ const MyAccount = () => {
     confirmPassword: '',
     secureTextEntry: true,
     confirmSecureTextEntry: true,
+    isAvailableNickname: false,
   });
 
   const [imageData, setImageData] = useState({
@@ -143,7 +146,7 @@ const MyAccount = () => {
               setImageData({
                 ...imageData,
                 uri: object.data.user.profileImage,
-              })
+              });
             }
           },
           () => {
@@ -175,6 +178,30 @@ const MyAccount = () => {
           show: true,
           message: '자동 로그인 데이터를 가져오는중 문제가 발생하였습니다.',
         });
+      },
+    );
+  };
+
+  const availableNicknameCheck = () => {
+    setAccountData({ ...accountData, isAvailableNickname: false });
+
+    if (accountData.nickname.length > 16) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '닉네임은 16자 밑으로 해주세요.',
+      });
+    }
+
+    COMMON.axiosCall(
+      'user/availableNickname',
+      {
+        nickname: accountData.nickname,
+      },
+      (object) => {
+        if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+          setAccountData({ ...accountData, isAvailableNickname: true });
+        }
       },
     );
   };
@@ -239,6 +266,24 @@ const MyAccount = () => {
   };
 
   const editAccount = (profileImageUrl) => {
+    if (accountData.password.length >= 1 && accountData.password.length < 8) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '비밀번호는 8자리 이상으로 해주세요.',
+      });
+      return false;
+    }
+
+    if (accountData.password !== accountData.confirmPassword) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '비밀번호가 서로 일치하지 않습니다.',
+      });
+      return false;
+    }
+
     COMMON.setStoreData('@isAutoSignIn', isAutoSignIn, () => {
       setAlertData({
         ...alertData,
@@ -250,18 +295,32 @@ const MyAccount = () => {
     COMMON.getStoreData(
       '@userToken',
       (value) => {
+        const accountObject = {
+          token: value,
+          nickname: accountData.nickname,
+        };
+
+        if (!COMMON.isEmptyValue(accountData.password))
+          accountObject.password = accountData.password;
+
+        if (!COMMON.isEmptyValue(profileImageUrl))
+          accountObject.profileImage = profileImageUrl;
+
         COMMON.axiosCall(
           'user/updateAccount',
-          {
-            token: value,
-            nickname: accountData.nickname,
-            password: accountData.password,
-            profileImage: profileImageUrl,
-          },
+          accountObject,
           (object) => {
-            console.log(object);
+            if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              navigation.goBack();
+            }
           },
-          (error) => {},
+          (error) => {
+            setAlertData({
+              ...alertData,
+              show: true,
+              message: '서버쪽 응답이 없습니다. 관리자에게 문의해주세요.',
+            });
+          },
         );
       },
       () => {
@@ -302,7 +361,13 @@ const MyAccount = () => {
                 keyboardType="email-address"
                 value={accountData.nickname}
                 onChangeText={(value) => handleInputChange(value, 'nickname')}
+                onBlur={availableNicknameCheck}
               />
+              {accountData.isAvailableNickname ? (
+                <Animatable.View animation="bounceIn">
+                  <FeatherIcon name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              ) : null}
             </InputWrap>
           </View>
 
@@ -351,13 +416,12 @@ const MyAccount = () => {
           <View>
             <AutoSignInWrap>
               <Title>자동 로그인 설정</Title>
-              <TouchableWithoutFeedback
-                onPress={() => {
+              <Switch
+                value={isAutoSignIn}
+                onValueChange={() => {
                   setIsAutoSignIn(!isAutoSignIn);
                 }}
-              >
-                <Switch value={isAutoSignIn} />
-              </TouchableWithoutFeedback>
+              />
             </AutoSignInWrap>
           </View>
 

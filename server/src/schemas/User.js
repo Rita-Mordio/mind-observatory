@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+
+import COMMON from "../common";
 
 dotenv.config();
 
@@ -79,6 +81,23 @@ UserSchema.pre("save", function (next) {
     });
   } else {
     next();
+  }
+});
+
+UserSchema.pre("updateOne", function (next) {
+  const user = this;
+
+  if (COMMON.isEmptyValue(user._update.$set.password)) {
+    next();
+  } else {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      if (err) return next(err);
+      bcrypt.hash(user._update.$set.password, salt, (err, hash) => {
+        if (err) return next(err);
+        user._update.$set.password = hash;
+        next();
+      });
+    });
   }
 });
 

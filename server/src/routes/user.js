@@ -237,26 +237,15 @@ router.post("/signIn", (request, response) => {
 
 //회원 정보 수정
 router.post("/updateAccount", (request, response) => {
-  User.findOne({ token: request.body.token })
+  User.updateOne({ token: request.body.token }, { $set: request.body })
     .then((result) => {
-      if (request.body.password === "" || request.body.password === undefined)
-        delete request.body.password;
-      else result.password = request.body.password;
-
-      result
-        .save()
-        .then(() => {})
-        .catch(() => {});
+      return response.status(200).json({ success: true, result });
     })
-    .catch((error) => {});
-
-  // User.updateOne({ token: request.body.token }, { $set: request.body })
-  //   .then((result) => {
-  //     return response.status(200).json({ success: true, result });
-  //   })
-  //   .catch((error) => {
-  //     return response.status(200).json({ success: false, error });
-  //   });
+    .catch((error) => {
+      return response
+        .status(200)
+        .json({ success: false, message: "정보 수정중 문제가 발생했습니다." });
+    });
 });
 
 export default router;
