@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions, View } from 'react-native';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
 import moment from 'moment';
@@ -9,6 +10,8 @@ import ReportContents from '../Components/ReportContents';
 import ReportDayItem from '../Components/ReportDayItem';
 import Alert from '../Components/Alert';
 import Loader from '../Components/Loader';
+
+const { width } = Dimensions.get('screen');
 
 //##################################
 //##################################
@@ -45,11 +48,12 @@ const DefaultView = styled.View`
 `;
 
 const DefaultImage = styled.Image`
-  width: 100px;
-  height: 100px;
+  width: ${Math.round(width * 0.35)}px;
+  height: ${Math.round(width * 0.35)}px;
 `;
 
 const DefaultText = styled.Text`
+  font-size: 17px;
   color: #3f3e3c;
 `;
 
@@ -129,6 +133,7 @@ const Report = ({ navigation }) => {
         );
       },
       () => {
+        setShowLoader(false);
         setAlertData({
           ...alertData,
           show: true,
@@ -154,48 +159,50 @@ const Report = ({ navigation }) => {
   };
 
   const handlePickerChange = (name, value) => {
+    setShowLoader(true);
     setSelectDate({
       ...selectDate,
       [name]: value,
     });
   };
 
-  if (showLoader) {
-    return <Loader />;
-  } else {
-    return (
-      <Container>
-        <DatePickerWrap>
-          <SelectDate
-            type={'year'}
-            value={selectDate}
-            handlePickerChange={handlePickerChange}
-          />
-          <SelectDate
-            type={'month'}
-            value={selectDate}
-            handlePickerChange={handlePickerChange}
-          />
-        </DatePickerWrap>
-        {reportData.weather.length === 0 && (
-          <DefaultView>
-            <DefaultImage
-              source={require(`../../assets/images/logo-background-void.png`)}
-            />
-            <DefaultText>관측된 일기 정보가 없어요.</DefaultText>
-          </DefaultView>
-        )}
+  return (
+    <Container>
+      <DatePickerWrap>
+        <SelectDate
+          type={'year'}
+          value={selectDate}
+          handlePickerChange={handlePickerChange}
+        />
+        <SelectDate
+          type={'month'}
+          value={selectDate}
+          handlePickerChange={handlePickerChange}
+        />
+      </DatePickerWrap>
+      {showLoader === true && <Loader />}
+      {showLoader === false && (
+        <View style={{ flex: 1 }}>
+          {reportData.weather.length === 0 && (
+            <DefaultView>
+              <DefaultImage
+                source={require(`../../assets/images/logo-background-void.png`)}
+              />
+              <DefaultText>관측된 일기 정보가 없어요.</DefaultText>
+            </DefaultView>
+          )}
 
-        {reportData.weather.length !== 0 && (
-          <ScrollView>
-            <ReportContents data={reportData} />
-            <CalendarItem>{renderDayItem()}</CalendarItem>
-          </ScrollView>
-        )}
-        <Alert alertData={alertData} setAlertData={setAlertData} />
-      </Container>
-    );
-  }
+          {reportData.weather.length !== 0 && (
+            <ScrollView>
+              <ReportContents data={reportData} />
+              <CalendarItem>{renderDayItem()}</CalendarItem>
+            </ScrollView>
+          )}
+        </View>
+      )}
+      <Alert alertData={alertData} setAlertData={setAlertData} />
+    </Container>
+  );
 };
 
 export default Report;

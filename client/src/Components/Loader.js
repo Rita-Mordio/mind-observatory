@@ -3,8 +3,7 @@ import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
-const { height } = Dimensions.get('screen');
-const height_logo = height * 0.17;
+const { width } = Dimensions.get('screen');
 
 //##################################
 //##################################
@@ -17,11 +16,12 @@ const LoadingContainer = styled.View`
   background-color: #ffffff;
   justify-content: center;
   align-items: center;
+  padding-bottom: 50px;
 `;
 
 const LoadingImage = styled.Image`
-  width: ${Math.round(height_logo)}px;
-  height: ${Math.round(height_logo)}px;
+  width: ${Math.round(width * 0.35)}px;
+  height: ${Math.round(width * 0.35)}px;
 `;
 
 const LoadingText = styled.Text`
