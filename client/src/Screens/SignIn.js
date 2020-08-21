@@ -128,7 +128,7 @@ const SignIn = ({ navigation }) => {
         setAlertData({
           ...alertData,
           show: true,
-          message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
+          message: '자동 로그인 데이터를 가져오는중 문제가 발생하였습니다.',
         });
       },
     );

@@ -85,6 +85,7 @@ router.post("/availableEmail", (request, response) => {
     });
 });
 
+//단일 회원 정보
 router.post("/getUser", (request, response, next) => {
   User.findOne({ token: request.body.token })
     .then((result) => {
@@ -232,6 +233,30 @@ router.post("/signIn", (request, response) => {
         error: error,
       });
     });
+});
+
+//회원 정보 수정
+router.post("/updateAccount", (request, response) => {
+  User.findOne({ token: request.body.token })
+    .then((result) => {
+      if (request.body.password === "" || request.body.password === undefined)
+        delete request.body.password;
+      else result.password = request.body.password;
+
+      result
+        .save()
+        .then(() => {})
+        .catch(() => {});
+    })
+    .catch((error) => {});
+
+  // User.updateOne({ token: request.body.token }, { $set: request.body })
+  //   .then((result) => {
+  //     return response.status(200).json({ success: true, result });
+  //   })
+  //   .catch((error) => {
+  //     return response.status(200).json({ success: false, error });
+  //   });
 });
 
 export default router;

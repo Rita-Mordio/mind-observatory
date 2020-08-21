@@ -111,8 +111,7 @@ const MyAccount = () => {
   });
 
   const [imageData, setImageData] = useState({
-    uri:
-      'https://mind-observatory.s3.ap-northeast-2.amazonaws.com/default-choice.png',
+    uri: '',
     name: '',
     type: '',
   });
@@ -141,6 +140,10 @@ const MyAccount = () => {
                 ...accountData,
                 nickname: object.data.user.nickname,
               });
+              setImageData({
+                ...imageData,
+                uri: object.data.user.profileImage,
+              })
             }
           },
           () => {
@@ -170,7 +173,7 @@ const MyAccount = () => {
         setAlertData({
           ...alertData,
           show: true,
-          message: '자동 로그인 데이터를 가져오는중 에러가 발생했습니다.',
+          message: '자동 로그인 데이터를 가져오는중 문제가 발생하였습니다.',
         });
       },
     );
@@ -235,14 +238,56 @@ const MyAccount = () => {
       });
   };
 
-  const editAccount = (profileImageUrl) => {};
+  const editAccount = (profileImageUrl) => {
+    COMMON.setStoreData('@isAutoSignIn', isAutoSignIn, () => {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '자동 로그인 데이터를 저장하는중 문제가 발생하였습니다.',
+      });
+    });
+
+    COMMON.getStoreData(
+      '@userToken',
+      (value) => {
+        COMMON.axiosCall(
+          'user/updateAccount',
+          {
+            token: value,
+            nickname: accountData.nickname,
+            password: accountData.password,
+            profileImage: profileImageUrl,
+          },
+          (object) => {
+            console.log(object);
+          },
+          (error) => {},
+        );
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '사용자 토큰정보를 가져오는데 실패하였습니다.',
+        });
+      },
+    );
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
           <ImageWrap>
-            <Image source={{ uri: imageData.uri }} resizeMode="cover" />
+            {!COMMON.isEmptyValue(imageData.uri) && (
+              <Image source={{ uri: imageData.uri }} resizeMode="cover" />
+            )}
+            {COMMON.isEmptyValue(imageData.uri) && (
+              <Image
+                source={require(`../../assets/images/default-user.png`)}
+                resizeMode="cover"
+              />
+            )}
           </ImageWrap>
         </TouchableWithoutFeedback>
 
@@ -256,7 +301,7 @@ const MyAccount = () => {
                 autoCapitalize="none"
                 keyboardType="email-address"
                 value={accountData.nickname}
-                onChangeText={(value) => handleInputChange(value, 'email')}
+                onChangeText={(value) => handleInputChange(value, 'nickname')}
               />
             </InputWrap>
           </View>
