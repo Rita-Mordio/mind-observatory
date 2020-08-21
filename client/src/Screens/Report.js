@@ -3,6 +3,7 @@ import { Dimensions, View } from 'react-native';
 import styled from 'styled-components/native';
 import Context from '../Redux/contexts/context';
 import moment from 'moment';
+import * as Animatable from 'react-native-animatable';
 
 import COMMON from '../common';
 import SelectDate from '../Components/SelectDate';
@@ -77,7 +78,7 @@ const Report = ({ navigation }) => {
     show: false,
     message: '',
     onConfirmPressed: null,
-    confirmButtonColor: '#AAD4EC'
+    confirmButtonColor: '#AAD4EC',
   });
 
   useEffect(() => {
@@ -184,12 +185,10 @@ const Report = ({ navigation }) => {
       </DatePickerWrap>
       {showLoader === true && <Loader />}
       {showLoader === false && (
-        <View style={{ flex: 1 }}>
+        <Animatable.View style={{ flex: 1 }} animation="fadeIn" duration={1500}>
           {reportData.weather.length === 0 && (
             <DefaultView>
-              <DefaultImage
-                source={require(`../../assets/images/empty.png`)}
-              />
+              <DefaultImage source={require(`../../assets/images/empty.png`)} />
               <DefaultText>관측된 일기 정보가 없어요.</DefaultText>
             </DefaultView>
           )}
@@ -200,7 +199,7 @@ const Report = ({ navigation }) => {
               <CalendarItem>{renderDayItem()}</CalendarItem>
             </ScrollView>
           )}
-        </View>
+        </Animatable.View>
       )}
       <Alert alertData={alertData} setAlertData={setAlertData} />
     </Container>

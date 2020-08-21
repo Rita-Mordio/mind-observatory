@@ -335,7 +335,7 @@ const MyAccount = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
+      <Container as={Animatable.View} animation="fadeIn" duration={1000}>
         <TouchableWithoutFeedback onPress={choosePhotoFromLibrary}>
           <ImageWrap>
             {!COMMON.isEmptyValue(imageData.uri) && (

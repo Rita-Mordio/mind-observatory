@@ -212,7 +212,7 @@ const DrawerContentScreen = (props) => {
           icon={({ color, size }) => (
             <Icon name="md-exit" color={color} size={size} />
           )}
-          label="Sign Out"
+          label="로그아웃"
           onPress={() => {
             signOut();
           }}
