@@ -46,7 +46,12 @@ const ButtonWrap = styled.View`
 //###################################
 
 const Observatory = ({ navigation }) => {
-  const { setHeader, setRefreshObservatory, getCommon } = useContext(Context);
+  const {
+    setHeader,
+    setRefreshObservatory,
+    setHistoryCount,
+    getCommon,
+  } = useContext(Context);
 
   const [page, setPage] = useState(1);
   const [isLastPage, setIsLastPage] = useState(false); //마지막 페이지인지 확인용, 마지막 페이지 일때는 하단 스크롤을 해도 더이상 Axios 호출을 안함
@@ -83,6 +88,7 @@ const Observatory = ({ navigation }) => {
 
   useEffect(() => {
     getDiaries();
+    getDiariesCount();
   }, []);
 
   const [alertData, setAlertData] = useState({
@@ -94,6 +100,14 @@ const Observatory = ({ navigation }) => {
   const handleVieTypeToggle = (nextType) => {
     if (nextType !== diaryViewType)
       setDiaryViewType(diaryViewType === 'image' ? 'text' : 'image');
+  };
+
+  const getDiariesCount = () => {
+    COMMON.getStoreData('@userToken', (value) => {
+      COMMON.axiosCall('diary/myDiariesCount', { token: value }, (object) => {
+        setHistoryCount(object.data.count);
+      });
+    });
   };
 
   const getDiaries = () => {
@@ -189,7 +203,7 @@ const Observatory = ({ navigation }) => {
                 handleVieTypeToggle={handleVieTypeToggle}
               />
               <DiariesView>{renderDiaries()}</DiariesView>
-              {!isLastPage && (
+              {diariesData.length >= 10 && !isLastPage && (
                 <ButtonWrap>
                   <Button
                     buttonStyle={{ backgroundColor: '#efc4cd' }}

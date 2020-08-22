@@ -1,11 +1,40 @@
 import express from "express";
-import moment from "moment";
 import _ from "lodash";
 
 import Diary from "../schemas/Diary";
 import User from "../schemas/User";
 
 const router = express.Router();
+
+const diariesCount = (userId, response) => {
+  Diary.countDocuments(
+    {
+      userFrom: userId,
+      isVisible: true,
+    },
+    (error, result) => {
+      if (error)
+        return response.status(200).json({
+          success: false,
+          message: "서버문제로 일기 개수를 가져오는데 실패하였습니다.",
+          error,
+        });
+
+      return response.status(200).json({ success: true, count: result });
+    }
+  );
+};
+
+//작성한 일기의 총 개수
+router.post("/myDiariesCount", (request, response) => {
+  User.findOne({ token: request.body.token })
+    .then((user) => {
+      diariesCount(user._id, response);
+    })
+    .catch((error) => {
+      return response.status(200).json({ success: false, error });
+    });
+});
 
 //일기 작성
 router.post("/addDiary", (request, response) => {
@@ -24,23 +53,7 @@ router.post("/addDiary", (request, response) => {
             message: "서버문제로 일기 저장에 실패하였습니다.",
             error,
           });
-
-        Diary.countDocuments(
-          {
-            userFrom: user._id,
-            isVisible: true,
-          },
-          (error, result) => {
-            if (error)
-              return response.status(200).json({
-                success: false,
-                message: "서버문제로 일기 개수를 가져오는데 실패하였습니다.",
-                error,
-              });
-
-            return response.status(200).json({ success: true, count: result });
-          }
-        );
+        diariesCount(user._id, response);
       });
     })
     .catch((error) => {
