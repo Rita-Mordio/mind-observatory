@@ -18,6 +18,7 @@ import moment from 'moment';
 import Alert from '../Components/Alert';
 import InputSecureIcon from '../Components/InputSecureIcon';
 import COMMON from '../common';
+import AWS_CONFIG from "../AWS_CONFIG";
 
 const { width } = Dimensions.get('screen');
 
@@ -251,7 +252,7 @@ const MyAccount = ({ navigation }) => {
       type: imageData.type,
     };
 
-    RNS3.put(imageObject, COMMON.awsConfig)
+    RNS3.put(imageObject, AWS_CONFIG.s3)
       .then((result) => {
         editAccount(result.body.postResponse.location);
       })

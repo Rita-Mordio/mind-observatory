@@ -68,7 +68,7 @@
 # CocoaPods
 /client/ios/Pods/
 
-/client/src/AWS_Key.js
+/client/src/AWS_CONFIG.js
 
 
 

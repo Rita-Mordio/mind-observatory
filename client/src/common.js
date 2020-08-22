@@ -1,6 +1,5 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import AWS_KEY from "./AWS_Key";
 
 const COMMON = {
   axiosCall: (url, data, successCallBack, errorCallBack) => {
@@ -82,15 +81,6 @@ const COMMON = {
         return 'EditDiaryDetail';
     }
   },
-
-  awsConfig : {
-    keyPrefix: 'images/',
-    bucket: 'mind-observatory',
-    region: 'ap-northeast-2',
-    accessKey: AWS_KEY.accessKey,
-    secretKey: AWS_KEY.secretKey,
-    successActionStatus: 201,
-  }
 };
 
 export default COMMON;

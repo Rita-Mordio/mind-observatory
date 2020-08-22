@@ -15,7 +15,7 @@ import ViewDiarySimple from '../Screens/ViewDiary-simple';
 import ViewDiaryDetail from '../Screens/ViewDiary-detail';
 import Context from '../Redux/contexts/context';
 import COMMON from '../common';
-import AWS_KEY from '../AWS_Key';
+import AWS_CONFIG from "../AWS_CONFIG";
 import Template from '../Screens/Template';
 
 const MainStack = createStackNavigator();
@@ -78,7 +78,7 @@ const MainStackScreen = ({ route, navigation }) => {
       saveDiary(url, diaryData);
     } else {
       //S3에 이미지 업로드
-      RNS3.put(diaryData.images[0], COMMON.awsConfig)
+      RNS3.put(diaryData.images[0], AWS_CONFIG.s3)
         .then((result) => {
           diaryData.images[0] = result.body.postResponse.location;
           saveDiary(url, diaryData);
