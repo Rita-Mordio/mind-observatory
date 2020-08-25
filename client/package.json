@@ -10,7 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@bam.tech/react-native-make": "^3.0.0",
     "@codler/react-native-keyboard-aware-scroll-view": "^1.0.1",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/clipboard": "^1.2.3",
@@ -48,6 +47,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@bam.tech/react-native-make": "^3.0.0",
     "@react-native-community/eslint-config": "^1.1.0",
     "@types/react-native": "^0.63.1",
     "babel-jest": "^25.1.0",
