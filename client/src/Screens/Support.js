@@ -32,7 +32,7 @@ const Email = styled.Text`
 const ButtonWrap = styled.View`
   width: 100%;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 40px;
 `;
 
 //###################################
