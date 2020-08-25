@@ -108,6 +108,7 @@ const MyAccount = ({ navigation }) => {
   const { setAccount } = useContext(Context);
 
   const [isAutoSignIn, setIsAutoSignIn] = useState(false);
+  const [showButtonSpinner, setShowButtonSpinner] = useState(false);
   const [initNickname, setInitNickName] = useState('');
   const [accountData, setAccountData] = useState({
     nickname: '',
@@ -115,7 +116,7 @@ const MyAccount = ({ navigation }) => {
     confirmPassword: '',
     secureTextEntry: true,
     confirmSecureTextEntry: true,
-    isAvailableNickname: false,
+    isAvailableNickname: true,
   });
 
   const [imageData, setImageData] = useState({
@@ -277,6 +278,7 @@ const MyAccount = ({ navigation }) => {
         editAccount(result.body.postResponse.location);
       })
       .catch((error) => {
+        setShowButtonSpinner(false);
         setAlertData({
           ...alertData,
           show: true,
@@ -348,10 +350,12 @@ const MyAccount = ({ navigation }) => {
               storeData('@userNickname', accountObject.nickname);
               if (!COMMON.isEmptyValue(accountObject.profileImage))
                 storeData('@userProfileImage', accountObject.profileImage);
+              setShowButtonSpinner(false);
               navigation.goBack();
             }
           },
           (error) => {
+            setShowButtonSpinner(false);
             setAlertData({
               ...alertData,
               show: true,
@@ -468,9 +472,10 @@ const MyAccount = ({ navigation }) => {
               title="저장"
               raised={true}
               onPress={() => {
+                setShowButtonSpinner(true);
                 imageData.name === '' ? editAccount() : uploadProfileImage();
               }}
-              // loading={showButtonSpinner}
+              loading={showButtonSpinner}
             />
           </ButtonWrap>
         </ScrollView>

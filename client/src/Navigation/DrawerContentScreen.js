@@ -119,10 +119,15 @@ const DrawerContentScreen = (props) => {
       (nickname) => {
         if (!COMMON.isEmptyValue(nickname)) {
           COMMON.getStoreData('@userProfileImage', (profileImage) => {
-            if (!COMMON.isEmptyValue(nickname)) {
+            if (!COMMON.isEmptyValue(profileImage)) {
               setAccount({
                 nickname,
                 profileImage,
+              });
+            } else {
+              setAccount({
+                nickname,
+                profileImage: 'default',
               });
             }
           });

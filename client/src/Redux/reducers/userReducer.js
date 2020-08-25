@@ -20,6 +20,12 @@ export const userReducer = (prevState, action) => {
           ...prevState,
           nickname: action.payload.nickname,
         };
+      } else if (action.payload.profileImage === 'default') {
+        return {
+          ...prevState,
+          nickname: action.payload.nickname,
+          profileImage: '',
+        };
       } else {
         return {
           ...prevState,
