@@ -194,8 +194,10 @@ const SignIn = ({ navigation }) => {
       (object) => {
         setLoadingButton(false);
         if (COMMON.checkSuccess(object, alertData, setAlertData)) {
-          signIn(object.data.token);
           storeData('@userToken', object.data.token);
+          storeData('@userNickname', object.data.nickname);
+          storeData('@userProfileImage', object.data.profileImage);
+          signIn(object.data.token);
         }
       },
       (error) => {

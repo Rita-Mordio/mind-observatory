@@ -219,17 +219,18 @@ router.post("/signIn", (request, response) => {
 
             return response.status(200).json({
               success: true,
-              userId: user._id,
               token: user.token,
+              nickname: user.nickname,
+              profileImage: user.profileImage,
             });
           });
         });
       }
     })
     .catch((error) => {
-      return response.json({
+      return response.status(200).json({
         success: false,
-        message: "로그인 DB 접속 에러",
+        message: "로그인 DB 접속 에러가 발생했습니다.",
         error: error,
       });
     });
