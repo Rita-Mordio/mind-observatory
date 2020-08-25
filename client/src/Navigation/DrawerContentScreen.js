@@ -68,6 +68,11 @@ const HistoryCaption = styled.Text`
   font-size: 14px;
 `;
 
+const Version = styled.Text`
+  color: #3f3e3c;
+  font-size: 14px;
+`;
+
 //###################################
 //###################################
 //############ Component ############
@@ -219,21 +224,21 @@ const DrawerContentScreen = (props) => {
             />
           </Drawer.Section>
 
-          <Drawer.Section>
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon
-                  name="information-circle-sharp"
-                  color={color}
-                  size={size}
-                />
-              )}
-              label="앱 정보"
-              onPress={() => {
-                props.navigation.navigate('AppInfo');
-              }}
-            />
-          </Drawer.Section>
+          {/*<Drawer.Section>*/}
+          {/*  <DrawerItem*/}
+          {/*    icon={({ color, size }) => (*/}
+          {/*      <Icon*/}
+          {/*        name="information-circle-sharp"*/}
+          {/*        color={color}*/}
+          {/*        size={size}*/}
+          {/*      />*/}
+          {/*    )}*/}
+          {/*    label="앱 정보"*/}
+          {/*    onPress={() => {*/}
+          {/*      props.navigation.navigate('AppInfo');*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*</Drawer.Section>*/}
 
           {/*<Drawer.Section title="테마 변경">*/}
           {/*  <TouchableRipple*/}
@@ -251,6 +256,7 @@ const DrawerContentScreen = (props) => {
           {/*</Drawer.Section>*/}
         </DrawerContent>
       </DrawerContentScrollView>
+      <Drawer.Item label="0.0.1 ver" />
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({ color, size }) => (
