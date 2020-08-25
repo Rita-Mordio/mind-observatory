@@ -108,6 +108,7 @@ const MyAccount = ({ navigation }) => {
   const { setAccount } = useContext(Context);
 
   const [isAutoSignIn, setIsAutoSignIn] = useState(false);
+  const [initNickname, setInitNickName] = useState('');
   const [accountData, setAccountData] = useState({
     nickname: '',
     password: '',
@@ -143,6 +144,7 @@ const MyAccount = ({ navigation }) => {
           { token: value },
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              setInitNickName(object.data.user.nickname);
               setAccountData({
                 ...accountData,
                 nickname: object.data.user.nickname,
@@ -187,6 +189,11 @@ const MyAccount = ({ navigation }) => {
   };
 
   const availableNicknameCheck = () => {
+    if (accountData.nickname === initNickname) {
+      setAccountData({ ...accountData, isAvailableNickname: true });
+      return;
+    }
+
     setAccountData({ ...accountData, isAvailableNickname: false });
 
     if (accountData.nickname.length > 8) {
@@ -280,6 +287,15 @@ const MyAccount = ({ navigation }) => {
   };
 
   const editAccount = (profileImageUrl) => {
+    if (!accountData.isAvailableNickname) {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '닉네임을 확인해 주세요.',
+      });
+      return false;
+    }
+
     if (accountData.password.length >= 1 && accountData.password.length < 8) {
       setAlertData({
         ...alertData,
@@ -327,12 +343,11 @@ const MyAccount = ({ navigation }) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
               setAccount({
                 nickname: accountObject.nickname,
-                profileImage: COMMON.isEmptyValue(accountObject.profileImage)
-                  ? ''
-                  : accountObject.profileImage,
+                profileImage: accountObject.profileImage,
               });
               storeData('@userNickname', accountObject.nickname);
-              storeData('@userProfileImage', accountObject.profileImage);
+              if (!COMMON.isEmptyValue(accountObject.profileImage))
+                storeData('@userProfileImage', accountObject.profileImage);
               navigation.goBack();
             }
           },

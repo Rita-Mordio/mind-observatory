@@ -1,4 +1,5 @@
 import { SET_HISTORY_COUNT, SET_ACCOUNT } from '../constants/actionTypes';
+import COMMON from '../../common';
 
 export const initialUserState = {
   historyCount: 0, //전체 기록 개수
@@ -14,10 +15,17 @@ export const userReducer = (prevState, action) => {
         historyCount: action.payload,
       };
     case SET_ACCOUNT:
-      return {
-        ...prevState,
-        nickname: action.payload.nickname,
-        profileImage: action.payload.profileImage,
-      };
+      if (COMMON.isEmptyValue(action.payload.profileImage)) {
+        return {
+          ...prevState,
+          nickname: action.payload.nickname,
+        };
+      } else {
+        return {
+          ...prevState,
+          nickname: action.payload.nickname,
+          profileImage: action.payload.profileImage,
+        };
+      }
   }
 };
