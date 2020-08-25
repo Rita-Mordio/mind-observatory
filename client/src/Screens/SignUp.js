@@ -151,11 +151,11 @@ const SignUp = ({ navigation }) => {
   const availableNicknameCheck = () => {
     setData({ ...data, isAvailableNickname: false });
 
-    if(data.nickname.length > 16) {
+    if(data.nickname.length > 8) {
       setAlertData({
         ...alertData,
         show: true,
-        message: '닉네임은 16자 밑으로 해주세요.',
+        message: '닉네임은 8자 밑으로 해주세요.',
       });
     }
 

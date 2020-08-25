@@ -82,12 +82,17 @@ const DrawerContentScreen = (props) => {
     onConfirmPressed: null,
   });
 
-  const { signOut, setHeader, setHistoryCount, getCommon } = useContext(
-    Context,
-  );
+  const {
+    signOut,
+    setHeader,
+    setHistoryCount,
+    setAccount,
+    getUser,
+  } = useContext(Context);
 
   useEffect(() => {
     getHistoryCount();
+    getAccount();
   }, []);
 
   const getHistoryCount = () => {
@@ -108,6 +113,31 @@ const DrawerContentScreen = (props) => {
     );
   };
 
+  const getAccount = () => {
+    COMMON.getStoreData(
+      '@userNickname',
+      (nickname) => {
+        if (!COMMON.isEmptyValue(nickname)) {
+          COMMON.getStoreData('@userProfileImage', (profileImage) => {
+            if (!COMMON.isEmptyValue(nickname)) {
+              setAccount({
+                nickname,
+                profileImage,
+              });
+            }
+          });
+        }
+      },
+      () => {
+        setAlertData({
+          ...alertData,
+          show: true,
+          message: '프로필 정보를 가져오는데 문제가 발생하였습니다.',
+        });
+      },
+    );
+  };
+
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
@@ -118,20 +148,29 @@ const DrawerContentScreen = (props) => {
         <DrawerContent>
           <UserInfoSection>
             <AvatarContent>
-              <Avatar.Image
-                source={{
-                  uri:
-                    'https://fimg4.pann.com/new/download.jsp?FileID=50483715',
-                }}
-                size={50}
-              />
+              {COMMON.isEmptyValue(getUser().profileImage) && (
+                <Avatar.Image
+                  source={require(`../../assets/images/default-user.png`)}
+                  size={50}
+                  style={{ backgroundColor: '#ffffff' }}
+                />
+              )}
+              {!COMMON.isEmptyValue(getUser().profileImage) && (
+                <Avatar.Image
+                  source={{
+                    uri: getUser().profileImage,
+                  }}
+                  size={50}
+                  style={{ backgroundColor: '#ffffff' }}
+                />
+              )}
               <NicknameSection>
-                <Nickname>김신예</Nickname>
+                <Nickname>{getUser().nickname}님</Nickname>
                 <AvatarCaption>오늘은 어떤 일이 있었나요?</AvatarCaption>
               </NicknameSection>
             </AvatarContent>
             <HistorySection>
-              <Day>{getCommon().historyCount}</Day>
+              <Day>{getUser().historyCount}</Day>
               <HistoryCaption>일의 기록이 있어요</HistoryCaption>
             </HistorySection>
           </UserInfoSection>

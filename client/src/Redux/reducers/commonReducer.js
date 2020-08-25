@@ -1,13 +1,11 @@
 import {
   SET_REFRESH_OBSERVATORY,
   SET_REFRESH_REPORT,
-  SET_HISTORY_COUNT,
 } from '../constants/actionTypes';
 
 export const initialCommonState = {
-  refreshObservatory: false,  //홈 화면 데이터 다시 불러올지 여부
-  refreshReport: false,       //리포트 화면 데이터 다시 불러올지 여부
-  historyCount: 0,            //전체 기록 개수
+  refreshObservatory: false, //홈 화면 데이터 다시 불러올지 여부
+  refreshReport: false, //리포트 화면 데이터 다시 불러올지 여부
 };
 
 export const commonReducer = (prevState, action) => {
@@ -21,11 +19,6 @@ export const commonReducer = (prevState, action) => {
       return {
         ...prevState,
         refreshReport: action.payload,
-      };
-    case SET_HISTORY_COUNT:
-      return {
-        ...prevState,
-        historyCount: action.payload,
       };
   }
 };

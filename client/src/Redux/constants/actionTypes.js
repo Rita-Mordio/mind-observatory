@@ -9,4 +9,6 @@ export const SET_HEADER = 'theme/SET_HEADER'
 
 export const SET_REFRESH_OBSERVATORY = 'common/SET_REFRESH_OBSERVATORY'
 export const SET_REFRESH_REPORT = 'common/SET_REFRESH_REPORT'
-export const SET_HISTORY_COUNT = 'common/SET_HISTORY_COUNT'
+
+export const SET_HISTORY_COUNT = 'user/SET_HISTORY_COUNT'
+export const SET_ACCOUNT = 'user/SET_ACCOUNT'

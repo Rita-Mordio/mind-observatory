@@ -15,7 +15,7 @@ const UserSchema = new Schema(
     // 닉네임
     nickname: {
       type: String,
-      maxlength: 16,
+      maxlength: 8,
       required: true,
       unique: true,
     },

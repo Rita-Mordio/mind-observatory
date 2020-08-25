@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Keyboard,
   Dimensions,
@@ -18,7 +18,8 @@ import moment from 'moment';
 import Alert from '../Components/Alert';
 import InputSecureIcon from '../Components/InputSecureIcon';
 import COMMON from '../common';
-import AWS_CONFIG from "../AWS_CONFIG";
+import AWS_CONFIG from '../AWS_CONFIG';
+import Context from '../Redux/contexts/context';
 
 const { width } = Dimensions.get('screen');
 
@@ -104,6 +105,8 @@ const ButtonWrap = styled.View`
 //###################################
 
 const MyAccount = ({ navigation }) => {
+  const { setAccount } = useContext(Context);
+
   const [isAutoSignIn, setIsAutoSignIn] = useState(false);
   const [accountData, setAccountData] = useState({
     nickname: '',
@@ -186,11 +189,11 @@ const MyAccount = ({ navigation }) => {
   const availableNicknameCheck = () => {
     setAccountData({ ...accountData, isAvailableNickname: false });
 
-    if (accountData.nickname.length > 16) {
+    if (accountData.nickname.length > 8) {
       setAlertData({
         ...alertData,
         show: true,
-        message: '닉네임은 16자 밑으로 해주세요.',
+        message: '닉네임은 8자 밑으로 해주세요.',
       });
     }
 
@@ -242,6 +245,16 @@ const MyAccount = ({ navigation }) => {
             '이미지를 선택하지 않았거나, 사용 불가능한 이미지 입니다. 다른 이미지를 선택해 주세요.',
         });
       });
+  };
+
+  const storeData = (key, value) => {
+    COMMON.setStoreData(key, value, () => {
+      setAlertData({
+        ...alertData,
+        show: true,
+        message: '데이터 저장중 에러가 발생했습니다.',
+      });
+    });
   };
 
   const uploadProfileImage = () => {
@@ -312,6 +325,14 @@ const MyAccount = ({ navigation }) => {
           accountObject,
           (object) => {
             if (COMMON.checkSuccess(object, alertData, setAlertData)) {
+              setAccount({
+                nickname: accountObject.nickname,
+                profileImage: COMMON.isEmptyValue(accountObject.profileImage)
+                  ? ''
+                  : accountObject.profileImage,
+              });
+              storeData('@userNickname', accountObject.nickname);
+              storeData('@userProfileImage', accountObject.profileImage);
               navigation.goBack();
             }
           },

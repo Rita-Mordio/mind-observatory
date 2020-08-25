@@ -13,10 +13,12 @@ import {
   SET_REFRESH_OBSERVATORY,
   SET_REFRESH_REPORT,
   SET_HISTORY_COUNT,
+  SET_ACCOUNT,
 } from './Redux/constants/actionTypes';
 import { authReducer, initialAuthState } from './Redux/reducers/authReducer';
 import { diaryReducer, initialDiaryState } from './Redux/reducers/diaryReducer';
 import { themeReducer, initialThemeState } from './Redux/reducers/themeReducer';
+import { userReducer, initialUserState } from './Redux/reducers/userReducer';
 import {
   commonReducer,
   initialCommonState,
@@ -34,6 +36,7 @@ const App = () => {
   }, []);
 
   const [authState, authDispatch] = useReducer(authReducer, initialAuthState);
+  const [userState, userDispatch] = useReducer(userReducer, initialUserState);
   const [diaryState, diaryDispatch] = useReducer(
     diaryReducer,
     initialDiaryState,
@@ -70,20 +73,26 @@ const App = () => {
       getTheme: () => {
         return themeState;
       },
+      setHistoryCount: (value) => {
+        userDispatch({ type: SET_HISTORY_COUNT, payload: value });
+      },
+      setAccount: (account) => {
+        userDispatch({ type: SET_ACCOUNT, payload: account });
+      },
+      getUser: () => {
+        return userState;
+      },
       setRefreshObservatory: (value) => {
         commonDispatch({ type: SET_REFRESH_OBSERVATORY, payload: value });
       },
       setRefreshReport: (value) => {
         commonDispatch({ type: SET_REFRESH_REPORT, payload: value });
       },
-      setHistoryCount: (value) => {
-        commonDispatch({ type: SET_HISTORY_COUNT, payload: value });
-      },
       getCommon: () => {
         return commonState;
       },
     }),
-    [commonState, diaryState, themeState],
+    [commonState, diaryState, themeState, userState],
   );
 
   return (
