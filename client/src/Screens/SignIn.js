@@ -232,6 +232,7 @@ const SignIn = ({ navigation }) => {
               secureTextEntry={data.secureTextEntry ? true : false}
               autoCapitalize="none"
               onChangeText={(value) => handleInputChange(value, 'password')}
+              keyboardType="ascii-capable"
             />
             <InputSecureIcon
               handleSecureTextEntryChange={() =>

@@ -45,6 +45,10 @@ const BottomView = styled.View`
   padding: 20px;
 `;
 
+const ScrollEventWrap = styled.View`
+  flex: 1;
+`;
+
 const ScrollView = styled.ScrollView`
   flex: 1;
 `;
@@ -151,7 +155,7 @@ const SignUp = ({ navigation }) => {
   const availableNicknameCheck = () => {
     setData({ ...data, isAvailableNickname: false });
 
-    if(data.nickname.length > 8) {
+    if (data.nickname.length > 8) {
       setAlertData({
         ...alertData,
         show: true,
@@ -250,87 +254,105 @@ const SignUp = ({ navigation }) => {
           <TopTitle>회원가입</TopTitle>
         </TopView>
         <BottomView as={Animatable.View} animation="fadeInUpBig">
-          <ScrollView>
-            <BottomTitle>이메일</BottomTitle>
-            <InputWrap>
-              <FontAwesomeIcon name="user-o" color="#05375a" size={20} style={{marginRight: 2}} />
-              <Input
-                placeholder="당신의 소중한 이메일"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={(value) => handleInputChange(value, 'email')}
-                onBlur={validEmailCheck}
-              />
-              {data.isAvailableEmail ? (
-                <Animatable.View animation="bounceIn">
-                  <FeatherIcon name="check-circle" color="green" size={20} />
-                </Animatable.View>
-              ) : null}
-            </InputWrap>
+          <ScrollEventWrap onStartShouldSetResponder={() => true}>
+            <ScrollView>
+              <BottomTitle>이메일</BottomTitle>
+              <InputWrap>
+                <FontAwesomeIcon
+                  name="user-o"
+                  color="#05375a"
+                  size={20}
+                  style={{ marginRight: 2 }}
+                />
+                <Input
+                  placeholder="당신의 소중한 이메일"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  onChangeText={(value) => handleInputChange(value, 'email')}
+                  onBlur={validEmailCheck}
+                />
+                {data.isAvailableEmail ? (
+                  <Animatable.View animation="bounceIn">
+                    <FeatherIcon name="check-circle" color="green" size={20} />
+                  </Animatable.View>
+                ) : null}
+              </InputWrap>
 
-            <BottomTitle>닉네임</BottomTitle>
-            <InputWrap>
-              <FontistoIcon name="smiley" color="#05375a" size={18} />
-              <Input
-                placeholder="당신만의 특별한 닉네임"
-                autoCapitalize="none"
-                onChangeText={(value) => handleInputChange(value, 'nickname')}
-                onBlur={availableNicknameCheck}
-              />
-              {data.isAvailableNickname ? (
-                <Animatable.View animation="bounceIn">
-                  <FeatherIcon name="check-circle" color="green" size={20} />
-                </Animatable.View>
-              ) : null}
-            </InputWrap>
+              <BottomTitle>닉네임</BottomTitle>
+              <InputWrap>
+                <FontistoIcon name="smiley" color="#05375a" size={18} />
+                <Input
+                  placeholder="당신만의 특별한 닉네임"
+                  autoCapitalize="none"
+                  onChangeText={(value) => handleInputChange(value, 'nickname')}
+                  onBlur={availableNicknameCheck}
+                />
+                {data.isAvailableNickname ? (
+                  <Animatable.View animation="bounceIn">
+                    <FeatherIcon name="check-circle" color="green" size={20} />
+                  </Animatable.View>
+                ) : null}
+              </InputWrap>
 
-            <BottomTitle>비밀번호</BottomTitle>
-            <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={22} style={{marginRight: 5}} />
-              <Input
-                placeholder="비밀번호는 8자 이상으로"
-                secureTextEntry={data.secureTextEntry ? true : false}
-                autoCapitalize="none"
-                onChangeText={(value) => handleInputChange(value, 'password')}
-              />
-              <InputSecureIcon
-                handleSecureTextEntryChange={() =>
-                  handleSecureTextEntryChange('secureTextEntry')
-                }
-                isSecureTextEntry={data.secureTextEntry}
-              />
-            </InputWrap>
+              <BottomTitle>비밀번호</BottomTitle>
+              <InputWrap>
+                <FontAwesomeIcon
+                  name="lock"
+                  color="#05375a"
+                  size={22}
+                  style={{ marginRight: 5 }}
+                />
+                <Input
+                  placeholder="비밀번호는 8자 이상으로"
+                  secureTextEntry={data.secureTextEntry ? true : false}
+                  autoCapitalize="none"
+                  onChangeText={(value) => handleInputChange(value, 'password')}
+                  keyboardType="ascii-capable"
+                />
+                <InputSecureIcon
+                  handleSecureTextEntryChange={() =>
+                    handleSecureTextEntryChange('secureTextEntry')
+                  }
+                  isSecureTextEntry={data.secureTextEntry}
+                />
+              </InputWrap>
 
-            <BottomTitle>비밀번호 확인</BottomTitle>
-            <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={22} style={{marginRight: 5}} />
-              <Input
-                placeholder="중요한 건 한번 더 체크"
-                secureTextEntry={data.confirmSecureTextEntry ? true : false}
-                autoCapitalize="none"
-                onChangeText={(value) =>
-                  handleInputChange(value, 'confirmPassword')
-                }
-              />
-              <InputSecureIcon
-                handleSecureTextEntryChange={() =>
-                  handleSecureTextEntryChange('confirmSecureTextEntry')
-                }
-                isSecureTextEntry={data.confirmSecureTextEntry}
-              />
-            </InputWrap>
+              <BottomTitle>비밀번호 확인</BottomTitle>
+              <InputWrap>
+                <FontAwesomeIcon
+                  name="lock"
+                  color="#05375a"
+                  size={22}
+                  style={{ marginRight: 5 }}
+                />
+                <Input
+                  placeholder="중요한 건 한번 더 체크"
+                  secureTextEntry={data.confirmSecureTextEntry ? true : false}
+                  autoCapitalize="none"
+                  onChangeText={(value) =>
+                    handleInputChange(value, 'confirmPassword')
+                  }
+                  keyboardType="ascii-capable"
+                />
+                <InputSecureIcon
+                  handleSecureTextEntryChange={() =>
+                    handleSecureTextEntryChange('confirmSecureTextEntry')
+                  }
+                  isSecureTextEntry={data.confirmSecureTextEntry}
+                />
+              </InputWrap>
 
-            <ButtonWrap>
-              <Button
-                buttonStyle={{ backgroundColor: '#efc4cd' }}
-                title="회원가입"
-                raised={true}
-                onPress={signUp}
-                loading={data.isLoading}
-              />
-            </ButtonWrap>
-            <ButtonWrap style={{marginBottom: 5}}>
-              <Button
+              <ButtonWrap>
+                <Button
+                  buttonStyle={{ backgroundColor: '#efc4cd' }}
+                  title="회원가입"
+                  raised={true}
+                  onPress={signUp}
+                  loading={data.isLoading}
+                />
+              </ButtonWrap>
+              <ButtonWrap style={{ marginBottom: 5 }}>
+                <Button
                   buttonStyle={{ borderColor: '#efc4cd' }}
                   titleStyle={{ color: '#efc4cd' }}
                   type="outline"
@@ -339,9 +361,10 @@ const SignUp = ({ navigation }) => {
                   onPress={() => {
                     navigation.navigate('SignIn');
                   }}
-              />
-            </ButtonWrap>
-          </ScrollView>
+                />
+              </ButtonWrap>
+            </ScrollView>
+          </ScrollEventWrap>
         </BottomView>
 
         <Alert alertData={alertData} setAlertData={setAlertData} />

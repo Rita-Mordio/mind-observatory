@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 import ImagePicker from 'react-native-image-crop-picker';
 import * as Animatable from 'react-native-animatable';
 import { Button } from 'react-native-elements';
@@ -39,10 +40,10 @@ const Container = styled.View`
 const ImageWrap = styled.View`
   width: ${Math.round(width * 0.35)}px;
   height: ${Math.round(width * 0.35)}px;
-  border-style: dashed;
   border-width: 1px;
   border-color: #a9a9a9;
   border-radius: ${Math.round(width * 0.175)}px;
+  position: relative;
 `;
 
 const Image = styled.Image`
@@ -51,9 +52,22 @@ const Image = styled.Image`
   border-radius: ${Math.round(width * 0.175)}px;
 `;
 
-const ScrollView = styled.ScrollView`
+const CameraIconWrap = styled.View`
+  opacity: 0.7;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+`;
+
+const ScrollEventWrap = styled.View`
   flex: 1;
   width: 100%;
+`;
+
+const ScrollView = styled.ScrollView`
+  flex: 1;
 `;
 
 const View = styled.View`
@@ -295,15 +309,17 @@ const MyAccount = ({ navigation }) => {
         show: true,
         message: '닉네임을 확인해 주세요.',
       });
+      setShowButtonSpinner(false);
       return false;
     }
 
-    if (accountData.password.length >= 1 && accountData.password.length < 8) {
+    if (accountData.password.length > 0 && accountData.password.length < 8) {
       setAlertData({
         ...alertData,
         show: true,
         message: '비밀번호는 8자리 이상으로 해주세요.',
       });
+      setShowButtonSpinner(false);
       return false;
     }
 
@@ -313,6 +329,7 @@ const MyAccount = ({ navigation }) => {
         show: true,
         message: '비밀번호가 서로 일치하지 않습니다.',
       });
+      setShowButtonSpinner(false);
       return false;
     }
 
@@ -322,6 +339,8 @@ const MyAccount = ({ navigation }) => {
         show: true,
         message: '자동 로그인 데이터를 저장하는중 문제가 발생하였습니다.',
       });
+      setShowButtonSpinner(false);
+      return false;
     });
 
     COMMON.getStoreData(
@@ -388,97 +407,103 @@ const MyAccount = ({ navigation }) => {
                 resizeMode="cover"
               />
             )}
+            <CameraIconWrap>
+              <EntypoIcon name="camera" color="#000000" size={50} />
+            </CameraIconWrap>
           </ImageWrap>
         </TouchableWithoutFeedback>
 
-        <ScrollView>
-          <View>
-            <Title>닉네임</Title>
-            <InputWrap>
-              <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
-              <Input
-                placeholder="당신만의 닉네임"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                value={accountData.nickname}
-                onChangeText={(value) => handleInputChange(value, 'nickname')}
-                onBlur={availableNicknameCheck}
-              />
-              {accountData.isAvailableNickname ? (
-                <Animatable.View animation="bounceIn">
-                  <FeatherIcon name="check-circle" color="green" size={20} />
-                </Animatable.View>
-              ) : null}
-            </InputWrap>
-          </View>
+        <ScrollEventWrap onStartShouldSetResponder={() => true}>
+          <ScrollView>
+            <View>
+              <Title>닉네임</Title>
+              <InputWrap>
+                <FontAwesomeIcon name="user-o" color="#05375a" size={20} />
+                <Input
+                  placeholder="당신만의 닉네임"
+                  autoCapitalize="none"
+                  value={accountData.nickname}
+                  onChangeText={(value) => handleInputChange(value, 'nickname')}
+                  onBlur={availableNicknameCheck}
+                />
+                {accountData.isAvailableNickname ? (
+                  <Animatable.View animation="bounceIn">
+                    <FeatherIcon name="check-circle" color="green" size={20} />
+                  </Animatable.View>
+                ) : null}
+              </InputWrap>
+            </View>
 
-          <View>
-            <Title>비밀번호</Title>
-            <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={20} />
-              <Input
-                placeholder="비밀번호는 8자 이상으로"
-                secureTextEntry={accountData.secureTextEntry ? true : false}
-                autoCapitalize="none"
-                onChangeText={(value) => handleInputChange(value, 'password')}
-              />
-              <InputSecureIcon
-                handleSecureTextEntryChange={() =>
-                  handleSecureTextEntryChange('secureTextEntry')
-                }
-                isSecureTextEntry={accountData.secureTextEntry}
-              />
-            </InputWrap>
-          </View>
+            <View>
+              <Title>비밀번호</Title>
+              <InputWrap>
+                <FontAwesomeIcon name="lock" color="#05375a" size={20} />
+                <Input
+                  placeholder="비밀번호는 8자 이상으로"
+                  secureTextEntry={accountData.secureTextEntry ? true : false}
+                  autoCapitalize="none"
+                  onChangeText={(value) => handleInputChange(value, 'password')}
+                  keyboardType="ascii-capable"
+                />
+                <InputSecureIcon
+                  handleSecureTextEntryChange={() =>
+                    handleSecureTextEntryChange('secureTextEntry')
+                  }
+                  isSecureTextEntry={accountData.secureTextEntry}
+                />
+              </InputWrap>
+            </View>
 
-          <View>
-            <Title>비밀번호 확인</Title>
-            <InputWrap>
-              <FontAwesomeIcon name="lock" color="#05375a" size={20} />
-              <Input
-                placeholder="중요한 건 한번 더 체크"
-                secureTextEntry={
-                  accountData.confirmSecureTextEntry ? true : false
-                }
-                autoCapitalize="none"
-                onChangeText={(value) =>
-                  handleInputChange(value, 'confirmPassword')
-                }
-              />
-              <InputSecureIcon
-                handleSecureTextEntryChange={() =>
-                  handleSecureTextEntryChange('confirmSecureTextEntry')
-                }
-                isSecureTextEntry={accountData.confirmSecureTextEntry}
-              />
-            </InputWrap>
-          </View>
+            <View>
+              <Title>비밀번호 확인</Title>
+              <InputWrap>
+                <FontAwesomeIcon name="lock" color="#05375a" size={20} />
+                <Input
+                  placeholder="중요한 건 한번 더 체크"
+                  secureTextEntry={
+                    accountData.confirmSecureTextEntry ? true : false
+                  }
+                  autoCapitalize="none"
+                  onChangeText={(value) =>
+                    handleInputChange(value, 'confirmPassword')
+                  }
+                  keyboardType="ascii-capable"
+                />
+                <InputSecureIcon
+                  handleSecureTextEntryChange={() =>
+                    handleSecureTextEntryChange('confirmSecureTextEntry')
+                  }
+                  isSecureTextEntry={accountData.confirmSecureTextEntry}
+                />
+              </InputWrap>
+            </View>
 
-          <View>
-            <AutoSignInWrap>
-              <Title>자동 로그인 설정</Title>
-              <Switch
-                value={isAutoSignIn}
-                onValueChange={() => {
-                  setIsAutoSignIn(!isAutoSignIn);
+            <View>
+              <AutoSignInWrap>
+                <Title>자동 로그인 설정</Title>
+                <Switch
+                  value={isAutoSignIn}
+                  onValueChange={() => {
+                    setIsAutoSignIn(!isAutoSignIn);
+                  }}
+                />
+              </AutoSignInWrap>
+            </View>
+
+            <ButtonWrap>
+              <Button
+                buttonStyle={{ backgroundColor: '#BCC74F' }}
+                title="저장"
+                raised={true}
+                onPress={() => {
+                  setShowButtonSpinner(true);
+                  imageData.name === '' ? editAccount() : uploadProfileImage();
                 }}
+                loading={showButtonSpinner}
               />
-            </AutoSignInWrap>
-          </View>
-
-          <ButtonWrap>
-            <Button
-              buttonStyle={{ backgroundColor: '#BCC74F' }}
-              title="저장"
-              raised={true}
-              onPress={() => {
-                setShowButtonSpinner(true);
-                imageData.name === '' ? editAccount() : uploadProfileImage();
-              }}
-              loading={showButtonSpinner}
-            />
-          </ButtonWrap>
-        </ScrollView>
+            </ButtonWrap>
+          </ScrollView>
+        </ScrollEventWrap>
 
         <Alert alertData={alertData} setAlertData={setAlertData} />
       </Container>
