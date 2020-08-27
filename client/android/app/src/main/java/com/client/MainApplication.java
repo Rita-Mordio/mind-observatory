@@ -1,4 +1,4 @@
-package com.client.mind_observatory;
+package com.client;
 
 import android.app.Application;
 import android.content.Context;
