@@ -256,7 +256,7 @@ const DrawerContentScreen = (props) => {
           {/*</Drawer.Section>*/}
         </DrawerContent>
       </DrawerContentScrollView>
-      <Drawer.Item label="0.0.1 ver" />
+      <Drawer.Item label="0.0.5 ver" />
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({ color, size }) => (
