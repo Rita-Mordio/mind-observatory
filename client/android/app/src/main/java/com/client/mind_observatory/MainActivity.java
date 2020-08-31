@@ -1,4 +1,4 @@
-package com.client;
+package com.client.mind_observatory;
 
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
