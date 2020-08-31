@@ -16,7 +16,7 @@ const SafeAreaView = styled.SafeAreaView`
   flex: 1;
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
