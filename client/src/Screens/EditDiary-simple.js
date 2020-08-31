@@ -227,7 +227,7 @@ export default EditDiarySimple;
 
 const styles = StyleSheet.create({
   textareaContainer: {
-    height: 100,
+    height: 130,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 10,

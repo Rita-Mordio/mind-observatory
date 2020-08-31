@@ -52,6 +52,7 @@ const Title = styled.Text`
 const Contents = styled.Text`
   color: #3f3e3c;
   font-size: 17px;
+  padding-bottom: 30px;
 `
 
 //###################################
