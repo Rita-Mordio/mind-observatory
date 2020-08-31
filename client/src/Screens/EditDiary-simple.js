@@ -196,11 +196,11 @@ const EditDiarySimple = ({ route }) => {
               <Textarea
                 containerStyle={styles.textareaContainer}
                 style={styles.textarea}
-                maxLength={100}
+                maxLength={90}
                 defaultValue={
                   COMMON.isEmptyValue(diary) ? '' : diary.contents[0]
                 }
-                placeholder={'내용을 작성해주세요, 최대 100자 까지 가능합니다.'}
+                placeholder={'내용을 작성해주세요, 최대 90자 까지 가능합니다.'}
                 placeholderTextColor={'#3f3e3c'}
                 underlineColorAndroid={'transparent'}
                 onChangeText={(value) => {
@@ -227,7 +227,7 @@ export default EditDiarySimple;
 
 const styles = StyleSheet.create({
   textareaContainer: {
-    height: 130,
+    height: 115,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 10,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 
   textarea: {
     textAlignVertical: 'top', // hack android
-    height: 170,
+    height: 115,
     fontSize: 16,
     color: '#333',
   },

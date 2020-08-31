@@ -24,7 +24,7 @@ const Container = styled.ScrollView`
 
 const ImageWrap = styled.View`
   width: 100%;
-  height: ${width - 40}px;
+  height: ${width - 80}px;
   border-width: 1px;
   border-color: #a9a9a9;
   border-radius: 20px;

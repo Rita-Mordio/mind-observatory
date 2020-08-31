@@ -54,7 +54,7 @@ const Weather = styled.Image`
 
 const ImageWrap = styled.View`
   width: 100%;
-  height: ${width - 40}px;
+  height: ${width - 80}px;
   border-style: dashed;
   border-width: 1px;
   border-color: #a9a9a9;
