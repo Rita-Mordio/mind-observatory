@@ -65,11 +65,11 @@ const MainStackScreen = ({ route, navigation }) => {
     } else if (COMMON.isEmptyValue(diaryData.contents[0])) {
       alert('내용을 입력해 주세요.');
       return false;
-    } else if (COMMON.isEmptyValue(diaryData.images.length === 0)) {
+    } else if (COMMON.isEmptyValue(diaryData.images[0].uri)) {
       alert('이미지를 선택해 주세요.');
       return false;
     }
-
+    
     //저장 할지 수정 할지 분기처리
     if (COMMON.isEmptyValue(diaryData._id)) url = 'diary/addDiary';
     else url = 'diary/editDiary';
